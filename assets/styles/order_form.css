@@ -1,0 +1,140 @@
+colors {
+	color: #548d95 #76c1c3 #ae7f21 #f0ae44 #789342 #b4db6f;
+}
+
+body {
+	font-size: calc(5px + 8vh);
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 90%;
+}
+
+#login-form {
+	width: fit-content;
+	padding: 1vh;
+	border-radius: 4vh;
+	background-color: aliceblue;
+}
+
+body {
+	background-color: aliceblue;
+	font-family: verdana, arial;
+	height: 100%;
+	align-content: center;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+}
+
+.costumer-label {
+	display: flex;
+	width: 100%;
+}
+
+#order_Costumer {
+	font-size: inherit;
+	width: inherit;
+	min-height: 20px;
+
+	flex-grow: 1;
+	flex-basis: 100px;
+}
+
+.menulabel {
+	flex-basis: 40%; /* zwischen 33.3% und 50%, damit genau 2 reihen generiert werden. */
+	background-color: #9ed8de;
+}
+
+textarea:focus,
+input:focus {
+	outline: none;
+}
+
+.menulabel:has(input[type="radio"]:checked) {
+	background: #d98dfb !important;
+}
+
+/* loader animation from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader */
+.loader {
+	border: 16px solid #f3f3f3;
+	border-radius: 50%;
+	border-top: 16px solid #3498db;
+	width: 120px;
+	height: 120px;
+	-webkit-animation: spin 2s linear infinite; /* Safari */
+	animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.footer {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	align-self: center;
+	margin: 1%;
+	width: 100%;
+}
+
+.tax {
+	background-color: #e8e7a4;
+}
+
+.tax:has(input[type="radio"]:checked) {
+	background: #d98dfb !important;
+}
+
+.input_invis {
+	width: 0px;
+	height: 0px;
+	position: fixed;
+}
+
+.btn {
+	/* height: 11vh; */
+	/* font-size:calc(11px + 4vh); */
+	min-height: 20px;
+	border-radius: 4vh;
+	margin: calc(1px + 0.3vh);
+	text-align: center;
+	flex-grow: 1;
+	color: black;
+	padding: 1vh;
+}
+
+.btn:has(input[type="radio"]:checked) {
+	box-shadow: 0 0 0 calc(1px + 0.5vh) black;
+}
+
+.submit {
+	background-color: #17cf53;
+}
+
+.menus {
+	height: 80%;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+}

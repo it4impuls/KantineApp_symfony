@@ -1,0 +1,44 @@
+#popup-yes,
+#popup-no,
+#popup-message {
+	font-size: calc(11px + 2vh);
+}
+
+.popup-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 9999;
+}
+
+.popup-box {
+	background: white;
+	padding: 20px;
+	border-radius: 4vh;
+	max-width: 400px;
+	text-align: center;
+}
+
+.popup-buttons,
+.button {
+	margin: 10px;
+	padding: 10px 20px;
+}
+
+.button {
+	background-color: lightgray;
+}
+
+a,
+a:hover,
+a:visited,
+a:active {
+	color: inherit;
+	text-decoration: none;
+}
