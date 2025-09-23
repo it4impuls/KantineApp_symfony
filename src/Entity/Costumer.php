@@ -136,6 +136,9 @@ class Costumer
 
     public function getBarcode(): string
     {
+        if (!$this->getId()) {
+            return '';
+        }
         $dir = 'barcodes';
         // look in public/barcodes/${id}.svg
         if (!is_dir($dir)) {
