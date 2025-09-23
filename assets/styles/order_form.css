@@ -35,7 +35,7 @@ body {
 	width: 100%;
 }
 
-#order_Costumer {
+.costumer-input {
 	font-size: inherit;
 	width: inherit;
 	min-height: 20px;
@@ -56,36 +56,6 @@ input:focus {
 
 .menulabel:has(input[type="radio"]:checked) {
 	background: #d98dfb !important;
-}
-
-/* loader animation from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader */
-.loader {
-	border: 16px solid #f3f3f3;
-	border-radius: 50%;
-	border-top: 16px solid #3498db;
-	width: 120px;
-	height: 120px;
-	-webkit-animation: spin 2s linear infinite; /* Safari */
-	animation: spin 2s linear infinite;
-}
-
-/* Safari */
-@-webkit-keyframes spin {
-	0% {
-		-webkit-transform: rotate(0deg);
-	}
-	100% {
-		-webkit-transform: rotate(360deg);
-	}
-}
-
-@keyframes spin {
-	0% {
-		transform: rotate(0deg);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
 }
 
 .footer {
@@ -114,6 +84,7 @@ input:focus {
 .btn {
 	/* height: 11vh; */
 	/* font-size:calc(11px + 4vh); */
+	font-size: inherit;
 	min-height: 20px;
 	border-radius: 4vh;
 	margin: calc(1px + 0.3vh);

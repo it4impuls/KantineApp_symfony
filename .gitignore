@@ -13,3 +13,10 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###< logs ###
+*.log
+
+###< barcodes ###
+*.svg
+public/barcodes/**

@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Order;
-use App\Form\OrderFormDTO\OrderFormDTO;
+use App\Form\OrderFormDTO;
 use App\Form\OrderType;
+use App\Form\OrderDTOType;
 use App\Entity\Costumer;
+use App\Repository\OrderRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -16,22 +18,25 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class OrderController extends AbstractController
 {
     private $logger;
     private $entityManager;
-    private $validatior;
+    private $validator;
 
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $entityManager, ValidatorInterface $validatior)
+    public function __construct(LoggerInterface $logger, EntityManagerInterface $entityManager, ValidatorInterface $validator)
     {
         $this->logger = $logger;
         $this->entityManager = $entityManager;
-        $this->validatior = $validatior;
+        $this->validator = $validator;
     }
 
     #[Route('/success', name: 'task_success')]
@@ -40,48 +45,99 @@ final class OrderController extends AbstractController
         return $this->render('base.html.twig');
     }
 
-    public function get_Costumer(int $id): Costumer
+    private function get_Costumer(int $id): Costumer | null
     {
-        // $id = $str_id.int
-        $costumer = $this->entityManager->getRepository(Costumer::class)->find($id);
-
-        if (!$costumer) {
-            throw $this->createNotFoundException(
-                'No product found for id ' . $id
-            );
-        }
-
-        return $costumer;
+        return $this->entityManager->getRepository(Costumer::class)->find($id);
     }
 
     public function makeOrderFromDTO(OrderFormDTO $orderDTO): Order
     {
         $order = new Order();
-        $order->setOrderDate(new DateTime());
+        $now = new DateTime();
+        $order->setOrderDateTime($now);
+        // $order->setOrderDate($now);
         $order->setCostumer($this->get_Costumer((int)$orderDTO->getCostumer()));
         $order->setOrderedItem($orderDTO->getOrderedItem());
         $order->setTax($orderDTO->getTax());
         return $order;
     }
 
+
     #[Route('/', name: 'app_order')]
     public function orderForm(Request $request): Response
     {
         // creates a task object and initializes some data for this example
-        $order = new OrderFormDTO();
+        $orderDTO = new OrderFormDTO();
+        $orderDTO->setTax(7);
+        $order = new Order();
+        $form = $this->createForm(OrderDTOType::class, $orderDTO);
 
-        $form = $this->createForm(OrderType::class, $order);
-        $options = ['form' => $form, 'alert' => '', 'errors' => []];
+        $options = ['form' => $form, 'alert' => '', 'override_form' => null];
         $form->handleRequest($request);
+
+        // form is submitted (any submit button pressed)
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('cancel')->isClicked()) {
+                return $this->render_site($options);
+            }
 
-            $order = $form->getData();
+            $orderDTO = $form->getData();
+            $order = $this->makeOrderFromDTO($orderDTO);
+            $existing = $this->already_ordered($order);
 
-            // throw new Exception(serialize($request->getPayload()->all()));
-            $this->logger->debug(serialize($form->getData()));
+            // if the costumer is not found, bail early
+            if ($order->getCostumer() === null) {
+                $options['alert'] = "Costumer not found";
+                return $this->render_site($options);
+            }
+
+            // normal OK submit
+            if ($form->get('save')->isClicked()) {
+                // if already ordered show update dialog
+                if ($existing) {
+                    $options['override_form'] = true;
+                } else {
+                    //try saving, if error write in $options['alert']
+                    $this->save_order($order, $options);
+                }
+            } elseif ($form->get('update')->isClicked()) {
+                $existing->setOrderedItem($order->getOrderedItem());
+                $existing->setTax($order->getTax());
+                $existing->setOrderDateTime($order->getOrderDateTime());
+                $this->save_order($existing, $options);
+            }
         }
-        $options['errors'] = $form->getErrors();
+        return $this->render_site($options);
+    }
 
-        return $this->render('components/Index.html.twig', $options);
+    private function render_site(&$options)
+    {
+        return $this->render('components/Order_submit.html.twig', $options);
+    }
+
+    private function already_ordered(Order $order): ?Order
+    {
+        //check for already ordered
+        $repository = $this->entityManager->getRepository(Order::class);
+        if (!$repository instanceof OrderRepository) {
+            throw new ConstraintDefinitionException(\sprintf('Class must use "%s".', OrderRepository::class));
+        }
+        return $repository->findCostumerOrderAtDate($order->getCostumer(), $order->getOrderDateTime());
+    }
+
+    private function save_order(Order $order, &$options = []): bool
+    {
+        $errors = $this->validator->validate($order);
+        if ($errors->count() > 0) {
+            $options['alert'] = (string)$errors;
+            return false;
+        } else {
+            $this->entityManager->persist($order);
+
+            // actually executes the queries (i.e. the INSERT query)
+            $this->entityManager->flush();
+            $options['alert'] = 'success';
+            return true;
+        }
     }
 }

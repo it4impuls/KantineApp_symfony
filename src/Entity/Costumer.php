@@ -5,8 +5,17 @@ namespace App\Entity;
 use App\Repository\CostumerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Picqer\Barcode\BarcodeGeneratorSVG;
+use Symfony\Component\Asset\Package;
+use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
+use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
+use Picqer\Barcode\Types\TypeCode128;
+use Picqer\Barcode\Renderers\HtmlRenderer;
+use Picqer\Barcode\Renderers\SvgRenderer;
+use Symfony\Component\AssetMapper\AssetMapper;
 
 #[ORM\Entity(repositoryClass: CostumerRepository::class)]
 class Costumer
@@ -34,6 +43,8 @@ class Costumer
      */
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'costumer')]
     private Collection $orders;
+
+    protected File $Barcode;
 
     public function __construct()
     {
@@ -121,5 +132,27 @@ class Costumer
         }
 
         return $this;
+    }
+
+    public function getBarcode(): string
+    {
+        $dir = 'barcodes';
+        // look in public/barcodes/${id}.svg
+        if (!is_dir($dir)) {
+            mkdir($dir, 0755);
+        }
+        $filename = join(DIRECTORY_SEPARATOR, [$dir, (string)$this->getId() . '.svg']);
+        if (!file_exists($filename)) {
+            // save image
+            $barcode = (new BarcodeGeneratorSVG())->getBarcode($this->getId(), BarcodeGeneratorSVG::TYPE_CODE_128);
+            file_put_contents($filename, $barcode);
+        }
+
+        // $renderer = new SvgRenderer();
+        // $renderer->setSvgType($renderer::TYPE_SVG_STANDALONE);
+        // $renderer->setForegroundColor([255, 0, 0]);
+        // $renderer->setBackgroundColor([255, 255, 255]);
+        // return $renderer->render($barcode, 400, 30);
+        return $filename;
     }
 }

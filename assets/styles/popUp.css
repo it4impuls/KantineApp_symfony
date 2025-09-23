@@ -1,7 +1,7 @@
 #popup-yes,
 #popup-no,
 #popup-message {
-	font-size: calc(11px + 2vh);
+	/* font-size: calc(11px + 2vh); */
 }
 
 .popup-overlay {
@@ -15,23 +15,26 @@
 	align-items: center;
 	justify-content: center;
 	z-index: 9999;
+	font-size: calc(5px + 4vh);
 }
 
 .popup-box {
 	background: white;
 	padding: 20px;
 	border-radius: 4vh;
-	max-width: 400px;
+	max-width: 80vw;
 	text-align: center;
 }
 
-.popup-buttons,
-.button {
+.popup-buttons {
 	margin: 10px;
 	padding: 10px 20px;
+	/* font-size: calc(11px + 2vh); */
 }
 
 .button {
+	margin: 1vh;
+	padding: 1vh;
 	background-color: lightgray;
 }
 
@@ -41,4 +44,5 @@ a:visited,
 a:active {
 	color: inherit;
 	text-decoration: none;
+	box-shadow: 0 0 0 calc(1px + 0.1vh) darkgray;
 }

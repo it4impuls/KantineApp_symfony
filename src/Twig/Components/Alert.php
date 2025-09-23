@@ -2,6 +2,7 @@
 
 namespace App\Twig\Components;
 
+use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
 #[AsTwigComponent]

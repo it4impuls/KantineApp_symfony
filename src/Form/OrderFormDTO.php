@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Form\OrderFormDTO;
+namespace App\Form;
 
 
 class OrderFormDTO

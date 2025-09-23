@@ -3,24 +3,36 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use App\Validator\UniqueDateForCostumer;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
+
+// only validate for unique date when creating new. when updating
+#[UniqueDateForCostumer(datefield: 'order_dateTime', costumerfield: 'Costumer'/*, groups: ['create']*/)]
 class Order
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: "integer")]
     private ?int $id = null;
 
+    // #[ORM\Column(name: '`order_date_time`', type: 'date')]
+    // private readonly ?\DateTime $order_date;
+
+
+
     #[ORM\Column]
-    private ?\DateTime $order_date = null;
+    private ?\DateTime $order_dateTime = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull]
     private ?Costumer $Costumer = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 4, scale: 2)]
@@ -34,17 +46,7 @@ class Order
         return $this->id;
     }
 
-    public function getOrderDate(): ?\DateTime
-    {
-        return $this->order_date;
-    }
-
-    public function setOrderDate(\DateTime $order_date): static
-    {
-        $this->order_date = $order_date;
-
-        return $this;
-    }
+    // public function setId($id) {}
 
     public function getCostumer(): ?Costumer
     {
@@ -78,6 +80,18 @@ class Order
     public function setTax(int $tax): static
     {
         $this->tax = $tax;
+
+        return $this;
+    }
+
+    public function getOrderDateTime(): ?\DateTime
+    {
+        return $this->order_dateTime;
+    }
+
+    public function setOrderDateTime(\DateTime $order_dateTime): static
+    {
+        $this->order_dateTime = $order_dateTime;
 
         return $this;
     }
