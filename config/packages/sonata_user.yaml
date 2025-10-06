@@ -1,0 +1,24 @@
+sonata_user:
+    security_acl: false
+    manager_type: orm
+
+    class:
+        user: App\Entity\SonataUserUser
+
+    admin:
+        user:
+            class: Sonata\UserBundle\Admin\Entity\UserAdmin
+            controller: '%sonata.admin.configuration.default_controller%'
+            translation: SonataUserBundle
+
+    profile:
+        default_avatar: bundles/sonatauser/default_avatar.png # Default avatar displayed if the user doesn't have one
+    # resetting:
+    #     email:
+    #         address: sonata@localhost
+    #         sender_name: Sonata Admin
+    # mailer: custom.mailer.service.id
+
+    # sonata_user:
+    #     security_acl: true
+    #     manager_type: orm 

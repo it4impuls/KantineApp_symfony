@@ -13,6 +13,19 @@
             "type": "shell",
             "command": "php bin/console asset-map:compile",
             "problemMatcher": []
+        },
+        {
+            "label": "make migrations",
+            "type": "shell",
+            "command": "php bin/console make:migration",
+            "problemMatcher": []
+        },
+        {
+            "label": "migrate",
+            "type": "shell",
+            "command": "php bin/console doctrine:migrations:migrate",
+            "problemMatcher": [],
+            "dependsOn": "make migrations"
         }
     ]
 }

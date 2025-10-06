@@ -19,7 +19,7 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
-    public function findCostumerOrderAtDate($costumer, DateTime $order_date): ?Order
+    public function findCostumerOrderAtDate($costumer, ?DateTime $order_date): ?Order
     {
         // copy original date
         $day_start = clone $order_date;

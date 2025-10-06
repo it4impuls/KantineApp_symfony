@@ -46,6 +46,11 @@ class Costumer
 
     protected File $Barcode;
 
+    public function __tostring()
+    {
+        return (string)$this->id;
+    }
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();

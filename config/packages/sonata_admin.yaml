@@ -1,0 +1,34 @@
+sonata_admin:
+    title: 'Sonata Admin'
+    dashboard:
+        blocks:
+            - { type: sonata.admin.block.admin_list, position: left }
+
+    security:
+        handler: sonata.admin.security.handler.role
+
+        role_admin: ROLE_ADMIN
+        role_super_admin: ROLE_SUPER_ADMIN
+
+
+        # acl security information
+        
+        # information:
+        #     external: ROLE_EXTERNAL
+        #     ROLE_INTERNAL_COSTUMERS: [ROLE_COSTUMERS_EDIT, ROLE_COSTUMERS_VIEW]
+        #     ROLE_INTERNAL_ORDERS: [ ROLE_ORDERS_VIEW, ROLE_COSTUMERS_VIEW ]
+        #     ROLE_ADMIN: [ROLE_EXTERNAL, ROLE_INTERNAL_COSTUMERS, ROLE_ALLOWED_TO_SWITCH, MASTER]
+
+        # permissions not related to an object instance and also to be available when objects do not exist
+        # the DELETE admin permission means the user is allowed to batch delete objects
+        # admin_permissions: [CREATE, LIST, DELETE, UNDELETE, EXPORT, OPERATOR, MASTER]
+
+        # permission related to the objects
+        # object_permissions: [VIEW, EDIT, HISTORY, DELETE, UNDELETE, OPERATOR, MASTER, OWNER]
+        
+
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+

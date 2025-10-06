@@ -1,0 +1,7 @@
+# sonata_form:
+#     form_type: standard
+
+# twig:
+#     # Sonata form themes
+#     form_themes:
+#         - 'SonataMediaBundle:Form:media_widgets.html.twig'

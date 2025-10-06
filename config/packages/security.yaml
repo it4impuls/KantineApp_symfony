@@ -1,17 +1,27 @@
 security:
+    enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+        App\Entity\SonataUserUser:
+            algorithm: auto
+
+
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        users_in_memory: { memory: null }
+        sonata_user_bundle:
+            id: sonata.user.security.user_provider
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\SonataUserUser
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-            lazy: true
-            provider: users_in_memory
+        # main:
+        #     lazy: true
+        #     provider: sonata_user_bundle
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -19,11 +29,69 @@ security:
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
 
+        admin:
+            lazy: true
+            pattern: /admin(.*)
+            provider: sonata_user_bundle
+            context: user
+            form_login:
+                login_path: sonata_user_admin_security_login
+                check_path: sonata_user_admin_security_check
+                default_target_path: sonata_admin_dashboard
+            logout:
+                path: sonata_user_admin_security_logout
+                target: sonata_user_admin_security_login
+            remember_me:
+                secret: '%env(APP_SECRET)%'
+                lifetime: 2629746
+                path: /admin
+
+
+        main:
+            provider: app_user_provider
+            context:             user
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                default_target_path: app_order
+                enable_csrf: true
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
+            remember_me:
+                secret: '%env(APP_SECRET)%'
+                lifetime: 2629746
+                path: /
+
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        # Admin login page needs to be accessed without credential
+        - { path: ^/admin/login$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/logout$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/login_check$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/request$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/check-email$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/reset/.*$, role: PUBLIC_ACCESS }
+        - { path: ^/login$, role: PUBLIC_ACCESS }
+        - { path: ^/logout$, role: PUBLIC_ACCESS }
+
+        # Secured part of the site
+        # This config requires being logged for the whole site and having the admin role for the admin part.
+        # Change these rules to adapt them to your needs
+        - { path: ^/admin/, role: ROLE_USER }
+        - { path: ^/.*, role: ROLE_USER }
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        # - { path: ^/, roles: ROLE_USER }
+
+    # role_hierarchy:
+    #     ROLE_USER: []
+    #     ROLE_EXTERNAL: [ROLE_APP_ADMIN_ORDERS_VIEW]
+    #     ROLE_INTERNAL_COSTUMERS: [ ROLE_APP_ADMIN_COSTUMERS_ALL ]
+    #     ROLE_INTERNAL_ORDERS: [ ROLE_APP_ADMIN_ORDERS_ALL ]
+    #     ROLE_ADMIN: [ROLE_EXTERNAL, ROLE_INTERNAL_COSTUMERS, ROLE_ALLOWED_TO_SWITCH]
+        # ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
 when@test:
     security:

@@ -19,3 +19,7 @@ WICHTIG:
 
 Webspace Directory muss in den public order zeigen!
 ![Webspace in All-inkl /elbkantine.impuls-tempus.de/public/](media/subdomain.png)
+
+
+Admin erstellen mit:
+`php bin/console sonata:user:create --super-admin <username> <email> <password>`

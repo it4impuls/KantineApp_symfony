@@ -1,8 +1,11 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+admin_area:
+    resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
+    prefix: /admin
+
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /admin
 
 sonata_user_admin_security:
     resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
@@ -10,4 +13,4 @@ sonata_user_admin_security:
 
 sonata_user_admin_resetting:
     resource: '@SonataUserBundle/Resources/config/routing/admin_resetting.xml'
-    prefix: /admin
+    prefix: /admin/resetting
