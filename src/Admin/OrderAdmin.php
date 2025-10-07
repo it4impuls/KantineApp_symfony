@@ -44,6 +44,11 @@ final class OrderAdmin extends AbstractAdmin
             ]);
     }
 
+    protected function configureExportFields(): array
+    {
+        return ['Costumer.id', 'order_dateTime', 'ordered_item', 'tax'];
+    }
+
     protected function configureFormFields(FormMapper $form): void
     {
         $form

@@ -1,10 +1,16 @@
 
 
-<twig:Alert message="{{alert}}" />
+{# #}
 <link rel="stylesheet" href="{{asset('styles/order_form.css')}}" />
 <script src="{{asset('scripts/order_form.js')}}"></script>
 
 
+{# we only want to show one message, dont add more then one flashes #}
+{% for label, messages in app.flashes|slice(0,1) %}
+    {% for message in messages %}
+        <twig:Alert type="{{label}}" message="{{message}}" /> 
+    {% endfor %}
+{% endfor %}
 
 {# 
     TODO: manually writing out how the form should be displayed should probably be done via form_themes:

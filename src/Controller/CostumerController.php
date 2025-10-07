@@ -6,14 +6,21 @@ use App\Entity\Costumer;
 use DateInterval;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\AdminBundle\Controller\CRUDController;
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use ZipArchive;
 
-final class CostumerController extends AbstractController
+final class CostumerController extends CRUDController
 {
     private $entityManager;
     private $validator;
@@ -54,6 +61,7 @@ final class CostumerController extends AbstractController
             $sur_loc = join(DIRECTORY_SEPARATOR, [$dir, $value]);
             $file = fopen($sur_loc, "r");
             $content = trim(fread($file, filesize($sur_loc)));
+            // [0=>[Vornamen], 1=>[Nachnamen]]
             $names[$key] = explode("\n", $content);
             fclose($file);
         }
@@ -74,5 +82,45 @@ final class CostumerController extends AbstractController
         }
 
         return new Response(implode($generated));
+    }
+
+    // #[Route('/order/{id}/barcode', name: 'get_barcode')]
+    public function batchActionBarcodes(ProxyQueryInterface $query, AdminInterface $admin): Response
+    {
+        $admin->checkAccess('list');
+        $modelManager = $admin->getModelManager();
+        $selectedModels = $query->execute();
+
+        $msg = "";
+        $imgs = [];
+
+        $zip = new ZipArchive();
+        $zipName = tempnam(sys_get_temp_dir(), 'zip');
+        if ($zip->open($zipName, ZipArchive::CREATE) !== true) {
+            throw new \RuntimeException('Cannot open ' . $zipName);
+        }
+
+
+
+        foreach ($selectedModels as $key => $model) {
+            $imgs[$key] = "<img src=/{$model->getBarcode()}>";
+            $filename = $model->getLastname() . $model->getFirstname() . $model->getId() . ".svg";
+            // $filename = ((string)$model->getFirstname()) . ".svg";
+            $zip->addFile($model->getBarcode(), $filename);
+        }
+        $zip->close();
+
+        $response = new BinaryFileResponse($zipName);
+        $response->headers->set('Content-Type', 'application/zip');
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'barcodes.zip');
+        $this->addFlash('sonata_flash_success', _('sucess'));
+        return $response;
+
+
+        // return new RedirectResponse(
+        //     $admin->generateUrl('list', [
+        //         'filter' => $admin->getFilterParameters()
+        //     ])
+        // );
     }
 }

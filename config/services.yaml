@@ -31,10 +31,9 @@ services:
     admin.costumer:
         class: App\Admin\CostumerAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Costumer, controller: ~, manager_type: orm, group: admin, label: Costumer }
+            - { name: sonata.admin, model_class: App\Entity\Costumer, controller: App\Controller\CostumerController, manager_type: orm, group: admin, label: Costumer }
 
     admin.order:
         class: App\Admin\OrderAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\Order, controller: ~, manager_type: orm, group: admin, label: Order }
-

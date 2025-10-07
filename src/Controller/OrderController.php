@@ -13,6 +13,8 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Psr\Log\LoggerInterface;
+use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
@@ -73,8 +75,10 @@ final class OrderController extends AbstractController
         $order = new Order();
         $form = $this->createForm(OrderDTOType::class, $orderDTO);
 
-        $options = ['form' => $form, 'alert' => '', 'override_form' => null];
+        $options = ['form' => $form,  'override_form' => null];
         $form->handleRequest($request);
+
+
 
         // form is submitted (any submit button pressed)
         if ($form->isSubmitted() && $form->isValid()) {
@@ -88,7 +92,7 @@ final class OrderController extends AbstractController
 
             // if the costumer is not found, bail early
             if ($order->getCostumer() === null) {
-                $options['alert'] = "Costumer not found";
+                $this->addFlash('alert', "Costumer not found");
                 return $this->render_site($options);
             }
 
@@ -98,6 +102,7 @@ final class OrderController extends AbstractController
                 if ($existing) {
                     $options['override_form'] = true;
                 } else {
+
                     //try saving, if error write in $options['alert']
                     $this->save_order($order, $options);
                 }
@@ -132,14 +137,14 @@ final class OrderController extends AbstractController
     {
         $errors = $this->validator->validate($order);
         if ($errors->count() > 0) {
-            $options['alert'] = (string)$errors;
+            $this->addFlash('alert', (string)$errors);
             return false;
         } else {
             $this->entityManager->persist($order);
 
             // actually executes the queries (i.e. the INSERT query)
             $this->entityManager->flush();
-            $options['alert'] = 'success';
+            $this->addFlash('alert', "sucess");
             return true;
         }
     }

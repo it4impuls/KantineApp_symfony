@@ -67,24 +67,24 @@ class Costumer
 
     public function getFirstname(): ?string
     {
-        return $this->firstname;
+        return trim($this->firstname);
     }
 
     public function setFirstname(string $firstname): static
     {
-        $this->firstname = $firstname;
+        trim($this->firstname = $firstname);
 
         return $this;
     }
 
     public function getLastname(): ?string
     {
-        return $this->lastname;
+        return  trim($this->lastname);
     }
 
     public function setLastname(string $lastname): static
     {
-        $this->lastname = $lastname;
+        trim($this->lastname = $lastname);
 
         return $this;
     }

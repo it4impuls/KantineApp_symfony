@@ -53,6 +53,27 @@ final class CostumerAdmin extends AbstractAdmin
             ]);
     }
 
+    protected function configureExportFields(): array
+    {
+        return ['id', 'firstname', 'lastname'];
+    }
+
+
+    protected function configureBatchActions(array $actions): array
+    {
+        if (
+            $this->hasRoute('edit') && $this->hasAccess('list')
+        ) {
+            $actions['barcodes'] = [
+                'ask_confirmation' => false,
+                // 'controller' => 'App/Controller/CostumerController',
+                // Or 'App/Controller/MergeController::batchMergeAction' base on how you declare your controller service.
+            ];
+        }
+
+        return $actions;
+    }
+
     protected function configureFormFields(FormMapper $form): void
     {
         $form
