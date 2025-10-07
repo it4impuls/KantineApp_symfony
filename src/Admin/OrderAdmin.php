@@ -18,6 +18,7 @@ final class OrderAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
+            ->add('Costumer')
             ->add('order_dateTime')
             ->add('ordered_item')
             ->add('tax')

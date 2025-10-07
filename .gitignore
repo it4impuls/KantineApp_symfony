@@ -20,3 +20,4 @@
 ###< barcodes ###
 *.svg
 public/barcodes/**
+public/uploads/**

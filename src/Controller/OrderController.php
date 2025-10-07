@@ -7,6 +7,7 @@ use App\Form\OrderFormDTO;
 use App\Form\OrderType;
 use App\Form\OrderDTOType;
 use App\Entity\Costumer;
+use App\Repository\CostumerRepository;
 use App\Repository\OrderRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -110,6 +111,8 @@ final class OrderController extends AbstractController
         return $this->render_site($options);
     }
 
+
+
     private function render_site(&$options)
     {
         return $this->render('components/Order_submit.html.twig', $options);
@@ -139,5 +142,33 @@ final class OrderController extends AbstractController
             $options['alert'] = 'success';
             return true;
         }
+    }
+
+
+    #[Route('/generate/order/{num}', name: 'gen_orders')]
+    public function genUsers(Request $request, $num): Response
+    {
+        $generated = [];
+        $costumers = $this->entityManager->getRepository(Costumer::class)->findAll();
+        foreach ($costumers as $key => $value) {
+            $order = new order();
+            $order->setCostumer($value)
+                ->setOrderedItem(rand(0, 9))
+                ->setTax(rand(7, 14));
+
+            $errors = $this->validator->validate($order);
+            if ($errors->count() > 0) {
+                $msg = (string)$errors . "<br><br>added:" . implode($generated);
+                return new Response((string)$msg);
+            }
+            $this->entityManager->persist($order);
+            $this->entityManager->flush();
+            $generated[$key] = join(" ", [$order->getId(), $order->getOrderedItem(), $order->getTax() . "%"]) . "<br>";
+            if ($num <= $key) {
+                break;
+            }
+        }
+
+        return new Response(implode($generated));
     }
 }

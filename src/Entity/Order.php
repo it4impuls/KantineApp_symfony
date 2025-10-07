@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OrderRepository;
 use App\Validator\UniqueDateForCostumer;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -25,12 +26,15 @@ class Order
     // #[ORM\Column(name: '`order_date_time`', type: 'date')]
     // private readonly ?\DateTime $order_date;
 
-
+    public function __construct()
+    {
+        $this->order_dateTime = new DateTime();
+    }
 
     #[ORM\Column]
     private ?\DateTime $order_dateTime = null;
 
-    #[ORM\ManyToOne(inversedBy: 'orders')]
+    #[ORM\ManyToOne(inversedBy: 'orders', cascade: ['persist', 'persist'])]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull]
     private ?Costumer $Costumer = null;

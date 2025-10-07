@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CostumerRepository;
+use DateInterval;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Picqer\Barcode\BarcodeGeneratorSVG;
@@ -54,6 +56,8 @@ class Costumer
     public function __construct()
     {
         $this->orders = new ArrayCollection();
+        $now = new DateTime();
+        $this->enddate = $now->add(new DateInterval("P4Y"));
     }
 
     public function getId(): ?int
