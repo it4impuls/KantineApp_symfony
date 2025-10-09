@@ -4,28 +4,17 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Form\OrderFormDTO;
-use App\Form\OrderType;
 use App\Form\OrderDTOType;
 use App\Entity\Costumer;
-use App\Repository\CostumerRepository;
 use App\Repository\OrderRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Psr\Log\LoggerInterface;
-use Sonata\AdminBundle\Admin\AdminInterface;
-use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\DependencyInjection\Attribute\When;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -150,15 +139,20 @@ final class OrderController extends AbstractController
     }
 
 
+    #[When(env: 'dev')]
     #[Route('/generate/order/{num}', name: 'gen_orders')]
-    public function genUsers(Request $request, $num): Response
+    public function genOrders(Request $request, $num): Response
     {
         $generated = [];
         $costumers = $this->entityManager->getRepository(Costumer::class)->findAll();
+        shuffle($costumers);
         foreach ($costumers as $key => $value) {
+            if ($num <= $key) {
+                break;
+            }
             $order = new order();
             $order->setCostumer($value)
-                ->setOrderedItem(rand(0, 9))
+                ->setOrderedItem((float)rand(0, 20) / 2)
                 ->setTax(rand(7, 14));
 
             $errors = $this->validator->validate($order);
@@ -169,9 +163,6 @@ final class OrderController extends AbstractController
             $this->entityManager->persist($order);
             $this->entityManager->flush();
             $generated[$key] = join(" ", [$order->getId(), $order->getOrderedItem(), $order->getTax() . "%"]) . "<br>";
-            if ($num <= $key) {
-                break;
-            }
         }
 
         return new Response(implode($generated));

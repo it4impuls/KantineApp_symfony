@@ -8,18 +8,16 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Picqer\Barcode\BarcodeGeneratorSVG;
-use Symfony\Component\Asset\Package;
-use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
-use Picqer\Barcode\Types\TypeCode128;
-use Picqer\Barcode\Renderers\HtmlRenderer;
-use Picqer\Barcode\Renderers\SvgRenderer;
-use Symfony\Component\AssetMapper\AssetMapper;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-#[ORM\Entity(repositoryClass: CostumerRepository::class)]
+#[ORM\Entity(repositoryClass: CostumerRepository::class)] #
+#[UniqueEntity(
+    fields: ['firstname', 'lastname'],
+    message: "A costumer with {{ value }} this name already exists"
+)]
 class Costumer
 {
 

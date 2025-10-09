@@ -12,6 +12,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Sonata\DoctrineORMAdminBundle\Filter\DateRangeFilter;
 
 final class OrderAdmin extends AbstractAdmin
 {
@@ -19,7 +20,7 @@ final class OrderAdmin extends AbstractAdmin
     {
         $filter
             ->add('Costumer')
-            ->add('order_dateTime')
+            ->add('order_dateTime', DateRangeFilter::class)
             ->add('ordered_item')
             ->add('tax')
         ;
@@ -43,6 +44,13 @@ final class OrderAdmin extends AbstractAdmin
                 ],
             ]);
     }
+
+    // public function getDataSourceIterator()
+    // {
+    //     $datasourceit = parent::getDataSourceIterator();
+    //     $datasourceit->setDateTimeFormat('d/m/Y'); //change this to suit your needs
+    //     return $datasourceit;
+    // }
 
     protected function configureExportFields(): array
     {

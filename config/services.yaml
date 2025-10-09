@@ -27,13 +27,15 @@ services:
     #     class: App\Admin\UserAdmin
     #     tags:
     #         - { name: sonata.admin, model_class: App\Entity\User, controller: ~, manager_type: orm, group: admin, label: User }
+    App\Admin\OrderDataSource:
+        decorates: 'sonata.admin.data_source.orm'
 
     admin.costumer:
         class: App\Admin\CostumerAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Costumer, controller: App\Controller\CostumerController, manager_type: orm, group: admin, label: Costumer }
+            - { name: sonata.admin, model_class: App\Entity\Costumer, controller: ~, manager_type: orm, group: admin, label: Costumer }
 
     admin.order:
         class: App\Admin\OrderAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Order, controller: ~, manager_type: orm, group: admin, label: Order }
+            - { name: sonata.admin, model_class: App\Entity\Order, controller: ~, manager_type: orm, group: admin, label: Order, data_source: ~ }

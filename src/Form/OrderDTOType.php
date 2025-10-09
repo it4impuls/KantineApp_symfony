@@ -2,22 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\Costumer;
-use App\Entity\Order;
 use App\Form\OrderFormDTO;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
-use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\index;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 // use Symfony\Bridge\Doctrine\Form\Type\;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OrderDTOType extends AbstractType

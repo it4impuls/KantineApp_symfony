@@ -3,24 +3,24 @@
 namespace App\Controller;
 
 use App\Entity\Costumer;
-use DateInterval;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Sonata\AdminBundle\Admin\AdminInterface;
-use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Attribute\When;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use ZipArchive;
 
-final class CostumerController extends CRUDController
+final class CostumerController extends AbstractController
 {
     private $entityManager;
     private $validator;
@@ -31,15 +31,75 @@ final class CostumerController extends CRUDController
         $this->validator = $validator;
     }
 
-    #[Route('/costumer', name: 'app_costumer')]
-    public function index(): JsonResponse
+    #[IsGranted('ROLE_ADMIN_COSTUMER_CREATE')]
+    #[Route('/add_users', name: 'upload_users')]
+    public function uploadUsers(Request $request): Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/CostumerController.php',
+
+        $form = $this->createFormBuilder()
+            ->add('file', FileType::class)
+            ->add('send', SubmitType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $fileField = $form["file"]->getData();
+
+            if ($fileField->getMimeType() != "text/csv") {
+                $this->addFlash('error', _("File must be csv"));
+                return $this->render('components/Form.html.twig', [
+                    'form' => $form,
+                ]);
+            }
+
+            //rows
+            $lines = str_getcsv($fileField->getContent(), "\n");
+            foreach ($lines as $line) {
+                $deliminator = str_contains($line, ";") ? ";" : ",";
+                $data = str_getcsv($line, $deliminator);
+                try {
+                    $costumer = new Costumer();
+                    $costumer
+                        ->setActive(true)
+                        ->setFirstname($data[0])
+                        ->setLastname($data[1]);
+
+                    $errors = $this->validator->validate($costumer);
+                    if ($errors->count() > 0) {
+                        foreach ($errors as $key => $error) {
+                            if ($error->getConstraint() instanceof UniqueEntity) {
+                                $this->addFlash('error', sprintf(
+                                    'Costumer %s %s already exists. ',
+                                    $costumer->getFirstname(),
+                                    $costumer->getLastname()
+                                ));
+                            } else {
+                                $this->addFlash('error', $error->getMessage());
+                            }
+                        }
+                    } else {
+                        $this->entityManager->persist($costumer);
+
+                        // actually executes the queries (i.e. the INSERT query)
+                        $this->entityManager->flush();
+                        $this->addFlash('notice', sprintf(
+                            'sucessfully added: %s %s &emsp; <img src="/%s"> ',
+                            $costumer->getFirstname(),
+                            $costumer->getLastname(),
+                            $costumer->getBarcode()
+                        ));
+                    }
+                } catch (\Throwable $th) {
+                    $this->addFlash('error', (string)$th);
+                }
+            }
+        }
+
+        return $this->render('components/Form.html.twig', [
+            'form' => $form,
         ]);
     }
-
 
     /* 
         For testing.
@@ -47,6 +107,7 @@ final class CostumerController extends CRUDController
             https://nachnamen.net/deutschland
             https://opendata.jena.de/dataset/vornamen
     */
+    #[When(env: 'dev')]
     #[Route('/generate/costumer/{num}', name: 'gen_costumers')]
     public function genUsers(Request $request, $num): Response
     {
@@ -87,12 +148,9 @@ final class CostumerController extends CRUDController
     // #[Route('/order/{id}/barcode', name: 'get_barcode')]
     public function batchActionBarcodes(ProxyQueryInterface $query, AdminInterface $admin): Response
     {
-        $admin->checkAccess('list');
-        $modelManager = $admin->getModelManager();
-        $selectedModels = $query->execute();
 
-        $msg = "";
-        $imgs = [];
+        $admin->checkAccess('list');
+        $selectedModels = $query->execute();
 
         $zip = new ZipArchive();
         $zipName = tempnam(sys_get_temp_dir(), 'zip');
@@ -100,12 +158,8 @@ final class CostumerController extends CRUDController
             throw new \RuntimeException('Cannot open ' . $zipName);
         }
 
-
-
         foreach ($selectedModels as $key => $model) {
-            $imgs[$key] = "<img src=/{$model->getBarcode()}>";
             $filename = $model->getLastname() . $model->getFirstname() . $model->getId() . ".svg";
-            // $filename = ((string)$model->getFirstname()) . ".svg";
             $zip->addFile($model->getBarcode(), $filename);
         }
         $zip->close();
@@ -115,12 +169,5 @@ final class CostumerController extends CRUDController
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'barcodes.zip');
         $this->addFlash('sonata_flash_success', _('sucess'));
         return $response;
-
-
-        // return new RedirectResponse(
-        //     $admin->generateUrl('list', [
-        //         'filter' => $admin->getFilterParameters()
-        //     ])
-        // );
     }
 }
