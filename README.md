@@ -11,9 +11,18 @@ src/
 templates/
 translations/ (optional)
 vendor/ (composer dependencies)
-dev.env
+.env
 .htaccess
 ```
+
+Wenn ssh Zugang besteht 
+```
+compose.yaml
+composer.json
+composer.lock
+```
+anstatt `vendor`
+
 
 WICHTIG:
 

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="de" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="w3uczGl" resname="Costumer">
+        <source>Costumer</source>
+        <target>Kunde</target>
+      </trans-unit>
+      <trans-unit id="IbERy.5" resname="Default">
+        <source>Default</source>
+        <target>Standard</target>
+      </trans-unit>
+      <trans-unit id="EhVukhv" resname="Id">
+        <source>Id</source>
+        <target>Id</target>
+      </trans-unit>
+      <trans-unit id="ZHz6kbI" resname="Firstname">
+        <source>Firstname</source>
+        <target>Vorname</target>
+      </trans-unit>
+      <trans-unit id="htiPHRy" resname="Lastname">
+        <source>Lastname</source>
+        <target>Nachname</target>
+      </trans-unit>
+      <trans-unit id="kjQGlYm" resname="Active">
+        <source>Active</source>
+        <target>Aktiv</target>
+      </trans-unit>
+      <trans-unit id="r6AgnXN" resname="Enddate">
+        <source>Enddate</source>
+        <target>Enddatum</target>
+      </trans-unit>
+      <trans-unit id="pAHzchA" resname="Barcode">
+        <source>Barcode</source>
+        <target>Barcode</target>
+      </trans-unit>
+      <trans-unit id=".4BZ3Gd" resname="Actions">
+        <source>Actions</source>
+        <target>Aktionen</target>
+      </trans-unit>
+      <trans-unit id="hgDZWDO" resname="Costumer List">
+        <source>Costumer List</source>
+        <target>Kunden Liste</target>
+      </trans-unit>
+      <trans-unit id="Sk1T9wP" resname="Costumer Create">
+        <source>Costumer Create</source>
+        <target>Kunden Erstellen</target>
+      </trans-unit>
+      <trans-unit id="a_CQgly" resname="Order">
+        <source>Order</source>
+        <target>Bestellung</target>
+      </trans-unit>
+      <trans-unit id="V7zPDAl" resname="Order Date Time">
+        <source>Order Date Time</source>
+        <target>Bestellungs Zeit</target>
+      </trans-unit>
+      <trans-unit id="HLf8Cj5" resname="Ordered Item">
+        <source>Ordered Item</source>
+        <target>Bestellungs Preis</target>
+      </trans-unit>
+      <trans-unit id="R_KIbuX" resname="Tax">
+        <source>Tax</source>
+        <target>Steuer</target>
+      </trans-unit>
+      <trans-unit id="QEGoILw" resname="Order List">
+        <source>Order List</source>
+        <target>Bestellungs Liste</target>
+      </trans-unit>
+      <trans-unit id="7zV8yU1" resname="Order Create">
+        <source>Order Create</source>
+        <target>Bestellung Erstellen</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

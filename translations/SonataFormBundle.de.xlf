@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="de" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="2KdkJXq" resname="link_add">
+        <source>link_add</source>
+        <target>Neu</target>
+      </trans-unit>
+      <trans-unit id="vf3cxXi" resname="label_type_yes">
+        <source>label_type_yes</source>
+        <target>ja</target>
+      </trans-unit>
+      <trans-unit id="_KcfkqG" resname="label_type_no">
+        <source>label_type_no</source>
+        <target>nein</target>
+      </trans-unit>
+      <trans-unit id="shi_F2d" resname="date_range_start">
+        <source>date_range_start</source>
+        <target>Von</target>
+      </trans-unit>
+      <trans-unit id="D7BcqBT" resname="date_range_end">
+        <source>date_range_end</source>
+        <target>Bis</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
