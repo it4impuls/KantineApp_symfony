@@ -13,6 +13,7 @@ translations/ (optional)
 vendor/ (composer dependencies)
 .env
 .htaccess
+composer.json
 ```
 
 Wenn ssh Zugang besteht 

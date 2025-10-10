@@ -3,6 +3,8 @@
 /.env.local
 /.env.local.php
 /.env.*.local
+/.env
+/.env.*
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
@@ -20,5 +22,5 @@ php_errors.log
 
 ###< barcodes ###
 *.svg
-public/barcodes/**
-public/uploads/**
+/public/barcodes/**
+/public/uploads/**

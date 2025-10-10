@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\When;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -67,11 +68,14 @@ final class OrderController extends AbstractController
         $options = ['form' => $form,  'override_form' => null];
         $form->handleRequest($request);
 
-
-
         // form is submitted (any submit button pressed)
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->get('cancel')->isClicked()) {
+            $cancelButton = $form->get('cancel');
+            assert($cancelButton instanceof SubmitButton);
+
+            if ($cancelButton->isClicked()) {
+                $order = new Order();
+                $form = $this->createForm(OrderDTOType::class, $orderDTO);
                 return $this->render_site($options);
             }
 
@@ -85,8 +89,14 @@ final class OrderController extends AbstractController
                 return $this->render_site($options);
             }
 
+            $saveButton = $form->get('save');
+            assert($saveButton instanceof SubmitButton);
+
+            $updateButton = $form->get('update');
+            assert($updateButton instanceof SubmitButton);
+
             // normal OK submit
-            if ($form->get('save')->isClicked()) {
+            if ($saveButton->isClicked()) {
                 // if already ordered show update dialog
                 if ($existing) {
                     $options['override_form'] = true;
@@ -95,7 +105,7 @@ final class OrderController extends AbstractController
                     //try saving, if error write in $options['alert']
                     $this->save_order($order, $options);
                 }
-            } elseif ($form->get('update')->isClicked()) {
+            } elseif ($updateButton->isClicked()) {
                 $existing->setOrderedItem($order->getOrderedItem());
                 $existing->setTax($order->getTax());
                 $existing->setOrderDateTime($order->getOrderDateTime());
