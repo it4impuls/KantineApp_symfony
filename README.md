@@ -2,7 +2,7 @@
 
 Ohne ssh zugang können composer-dependencies nicht automatisch installiert werden können, müssen diese manuell via ftp hochgeladen werden.
 
-Zu hochladenden Dateien/Ordner:
+Zu hochladenden Dateien/Ordner ohne ssh:
 ```
 assets/
 config/
@@ -18,12 +18,23 @@ composer.json
 
 Wenn ssh Zugang besteht 
 ```
-compose.yaml
-composer.json
-composer.lock
+git clone {{repository}}
 ```
-anstatt `vendor`
 
+reference: https://symfony.com/doc/current/deployment.html
+
+`.env` mit 
+```
+APP_ENV=prod
+APP_SECRET={{secret}}
+DATABASE_URL="mysql://root@127.0.0.1:3306/{{db_name}}"
+```
+
+`composer dump-env prod`
+
+`composer install --no-dev --optimize-autoloader`
+
+`APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear`
 
 WICHTIG:
 

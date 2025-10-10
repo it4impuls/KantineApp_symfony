@@ -8,7 +8,7 @@
 {# we only want to show one message, dont add more then one flashes #}
 {% for label, messages in app.flashes|slice(0,1) %}
     {% for message in messages %}
-        <twig:Alert type="{{label}}" message="{{message}}" /> 
+        <twig:Alert type="{{label}}" message="{{message|trans}}" /> 
     {% endfor %}
 {% endfor %}
 
@@ -78,7 +78,7 @@
             <link rel="stylesheet" href="{{asset('styles/popUp.css')}}" />
             <div class="popup-overlay alert">
                 <div class="popup-box">
-                    <p id="popup-message">User already ordered, update order?</p>
+                    <p id="popup-message">{{"User already ordered, update order?"|trans}}</p>
                     <div class="popup-buttons">
                             {{ form_widget(form.update) }}
                             {{ form_widget(form.cancel) }}

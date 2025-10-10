@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="de" target-language="de" datatype="plaintext" original="file.ext">
+  <file source-language="de" target-language="en" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
       <trans-unit id="2KdkJXq" resname="link_add">
         <source>link_add</source>
-        <target>Neu</target>
+        <target>Add new</target>
       </trans-unit>
       <trans-unit id="vf3cxXi" resname="label_type_yes">
         <source>label_type_yes</source>
-        <target>ja</target>
+        <target>yes</target>
       </trans-unit>
       <trans-unit id="_KcfkqG" resname="label_type_no">
         <source>label_type_no</source>
-        <target>nein</target>
+        <target>no</target>
       </trans-unit>
       <trans-unit id="shi_F2d" resname="date_range_start">
         <source>date_range_start</source>
-        <target>Von</target>
+        <target>From</target>
       </trans-unit>
       <trans-unit id="D7BcqBT" resname="date_range_end">
         <source>date_range_end</source>
-        <target>Bis</target>
+        <target>To</target>
       </trans-unit>
     </body>
   </file>

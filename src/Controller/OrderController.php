@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use function Symfony\Component\Translation\t;
+use Symfony\Component\Translation\TranslatableMessage;
 
 final class OrderController extends AbstractController
 {
@@ -83,9 +85,10 @@ final class OrderController extends AbstractController
             $order = $this->makeOrderFromDTO($orderDTO);
             $existing = $this->already_ordered($order);
 
+
             // if the costumer is not found, bail early
             if ($order->getCostumer() === null) {
-                $this->addFlash('alert', "Costumer not found");
+                $this->addFlash('alert', new TranslatableMessage("Costumer not found"));
                 return $this->render_site($options);
             }
 
@@ -143,7 +146,7 @@ final class OrderController extends AbstractController
 
             // actually executes the queries (i.e. the INSERT query)
             $this->entityManager->flush();
-            $this->addFlash('alert', "sucess");
+            $this->addFlash('alert', new TranslatableMessage("success"));
             return true;
         }
     }

@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Translation\TranslatableMessage;
+
 use ZipArchive;
 
 final class CostumerController extends AbstractController
@@ -47,7 +49,7 @@ final class CostumerController extends AbstractController
             $fileField = $form["file"]->getData();
 
             if ($fileField->getMimeType() != "text/csv") {
-                $this->addFlash('error', _("File must be csv"));
+                $this->addFlash('error', message: _("File must be csv"));
                 return $this->render('components/Form.html.twig', [
                     'form' => $form,
                 ]);
@@ -69,10 +71,13 @@ final class CostumerController extends AbstractController
                     if ($errors->count() > 0) {
                         foreach ($errors as $key => $error) {
                             if ($error->getConstraint() instanceof UniqueEntity) {
-                                $this->addFlash('error', sprintf(
+                                $this->addFlash('error', new TranslatableMessage(
                                     'Costumer %s %s already exists. ',
-                                    $costumer->getFirstname(),
-                                    $costumer->getLastname()
+                                    [
+                                        $costumer->getFirstname(),
+                                        $costumer->getLastname(),
+                                    ],
+                                    "messages"
                                 ));
                             } else {
                                 $this->addFlash('error', $error->getMessage());
@@ -155,7 +160,7 @@ final class CostumerController extends AbstractController
         $zip = new ZipArchive();
         $zipName = tempnam(sys_get_temp_dir(), 'zip');
         if ($zip->open($zipName, ZipArchive::CREATE) !== true) {
-            throw new \RuntimeException('Cannot open ' . $zipName);
+            throw new \RuntimeException(_('Cannot open ' . $zipName));
         }
 
         foreach ($selectedModels as $key => $model) {

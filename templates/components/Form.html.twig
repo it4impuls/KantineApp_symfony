@@ -2,7 +2,7 @@
 {% for label, messages in app.flashes %}
     {% for message in messages %}
         <div class="flash-{{ label }}">
-            {{ message|raw }}
+            {{ message|trans|raw }}
         </div>
     {% endfor %}
 {% endfor %}

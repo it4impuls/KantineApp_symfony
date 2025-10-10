@@ -11,19 +11,19 @@
         {
             "label": "compile assets",
             "type": "shell",
-            "command": "php bin/console asset-map:compile",
+            "command": "APP_ENV=dev APP_DEBUG=1 php bin/console asset-map:compile",
             "problemMatcher": []
         },
         {
             "label": "make migrations",
             "type": "shell",
-            "command": "php bin/console make:migration",
+            "command": "APP_ENV=dev APP_DEBUG=1 php bin/console make:migration",
             "problemMatcher": []
         },
         {
             "label": "migrate",
             "type": "shell",
-            "command": "php bin/console doctrine:migrations:migrate",
+            "command": "APP_ENV=dev APP_DEBUG=1 php bin/console doctrine:migrations:migrate",
             "problemMatcher": [],
             "dependsOn": "make migrations"
         }

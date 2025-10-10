@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="de" target-language="de" datatype="plaintext" original="file.ext">
+  <file source-language="de" target-language="en" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -11,15 +11,15 @@
       </trans-unit>
       <trans-unit id="C91eiMR" resname="sonata.block.service.text">
         <source>sonata.block.service.text</source>
-        <target>Einfacher Text</target>
+        <target>Simple text</target>
       </trans-unit>
       <trans-unit id="rEEPz_B" resname="sonata.block.service.rss">
         <source>sonata.block.service.rss</source>
-        <target>RSS Feed</target>
+        <target>RSS feed</target>
       </trans-unit>
       <trans-unit id="5uBvA3F" resname="sonata.block.service.menu">
         <source>sonata.block.service.menu</source>
-        <target>Menü</target>
+        <target>Menu</target>
       </trans-unit>
       <trans-unit id="NBjI_D0" resname="sonata.block.service.template">
         <source>sonata.block.service.template</source>
@@ -31,7 +31,7 @@
       </trans-unit>
       <trans-unit id="_Zhah40" resname="form.label_content">
         <source>form.label_content</source>
-        <target>Inhalt</target>
+        <target>Content</target>
       </trans-unit>
       <trans-unit id="1kSuG.g" resname="form.label_url">
         <source>form.label_url</source>
@@ -39,7 +39,7 @@
       </trans-unit>
       <trans-unit id="hEFmOyL" resname="form.label_title">
         <source>form.label_title</source>
-        <target>Titel</target>
+        <target>Title</target>
       </trans-unit>
       <trans-unit id="cVdqSMj" resname="form.label_code">
         <source>form.label_code</source>
@@ -51,7 +51,7 @@
       </trans-unit>
       <trans-unit id="gWHi3S7" resname="form.label_class">
         <source>form.label_class</source>
-        <target>CSS Klasse</target>
+        <target>CSS Class</target>
       </trans-unit>
       <trans-unit id="HYFRRPN" resname="form.label_menu_name">
         <source>form.label_menu_name</source>
@@ -59,27 +59,27 @@
       </trans-unit>
       <trans-unit id="f6JLp0l" resname="form.label_safe_labels">
         <source>form.label_safe_labels</source>
-        <target>Sichere Bezeichner</target>
+        <target>Safe labels</target>
       </trans-unit>
       <trans-unit id="EPwqZII" resname="form.label_current_class">
         <source>form.label_current_class</source>
-        <target>Aktuelle CSS Klasse</target>
+        <target>Current CSS Class</target>
       </trans-unit>
       <trans-unit id="wYEUxWH" resname="form.label_first_class">
         <source>form.label_first_class</source>
-        <target>Erste CSS Klasse</target>
+        <target>First CSS Class</target>
       </trans-unit>
       <trans-unit id="UYTKpIn" resname="form.label_last_class">
         <source>form.label_last_class</source>
-        <target>Letzte CSS Klasse</target>
+        <target>Last CSS Class</target>
       </trans-unit>
       <trans-unit id="eVdBcdV" resname="form.label_menu_template">
         <source>form.label_menu_template</source>
-        <target>Menü Template</target>
+        <target>Menu Template</target>
       </trans-unit>
       <trans-unit id="dhibfe4" resname="form.label_translation_domain">
         <source>form.label_translation_domain</source>
-        <target>Übersetzungsdatei</target>
+        <target>Translation domain</target>
       </trans-unit>
       <trans-unit id="kSxcQro" resname="form.label_icon">
         <source>form.label_icon</source>

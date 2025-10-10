@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="de" target-language="de" datatype="plaintext" original="file.ext">
+  <file source-language="de" target-language="en" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
       <trans-unit id="w3uczGl" resname="Costumer">
         <source>Costumer</source>
-        <target>Kunde</target>
+        <target>Costumer</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default">
         <source>Default</source>
-        <target>Standard</target>
+        <target>Default</target>
       </trans-unit>
       <trans-unit id="EhVukhv" resname="Id">
         <source>Id</source>
@@ -19,19 +19,19 @@
       </trans-unit>
       <trans-unit id="ZHz6kbI" resname="Firstname">
         <source>Firstname</source>
-        <target>Vorname</target>
+        <target>Firstname</target>
       </trans-unit>
       <trans-unit id="htiPHRy" resname="Lastname">
         <source>Lastname</source>
-        <target>Nachname</target>
+        <target>Lastname</target>
       </trans-unit>
       <trans-unit id="kjQGlYm" resname="Active">
         <source>Active</source>
-        <target>Aktiv</target>
+        <target>Active</target>
       </trans-unit>
       <trans-unit id="r6AgnXN" resname="Enddate">
         <source>Enddate</source>
-        <target>Enddatum</target>
+        <target>Enddate</target>
       </trans-unit>
       <trans-unit id="pAHzchA" resname="Barcode">
         <source>Barcode</source>
@@ -39,55 +39,39 @@
       </trans-unit>
       <trans-unit id=".4BZ3Gd" resname="Actions">
         <source>Actions</source>
-        <target>Aktionen</target>
+        <target>Actions</target>
       </trans-unit>
       <trans-unit id="hgDZWDO" resname="Costumer List">
         <source>Costumer List</source>
-        <target>Kunden Liste</target>
+        <target>Costumer List</target>
       </trans-unit>
       <trans-unit id="Sk1T9wP" resname="Costumer Create">
         <source>Costumer Create</source>
-        <target>Kunden Erstellen</target>
+        <target>Costumer Create</target>
       </trans-unit>
       <trans-unit id="a_CQgly" resname="Order">
         <source>Order</source>
-        <target>Bestellung</target>
+        <target>Order</target>
       </trans-unit>
       <trans-unit id="V7zPDAl" resname="Order Date Time">
         <source>Order Date Time</source>
-        <target>Bestellungs Zeit</target>
+        <target>Order Date Time</target>
       </trans-unit>
       <trans-unit id="HLf8Cj5" resname="Ordered Item">
         <source>Ordered Item</source>
-        <target>Bestellungs Preis</target>
+        <target>Ordered Item</target>
       </trans-unit>
       <trans-unit id="R_KIbuX" resname="Tax">
         <source>Tax</source>
-        <target>Steuer</target>
+        <target>Tax</target>
       </trans-unit>
       <trans-unit id="QEGoILw" resname="Order List">
         <source>Order List</source>
-        <target>Bestellungs Liste</target>
+        <target>Order List</target>
       </trans-unit>
       <trans-unit id="7zV8yU1" resname="Order Create">
         <source>Order Create</source>
-        <target>Bestellung Erstellen</target>
-      </trans-unit>
-      <trans-unit id="_juxhIU" resname="Costumer %s %s already exists. ">
-        <source>Costumer %s %s already exists. </source>
-        <target>__Costumer %s %s already exists. </target>
-      </trans-unit>
-      <trans-unit id="SyOsUra" resname="Costumer not found">
-        <source>Costumer not found</source>
-        <target>Kunde nicht gefunden</target>
-      </trans-unit>
-      <trans-unit id="ruQIhH0" resname="success">
-        <source>success</source>
-        <target>__success</target>
-      </trans-unit>
-      <trans-unit id="MIHymVJ" resname="User already ordered, update order?">
-        <source>User already ordered, update order?</source>
-        <target>Kunde hat bereits bestellt, alte Bestellung überschreiben?</target>
+        <target>Order Create</target>
       </trans-unit>
     </body>
   </file>
