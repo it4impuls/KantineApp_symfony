@@ -151,28 +151,5 @@ final class CostumerController extends AbstractController
     }
 
     // #[Route('/order/{id}/barcode', name: 'get_barcode')]
-    public function batchActionBarcodes(ProxyQueryInterface $query, AdminInterface $admin): Response
-    {
 
-        $admin->checkAccess('list');
-        $selectedModels = $query->execute();
-
-        $zip = new ZipArchive();
-        $zipName = tempnam(sys_get_temp_dir(), 'zip');
-        if ($zip->open($zipName, ZipArchive::CREATE) !== true) {
-            throw new \RuntimeException(_('Cannot open ' . $zipName));
-        }
-
-        foreach ($selectedModels as $key => $model) {
-            $filename = $model->getLastname() . $model->getFirstname() . $model->getId() . ".svg";
-            $zip->addFile($model->getBarcode(), $filename);
-        }
-        $zip->close();
-
-        $response = new BinaryFileResponse($zipName);
-        $response->headers->set('Content-Type', 'application/zip');
-        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'barcodes.zip');
-        $this->addFlash('sonata_flash_success', _('sucess'));
-        return $response;
-    }
 }

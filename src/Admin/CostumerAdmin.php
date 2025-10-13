@@ -65,7 +65,7 @@ final class CostumerAdmin extends AbstractAdmin
         ) {
             $actions['barcodes'] = [
                 'ask_confirmation' => false,
-                // 'controller' => 'App/Controller/CostumerController',
+                'controller' => 'App\Controller\CostumerCRUDController::batchActionBarcodes',
                 // Or 'App/Controller/MergeController::batchMergeAction' base on how you declare your controller service.
             ];
         }
