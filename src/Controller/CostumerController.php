@@ -4,23 +4,17 @@ namespace App\Controller;
 
 use App\Entity\Costumer;
 use Doctrine\ORM\EntityManagerInterface;
-use Sonata\AdminBundle\Admin\AdminInterface;
-use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\When;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Translation\TranslatableMessage;
-
-use ZipArchive;
 
 final class CostumerController extends AbstractController
 {
@@ -149,7 +143,4 @@ final class CostumerController extends AbstractController
 
         return new Response(implode($generated));
     }
-
-    // #[Route('/order/{id}/barcode', name: 'get_barcode')]
-
 }

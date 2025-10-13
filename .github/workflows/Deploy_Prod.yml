@@ -1,8 +1,8 @@
 name: Deploy to All-Inkl (Production)
 
 on:
-  push:
-    branches: [main]
+  # push:
+  #   branches: [main]
   workflow_dispatch:
 
 jobs:

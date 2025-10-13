@@ -1,7 +1,7 @@
 sonata_doctrine_orm_admin:
     templates:
         types:
-            show: # or "list"
+            show: 
                 barcode: 'admin/Barcode_show_field.html.twig'
-            list: # or "list"
+            list:
                 barcode: 'admin/Barcode_list_field.html.twig'
