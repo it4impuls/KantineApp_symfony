@@ -73,6 +73,30 @@
         <source>Order Create</source>
         <target>Order Create</target>
       </trans-unit>
+      <trans-unit id="SyOsUra" resname="Costumer not found">
+        <source>Costumer not found</source>
+        <target>Costumer not found</target>
+      </trans-unit>
+      <trans-unit id="ruQIhH0" resname="success">
+        <source>success</source>
+        <target>success</target>
+      </trans-unit>
+      <trans-unit id="CZlYPiJ" resname="Costumer %firstname% %lastname% already exists. ">
+        <source>Costumer %firstname% %lastname% already exists. </source>
+        <target>Costumer %firstname% %lastname% already exists. </target>
+      </trans-unit>
+      <trans-unit id="k13JI7C" resname="sucessfully added: %firstname% %lastname% in %dep% &amp;emsp; &lt;img src=&quot;/%barcode%&quot;&gt; ">
+        <source>sucessfully added: %firstname% %lastname% in %dep% &amp;emsp; &lt;img src="/%barcode%"&gt; </source>
+        <target><![CDATA[__sucessfully added: %firstname% %lastname% in %dep% &emsp; <img src="/%barcode%"> ]]></target>
+      </trans-unit>
+      <trans-unit id="MIHymVJ" resname="User already ordered, update order?">
+        <source>User already ordered, update order?</source>
+        <target>User already ordered, update order?</target>
+      </trans-unit>
+      <trans-unit id="sOlpgrQ" resname="sucessfully added: costumer.firstname costumer.lastname in costumer.department &amp;emsp; &lt;img src=&quot;/costumer.barcode&quot;&gt; ">
+        <source>sucessfully added: costumer.firstname costumer.lastname in costumer.department &amp;emsp; &lt;img src="/costumer.barcode"&gt; </source>
+        <target><![CDATA[__sucessfully added: costumer.firstname costumer.lastname in costumer.department &emsp; <img src="/costumer.barcode"> ]]></target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

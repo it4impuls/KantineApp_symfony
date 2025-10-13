@@ -71,7 +71,7 @@ final class OrderAdmin extends AbstractAdmin
     }
 
     /**
-     * @phpstan-return T
+     * @phpstan-return object
      */
     protected function createNewInstance(): object
     {

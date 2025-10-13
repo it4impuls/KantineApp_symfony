@@ -17,14 +17,14 @@ composer.json
 ```
 
 Wenn ssh Zugang besteht 
-```
+```bash
 git clone https://github.com/it4impuls/KantineApp_symfony.git
 ```
 
 
 
 `.env` mit 
-```
+```.env
 APP_ENV=prod
 DATABASE_URL="mysql://root@127.0.0.1:3306/{{db_name}}"
 ```
@@ -45,6 +45,7 @@ doctrine:
 
 
 reference: https://symfony.com/doc/current/deployment.html
+
 `composer dump-env prod`
 
 `APP_RUNTIME_ENV=prod php bin/console secrets:generate-keys`
@@ -55,9 +56,8 @@ reference: https://symfony.com/doc/current/deployment.html
 
 WICHTIG:
 
-Webspace Directory muss in den public order zeigen!
+Webspace Directory muss in den /public/ order zeigen!
 ![Webspace in All-inkl /elbkantine.impuls-tempus.de/public/](media/subdomain.png)
-
 
 Admin erstellen mit:
 `php bin/console sonata:user:create --super-admin <username> <email> <password>`
