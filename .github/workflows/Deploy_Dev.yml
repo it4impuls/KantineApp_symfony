@@ -20,3 +20,13 @@ jobs:
           server: ${{ vars.FTP_ADDR }}
           username: ${{ vars.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
+          server-dir: ${{ vars.FTP_DIR }}
+          exclude: |
+            **/.github*
+            **/.vscode*
+            **/.git*
+            **/migrations*
+            .env.dev*
+            deploy_prod.sh
+            README.md
+
