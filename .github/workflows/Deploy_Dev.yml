@@ -17,6 +17,6 @@ jobs:
       - name: Deploy to All-Inkl (Development)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ env.FTP_ADDR }}
-          username: ${{ env.FTP_USER }}
+          server: ${{ vars.FTP_ADDR }}
+          username: ${{ vars.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
