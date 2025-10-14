@@ -22,10 +22,13 @@ jobs:
           password: ${{ secrets.FTP_PASS }}
           server-dir: ${{ vars.FTP_DIR }}
           exclude: |
-            **/.github*
-            **/.vscode*
-            **/.git*
-            **/migrations*
+            .github*
+            .github*/**
+            .vscode*
+            .vscode*/**
+            .git*
+            .git*/**
+            migrations*
             .env.dev*
             deploy_prod.sh
             README.md
