@@ -511,7 +511,7 @@
       </trans-unit>
       <trans-unit id="jGl25bV" resname="admin">
         <source>admin</source>
-        <target>__admin</target>
+        <target>admin</target>
       </trans-unit>
     </body>
   </file>

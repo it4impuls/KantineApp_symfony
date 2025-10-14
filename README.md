@@ -46,13 +46,12 @@ doctrine:
 
 reference: https://symfony.com/doc/current/deployment.html
 
-`composer dump-env prod`
-
-`APP_RUNTIME_ENV=prod php bin/console secrets:generate-keys`
-
-`composer install --no-dev --optimize-autoloader`
-
-`APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear`
+```bash
+composer dump-env prod
+APP_RUNTIME_ENV=prod php bin/console secrets:generate-keys
+composer install --no-dev --optimize-autoloader
+APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
+```
 
 WICHTIG:
 
@@ -60,4 +59,6 @@ Webspace Directory muss in den /public/ order zeigen!
 ![Webspace in All-inkl /elbkantine.impuls-tempus.de/public/](media/subdomain.png)
 
 Admin erstellen mit:
-`php bin/console sonata:user:create --super-admin <username> <email> <password>`
+```bash
+php bin/console sonata:user:create --super-admin {{username}} {{email}} {{password}}
+```
