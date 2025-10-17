@@ -17,14 +17,14 @@ composer.json
 ```
 
 Wenn ssh Zugang besteht 
-```bash
+```
 git clone https://github.com/it4impuls/KantineApp_symfony.git
 ```
 
 
 
 `.env` mit 
-```.env
+```
 APP_ENV=prod
 DATABASE_URL="mysql://root@127.0.0.1:3306/{{db_name}}"
 ```
@@ -55,8 +55,9 @@ APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
 
 WICHTIG:
 
-Webspace Directory muss in den /public/ order zeigen!
+Webspace Directory muss in den public order zeigen!
 ![Webspace in All-inkl /elbkantine.impuls-tempus.de/public/](media/subdomain.png)
+
 
 Admin erstellen mit:
 ```bash

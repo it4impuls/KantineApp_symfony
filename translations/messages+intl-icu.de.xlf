@@ -73,25 +73,21 @@
         <source>Order Create</source>
         <target>Bestellung Erstellen</target>
       </trans-unit>
+      <trans-unit id="_juxhIU" resname="Costumer %s %s already exists. ">
+        <source>Costumer %s %s already exists. </source>
+        <target>__Costumer %s %s already exists. </target>
+      </trans-unit>
       <trans-unit id="SyOsUra" resname="Costumer not found">
         <source>Costumer not found</source>
         <target>Kunde nicht gefunden</target>
       </trans-unit>
       <trans-unit id="ruQIhH0" resname="success">
         <source>success</source>
-        <target>Erfolgreich</target>
+        <target>__success</target>
       </trans-unit>
       <trans-unit id="MIHymVJ" resname="User already ordered, update order?">
         <source>User already ordered, update order?</source>
         <target>Kunde hat bereits bestellt, alte Bestellung überschreiben?</target>
-      </trans-unit>
-      <trans-unit id="k13JI7C" resname="sucessfully added: %firstname% %lastname% in %dep% &amp;emsp; &lt;img src=&quot;/%barcode%&quot;&gt; ">
-        <source>sucessfully added: %firstname% %lastname% in %dep% &amp;emsp; &lt;img src="/%barcode%"&gt; </source>
-        <target><![CDATA[Erfolgreich hunzugefügt: {firstname} {lastname} in {dep}  <img src="/{barcode}"> ]]></target>
-      </trans-unit>
-      <trans-unit id="z9ggg6q" resname="Costumer %firstname% %lastname% already exists">
-        <source>{firstname} {lastname}</source>
-        <target>Kunde {firstname} {lastname} existiert bereits</target>
       </trans-unit>
     </body>
   </file>

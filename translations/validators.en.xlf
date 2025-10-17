@@ -617,10 +617,6 @@
         <source>A costumer with {{ value }} this name already exists</source>
         <target>A costumer with the name {{ value }} already exists</target>
       </trans-unit>
-      <trans-unit id="8VA2XFL" resname="A costumer with this name already exists">
-        <source>A costumer with this name already exists</source>
-        <target>A costumer with this name already exists</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

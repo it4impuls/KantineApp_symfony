@@ -42,7 +42,7 @@ final class CostumerController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $fileField = $form["file"]->getData();
 
-            if ($fileField->getMimeType() != "text/csv" && $fileField->getMimeType() != "text/plain") {
+            if ($fileField->getMimeType() != "text/csv") {
                 $this->addFlash('error', message: _("File must be csv"));
                 return $this->render('components/Form.html.twig', [
                     'form' => $form,
@@ -59,19 +59,19 @@ final class CostumerController extends AbstractController
                     $costumer
                         ->setActive(true)
                         ->setFirstname($data[0])
-                        ->setLastname($data[1])
-                        ->setDepartment(Department: count($data) >= 3 ? $data[2]  : null);
+                        ->setLastname($data[1]);
 
                     $errors = $this->validator->validate($costumer);
                     if ($errors->count() > 0) {
                         foreach ($errors as $key => $error) {
                             if ($error->getConstraint() instanceof UniqueEntity) {
                                 $this->addFlash('error', new TranslatableMessage(
-                                    'Costumer %firstname% %lastname% already exists',
+                                    'Costumer %s %s already exists. ',
                                     [
-                                        '%firstname%' => $costumer->getFirstname(),
-                                        '%lastname%' => $costumer->getLastname()
-                                    ]
+                                        $costumer->getFirstname(),
+                                        $costumer->getLastname(),
+                                    ],
+                                    "messages"
                                 ));
                             } else {
                                 $this->addFlash('error', $error->getMessage());
@@ -82,14 +82,11 @@ final class CostumerController extends AbstractController
 
                         // actually executes the queries (i.e. the INSERT query)
                         $this->entityManager->flush();
-                        $this->addFlash('notice', new TranslatableMessage(
-                            'sucessfully added: %firstname% %lastname% in %dep% &emsp; <img src="/%barcode%"> ',
-                            [
-                                '%firstname%' => $costumer->getFirstname(),
-                                '%lastname%' => $costumer->getLastname(),
-                                '%dep%' => $costumer->getDepartment() ?? _("NO DEPARTMENT SET"),
-                                '%barcode%' => $costumer->getBarcode()
-                            ]
+                        $this->addFlash('notice', sprintf(
+                            'sucessfully added: %s %s &emsp; <img src="/%s"> ',
+                            $costumer->getFirstname(),
+                            $costumer->getLastname(),
+                            $costumer->getBarcode()
                         ));
                     }
                 } catch (\Throwable $th) {

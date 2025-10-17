@@ -14,10 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: CostumerRepository::class)] #
-#[ORM\Table(name: 'attendee')]
 #[UniqueEntity(
     fields: ['firstname', 'lastname'],
-    message: "A costumer with this name already exists"
+    message: "A costumer with {{ value }} this name already exists"
 )]
 class Costumer
 {
@@ -47,9 +46,6 @@ class Costumer
 
     protected File $Barcode;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Department = null;
-
     public function __tostring()
     {
         return (string)$this->id;
@@ -59,7 +55,7 @@ class Costumer
     {
         $this->orders = new ArrayCollection();
         $now = new DateTime();
-        $this->enddate = $now->add(new DateInterval("P4Y")); // 4 Years
+        $this->enddate = $now->add(new DateInterval("P4Y"));
     }
 
     public function getId(): ?int
@@ -69,28 +65,24 @@ class Costumer
 
     public function getFirstname(): ?string
     {
-        // trimmed and 1st letter capitalized
-        return ucwords(trim($this->firstname));
+        return trim($this->firstname);
     }
 
     public function setFirstname(string $firstname): static
     {
-        // trimmed and lowercase
-        strtolower(trim($this->firstname = $firstname));
+        trim($this->firstname = $firstname);
 
         return $this;
     }
 
     public function getLastname(): ?string
     {
-        // trimmed and 1st letter capitalized
-        return  ucwords(trim($this->lastname));
+        return  trim($this->lastname);
     }
 
     public function setLastname(string $lastname): static
     {
-        // trimmed and lowercase
-        strtolower(trim($this->lastname = $lastname));
+        trim($this->lastname = $lastname);
 
         return $this;
     }
@@ -172,17 +164,5 @@ class Costumer
         // $renderer->setBackgroundColor([255, 255, 255]);
         // return $renderer->render($barcode, 400, 30);
         return $filename;
-    }
-
-    public function getDepartment(): ?string
-    {
-        return $this->Department;
-    }
-
-    public function setDepartment(?string $Department): static
-    {
-        $this->Department = $Department;
-
-        return $this;
     }
 }
