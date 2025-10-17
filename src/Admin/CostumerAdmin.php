@@ -14,11 +14,6 @@ final class CostumerAdmin extends AbstractAdmin
 {
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        // $options = array('required' => false);
-        // if (($subject = $this->getSubject()) && $subject->getPhoto()) {
-        //     $path = $subject->getPhotoWebPath();
-        //     $options['help'] = '<img src="' . $path . '" />';
-        // }
         $filter
             ->add('id')
             ->add('firstname')
@@ -28,6 +23,7 @@ final class CostumerAdmin extends AbstractAdmin
                 'inverse'  => true,
             ])
             ->add('enddate')
+            ->add('department')
             // ->add('Barcode', FieldDescriptionInterface::TYPE_HTML/*, ["required" => false, ['help' => '<img src="' . $this->getSubject()->getBarcode() . '" />']]*/)
         ;
     }
@@ -41,6 +37,7 @@ final class CostumerAdmin extends AbstractAdmin
             ->add('active', null, [
                 'editable' => true
             ])
+            ->add('department')
             ->add('enddate')
             ->add('Barcode', 'barcode')
             ->add(ListMapper::NAME_ACTIONS, null, [
@@ -81,7 +78,7 @@ final class CostumerAdmin extends AbstractAdmin
             ->add('lastname')
             ->add('active')
             ->add('enddate')
-
+            ->add('department')
         ;
     }
 
@@ -94,6 +91,7 @@ final class CostumerAdmin extends AbstractAdmin
             ->add('active')
             ->add('enddate')
             ->add('Barcode', 'barcode')
+            ->add('department')
         ;
     }
 }
