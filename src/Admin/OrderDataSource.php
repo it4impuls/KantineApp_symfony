@@ -10,12 +10,7 @@ use Sonata\Exporter\Source\DoctrineORMQuerySourceIterator;
 
 class OrderDataSource implements DataSourceInterface
 {
-    private DataSource $dataSource;
-
-    public function __construct(DataSource $dataSource)
-    {
-        $this->dataSource = $dataSource;
-    }
+    public function __construct(private readonly DataSource $dataSource) {}
 
     public function createIterator(ProxyQueryInterface $query, array $fields): \Iterator
     {

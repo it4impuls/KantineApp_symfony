@@ -23,16 +23,12 @@ use Symfony\Component\Translation\TranslatableMessage;
 
 final class OrderController extends AbstractController
 {
-    private $logger;
-    private $entityManager;
-    private $validator;
 
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $entityManager, ValidatorInterface $validator)
-    {
-        $this->logger = $logger;
-        $this->entityManager = $entityManager;
-        $this->validator = $validator;
-    }
+    public function __construct(
+        private readonly LoggerInterface $logger,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly ValidatorInterface $validator
+    ) {}
 
     #[Route('/success', name: 'task_success')]
     public function index(): Response

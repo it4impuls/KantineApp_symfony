@@ -18,14 +18,10 @@ use Symfony\Component\Translation\TranslatableMessage;
 
 final class CostumerController extends AbstractController
 {
-    private $entityManager;
-    private $validator;
-
-    public function __construct(EntityManagerInterface $entityManager, ValidatorInterface $validator)
-    {
-        $this->entityManager = $entityManager;
-        $this->validator = $validator;
-    }
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly ValidatorInterface $validator
+    ) {}
 
     #[IsGranted('ROLE_ADMIN_COSTUMER_CREATE')]
     #[Route('/add_users', name: 'upload_users')]

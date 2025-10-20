@@ -16,11 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OrderType extends AbstractType
 {
-    private EntityManagerInterface $em;
-    function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->em = $entityManager;
-    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

@@ -13,12 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OrderDTOType extends AbstractType
 {
-    private EntityManagerInterface $em;
-    function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->em = $entityManager;
-    }
-
     private $items = [
         "3,00€" => 3.00,
         "3,50€" => 3.50,
