@@ -3,15 +3,11 @@
 namespace App\Validator;
 
 use App\Repository\OrderRepository;
-use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\Persistence\Mapping\ClassMetadata;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
-use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 final class UniqueDateForCostumerValidator extends ConstraintValidator
 {
@@ -19,6 +15,8 @@ final class UniqueDateForCostumerValidator extends ConstraintValidator
         private readonly ManagerRegistry $registry,
     ) {}
 
+
+    // adapted from Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator::validate
     #[\Override]
     public function validate(mixed $entity, Constraint $constraint): void
     {

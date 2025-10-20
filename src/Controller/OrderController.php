@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use function Symfony\Component\Translation\t;
 use Symfony\Component\Translation\TranslatableMessage;
 
 final class OrderController extends AbstractController

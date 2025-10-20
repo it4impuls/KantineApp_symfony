@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Costumer;
 use App\Entity\Order;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
