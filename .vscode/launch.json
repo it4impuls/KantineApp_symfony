@@ -36,7 +36,11 @@
                 "action": "openExternally"
             },
             "preLaunchTask": "compile assets",
-            "log":true
+            "log":true,
+            "env": {
+                "APP_ENV":"dev",
+                "APP_DEBUG":"1"
+            }
         }
     ]
 }

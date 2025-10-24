@@ -16,40 +16,38 @@ vendor/ (composer dependencies)
 composer.json
 ```
 
-Wenn ssh Zugang besteht 
-```
-git clone https://github.com/it4impuls/KantineApp_symfony.git
-```
 
 
-
-`.env` mit 
-```
-APP_ENV=prod
-DATABASE_URL="mysql://root@127.0.0.1:3306/{{db_name}}"
-```
-
-Die datenbank sollte lokal ohne passwort ansprechbar sein. Falls nicht, müssen die credentials [via secrets gespeichert werden](https://symfony.com/doc/current/configuration/secrets.html#create-or-update-secrets) und in der [config/packages/doctrine.yaml angegeben werden
-](https://symfony.com/doc/current/reference/configuration/doctrine.html#doctrine-dbal-configuration), und die `DATABASE_URL` in der .env gelöscht werden.
-
-```yaml
-doctrine:
-    dbal:
-        dbname:               '%env(DATABASE_NAME)%'
-        host:                 localhost
-        port:                 3306
-        user:                 '%env(DATABASE_USER)%'
-        password:             '%env(DATABASE_PASSWORD)%'
-        driver:               mysql
-```
-
-
+# Auf Server mit ssh-zugang installieren
 reference: https://symfony.com/doc/current/deployment.html
+
+### Dependencies installieren
+Wenn ssh Zugang besteht 
+```bash
+git clone https://github.com/it4impuls/KantineApp_symfony.git
+cd KantineApp_symfony
+composer install --no-dev --optimize-autoloader
+```
+composer sollte bei jedem Webhoster vor-Installiert sein. Falls nicht, folge der Anleitung auf https://getcomposer.org/download/
+
+
+### Secrets hochladen/setzen
+Falls Secrets und decrypt key in `/config/secrets/prod/` von einer vorherigen installation vorhanden sind, lade diese auf den Server hoch. Die Dateien haben das Format `prod.{{secret_name}}.{{random_hex}}.php`, sowie `prod.decrypt.private.php`, `prod.encrypt.public.php`, `prod.list.php`.
+
+Falls eines dieser Dateien nicht vorhanden ist, müssen die Secrets [neu generiert werden](https://symfony.com/doc/current/configuration/secrets.html#generate-cryptographic-keys):
+```bash
+APP_RUNTIME_ENV=prod php bin/console secrets:generate-keys
+APP_RUNTIME_ENV=prod php bin/console secrets:set APP_SECRET --random
+APP_RUNTIME_ENV=prod php bin/console secrets:set DATABASE_HOST      # addresse zur Datenbank
+APP_RUNTIME_ENV=prod php bin/console secrets:set DATABASE_NAME      # Name der Datenbank
+APP_RUNTIME_ENV=prod php bin/console secrets:set DATABASE_PASSWORD  # Passwort des Datenbank-Benutzers
+APP_RUNTIME_ENV=prod php bin/console secrets:set DATABASE_USER      # Username des Datenbank-Benutzers
+```
+
+### Finalize
 
 ```bash
 composer dump-env prod
-APP_RUNTIME_ENV=prod php bin/console secrets:generate-keys
-composer install --no-dev --optimize-autoloader
 APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
 ```
 
