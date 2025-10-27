@@ -61,3 +61,18 @@ Admin erstellen mit:
 ```bash
 php bin/console sonata:user:create --super-admin {{username}} {{email}} {{password}}
 ```
+
+
+# Updating der Webseite
+Änderungen in das `github.com/it4impuls/KantineApp_symfony` Repository pushen.
+## Automatisch
+Ein Automatischer Workflow sollte diese auf den Server Hochladen.
+Auf https://github.com/it4impuls/KantineApp_symfony/actions kann überprüft werden, ob dies Erfolgreich war. Fehler können ebenfalls Überprüft werden woran es gescheitert ist.
+
+## Manuell
+Per ssh auf den Server loggen.
+Änderungen pullen und cache clearen:
+```bash
+git pull
+APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
+```
