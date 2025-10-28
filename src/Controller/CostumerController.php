@@ -47,9 +47,11 @@ final class CostumerController extends AbstractController
 
             //rows
             $lines = str_getcsv($fileField->getContent(), "\n");
+            $deliminator = str_contains($lines[0], ";") ? ";" : ",";
             foreach ($lines as $line) {
-                $deliminator = str_contains($line, ";") ? ";" : ",";
+                if (!str_contains($line, $deliminator)) break;
                 $data = str_getcsv($line, $deliminator);
+                if (sizeof($data) < 2) break;
                 try {
                     $costumer = new Costumer();
                     $costumer
