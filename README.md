@@ -44,6 +44,13 @@ APP_RUNTIME_ENV=prod php bin/console secrets:set DATABASE_PASSWORD  # Passwort d
 APP_RUNTIME_ENV=prod php bin/console secrets:set DATABASE_USER      # Username des Datenbank-Benutzers
 ```
 
+### Cronjobs
+Das löschen alter, inaktiver Teilnehmer läuft in einem cronjob. Dieser muss im all-inkl unter `Tools` -> `cronjobs` eingerichtet werden:
+![all-inkl cron](media/cronjob.png)
+
+Es muss ein Benutzer mit `Costumer delete` privilegien Angelegt werden und dessen login Informationen unter `advanced` abgelegt werden.
+![cron user](media/cron_user.png)
+
 ### Finalize
 
 ```bash

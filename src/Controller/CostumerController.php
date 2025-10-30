@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Costumer;
+use App\Repository\CostumerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +21,8 @@ final class CostumerController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly ValidatorInterface $validator
+        private readonly ValidatorInterface $validator,
+        private CostumerRepository $costumerRepository
     ) {}
 
     #[IsGranted('ROLE_ADMIN_COSTUMER_CREATE')]
@@ -143,5 +145,13 @@ final class CostumerController extends AbstractController
         }
 
         return new Response(implode($generated));
+    }
+
+    #[IsGranted('ROLE_ADMIN_COSTUMER_DELETE')]
+    #[Route('/cron/delete_old_costumers', name: 'del_costumers')]
+    public function deleteOldInactiveCostumers(Request $request): Response
+    {
+        $count = $this->costumerRepository->deleteOldInactive();
+        return new Response($count ? sprintf('Deleted %d old Costumer(s).', $count) : 'No Costumers to delete');
     }
 }
