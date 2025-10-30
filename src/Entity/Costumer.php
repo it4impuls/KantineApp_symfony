@@ -102,7 +102,9 @@ class Costumer
     public function setActive(bool $active): static
     {
         $this->active = $active;
-
+        $now = new DateTime();
+        // if set to inactive, set enddate to now, if set to active set to 4Y from now
+        $this->enddate = $active ? $now->add(new DateInterval("P4Y")) : $now;
         return $this;
     }
 
