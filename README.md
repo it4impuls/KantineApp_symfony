@@ -45,7 +45,7 @@ APP_RUNTIME_ENV=prod php bin/console secrets:set DATABASE_USER      # Username d
 ```
 
 ### Cronjobs
-Das löschen alter, inaktiver Teilnehmer läuft in einem cronjob. Dieser muss im all-inkl unter `Tools` -> `cronjobs` eingerichtet werden:
+Das löschen alter, inaktiver Teilnehmer läuft in einem cronjob. Dieser muss im all-inkl unter `Tools` -> `cronjobs` eingerichtet werden siehe [hier](https://all-inkl.com/wichtig/anleitungen/kas/tools/cronjobs/einrichtung_479.html):
 ![all-inkl cron](media/cronjob.png)
 
 Es muss ein Benutzer mit `Costumer delete` privilegien Angelegt werden und dessen login Informationen unter `advanced` abgelegt werden.

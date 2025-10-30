@@ -21,8 +21,7 @@ final class CostumerController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly ValidatorInterface $validator,
-        private CostumerRepository $costumerRepository
+        private readonly ValidatorInterface $validator
     ) {}
 
     #[IsGranted('ROLE_ADMIN_COSTUMER_CREATE')]
@@ -151,7 +150,8 @@ final class CostumerController extends AbstractController
     #[Route('/cron/delete_old_costumers', name: 'del_costumers')]
     public function deleteOldInactiveCostumers(Request $request): Response
     {
-        $count = $this->costumerRepository->deleteOldInactive();
+        $repository = $this->entityManager->getRepository(Costumer::class);
+        $count = $repository->deleteOldInactive();
         return new Response($count ? sprintf('Deleted %d old Costumer(s).', $count) : 'No Costumers to delete');
     }
 }
