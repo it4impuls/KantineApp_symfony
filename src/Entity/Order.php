@@ -34,7 +34,7 @@ class Order
     private ?\DateTime $order_dateTime = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders', cascade: ['persist', 'persist'])]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?Costumer $Costumer = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 4, scale: 2)]
