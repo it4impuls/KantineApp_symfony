@@ -64,7 +64,27 @@ final class CostumerController extends AbstractController
                     $errors = $this->validator->validate($costumer);
                     if ($errors->count() > 0) {
                         foreach ($errors as $key => $error) {
-                            if ($error->getConstraint() instanceof UniqueEntity) {
+                            if ($error->getConstraint() instanceof UniqueEntity && $costumer->getDepartment()) {
+
+                                $cause = $error->getCause();
+                                if (count($cause) != 1) {
+                                    $this->addFlash('error', $error->getMessage());
+                                } else {
+                                    // save existing costumer with new department
+                                    $cause[0]->setDepartment($costumer->getDepartment());
+                                    $this->entityManager->persist($cause[0]);
+                                    $this->entityManager->flush();
+                                    $this->addFlash('notice', new TranslatableMessage(
+                                        'updated department %dep% for existing costumer: %firstname% %lastname% &emsp; <img src="/%barcode%"> ',
+                                        [
+                                            '%firstname%' => $cause[0]->getFirstname(),
+                                            '%lastname%' => $cause[0]->getLastname(),
+                                            '%dep%' => $cause[0]->getDepartment() ?? _("NO DEPARTMENT SET"),
+                                            '%barcode%' => $cause[0]->getBarcode()
+                                        ]
+                                    ));
+                                }
+                            } else if ($error->getConstraint() instanceof UniqueEntity) {
                                 $this->addFlash('error', new TranslatableMessage(
                                     'Costumer %firstname% %lastname% already exists',
                                     [

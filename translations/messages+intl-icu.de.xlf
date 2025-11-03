@@ -90,16 +90,20 @@
         <target>Kunde hat bereits bestellt, alte Bestellung überschreiben?</target>
       </trans-unit>
       <trans-unit id="LhXtepv" resname="Costumer %firstname% %lastname% already exists">
-        <source>Costumer {firstname} {lastname} already exists</source>
+        <source>Costumer %firstname% %lastname% already exists</source>
         <target>Kunde {firstname} {lastname} existiert bereits</target>
       </trans-unit>
       <trans-unit id="k13JI7C" resname="sucessfully added: %firstname% %lastname% in %dep% &amp;emsp; &lt;img src=&quot;/%barcode%&quot;&gt; ">
-        <source>sucessfully added: {firstname} {lastname} in {dep}  &amp;emsp; &lt;img src="/{barcode}"&gt; </source>
+        <source>sucessfully added: %firstname% %lastname% in %dep% &amp;emsp; &lt;img src="/%barcode%"&gt; </source>
         <target><![CDATA[Erfolgreich hinzugefügt: {firstname} {lastname} in {dep} &emsp; <img src="/{barcode}"> ]]></target>
       </trans-unit>
       <trans-unit id="UwSrmOW" resname="Department">
         <source>Department</source>
         <target>Bereich</target>
+      </trans-unit>
+      <trans-unit id="ZnSEFXp" resname="updated department %dep% for existing costumer: %firstname% %lastname% &amp;emsp; &lt;img src=&quot;/%barcode%&quot;&gt; ">
+        <source>updated department {dep} for existing costumer: {firstname} {lastname} &amp;emsp; &lt;img src="/{barcode}"&gt; </source>
+        <target><![CDATA[Fachbereich {dep} geupdated für bestehenden Teilnehmer: {firstname} {lastname} &emsp; <img src="/{barcode}"> ]]></target>
       </trans-unit>
     </body>
   </file>

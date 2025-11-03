@@ -26,6 +26,18 @@
             "command": "APP_ENV=dev APP_DEBUG=1 php bin/console doctrine:migrations:migrate",
             "problemMatcher": [],
             "dependsOn": "make migrations"
-        }
+        },
+        {
+            "label": "extract translations",
+            "type": "shell",
+            "command": "APP_ENV=dev APP_DEBUG=1 php bin/console translation:extract --force de",
+            "problemMatcher": [],
+        },
+        {
+            "label": "clear cache",
+            "type": "shell",
+            "command": "APP_ENV=dev APP_DEBUG=1 php bin/console cache:clear && APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear && ",
+            "problemMatcher": [],
+        },
     ]
 }
