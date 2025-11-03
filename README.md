@@ -17,7 +17,6 @@ composer.json
 ```
 
 
-
 # Auf Server mit ssh-zugang installieren
 reference: https://symfony.com/doc/current/deployment.html
 
@@ -44,13 +43,6 @@ APP_RUNTIME_ENV=prod php bin/console secrets:set DATABASE_PASSWORD  # Passwort d
 APP_RUNTIME_ENV=prod php bin/console secrets:set DATABASE_USER      # Username des Datenbank-Benutzers
 ```
 
-### Cronjobs
-Das löschen alter, inaktiver Teilnehmer läuft in einem cronjob. Dieser muss im all-inkl unter `Tools` -> `cronjobs` eingerichtet werden siehe [hier](https://all-inkl.com/wichtig/anleitungen/kas/tools/cronjobs/einrichtung_479.html):
-![all-inkl cron](media/cronjob.png)
-
-Es muss ein Benutzer mit `Costumer delete` privilegien Angelegt werden und dessen login Informationen unter `advanced` abgelegt werden.
-![cron user](media/cron_user.png)
-
 ### Finalize
 
 ```bash
@@ -69,6 +61,12 @@ Admin erstellen mit:
 php bin/console sonata:user:create --super-admin {{username}} {{email}} {{password}}
 ```
 
+# Cronjobs
+Das löschen alter, inaktiver Teilnehmer läuft in einem cronjob. Dieser muss im all-inkl unter `Tools` -> `cronjobs` eingerichtet werden. https://all-inkl.com/wichtig/anleitungen/kas/tools/cronjobs/einrichtung_479.html:
+![all-inkl cron](media/cronjob.png)
+
+Es muss ein Benutzer mit `Costumer delete` privilegien Angelegt werden und dessen login Informationen unter `advanced` abgelegt werden.
+![cron user](media/cron_user.png)
 
 # Updating der Webseite
 Änderungen in das `github.com/it4impuls/KantineApp_symfony` Repository pushen.
