@@ -12,12 +12,16 @@ use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints\Choice;
 
 #[ORM\Entity(repositoryClass: CostumerRepository::class)] #
 #[UniqueEntity(
     fields: ['firstname', 'lastname'],
     message: "A costumer with this name already exists"
 )]
+
+
+
 class Costumer
 {
 
@@ -35,6 +39,8 @@ class Costumer
     #[ORM\Column]
     private ?bool $active = null;
 
+    public const DEPARTMENTS = ["IT" => "IT", "BüMa" => "BÜMA", "Media" => "MEDIA", "Service" => "SERVICE", "Tischlerei" => "TISCHLEREI"];
+
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $enddate = null;
 
@@ -46,6 +52,7 @@ class Costumer
 
     protected File $Barcode;
 
+    #[Choice(choices: Costumer::DEPARTMENTS, message: '{{ value }} not a valid department. Possible departments: {{ choices }}')]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $Department = null;
 
@@ -155,23 +162,19 @@ class Costumer
         if (!$this->getId()) {
             return '';
         }
-        $dir = 'barcodes';
+        $dirname = 'barcodes';
         // look in public/barcodes/${id}.svg
-        if (!is_dir($dir)) {
-            mkdir($dir, 0755);
+        if (!is_dir($dirname)) {
+            mkdir($dirname, 0755);
         }
-        $filename = join(DIRECTORY_SEPARATOR, [$dir, (string)$this->getId() . '.svg']);
+
+        // 
+        $filename = join(DIRECTORY_SEPARATOR, [$dirname, (string)$this->getId() . '.svg']);
         if (!file_exists($filename)) {
-            // save image
-            $barcode = (new BarcodeGeneratorSVG())->getBarcode($this->getId(), BarcodeGeneratorSVG::TYPE_CODE_128);
+            $barcode = SvgHelper::generateBarcode($this->getId());
             file_put_contents($filename, $barcode);
         }
 
-        // $renderer = new SvgRenderer();
-        // $renderer->setSvgType($renderer::TYPE_SVG_STANDALONE);
-        // $renderer->setForegroundColor([255, 0, 0]);
-        // $renderer->setBackgroundColor([255, 255, 255]);
-        // return $renderer->render($barcode, 400, 30);
         return $filename;
     }
 
@@ -182,8 +185,80 @@ class Costumer
 
     public function setDepartment(?string $Department): static
     {
-        $this->Department = $Department;
+        $this->Department = trim(strtoupper($Department));
 
         return $this;
+    }
+}
+
+class SvgHelper
+{
+    static public function generateBarcode(int $id): string
+    {
+        // save image
+        $barcode = (new BarcodeGeneratorSVG())->getBarcode($id, BarcodeGeneratorSVG::TYPE_CODE_128);
+        SvgHelper::addNumberBarcode($barcode, $id);
+        return $barcode;
+    }
+
+    static public function getSvgValue(string $svg, string $name, string $class): string
+    {
+        // <$class**$name="$toGet">
+        $pattern = sprintf('/(?<=<%s).+?\K(?<=%s=\").+?(?=")/', $class, $name);
+        //'/(?<=%s=\\").+?(?=")/', $name);
+        $matches = [];
+        $entries = preg_match($pattern, $svg, $matches);
+        assert($entries && sizeof($matches) >= 1, "No matches");
+        return $matches[0];
+    }
+
+    static public function setSvgValue(string &$barcode, string $name, string $value, $class): string
+    {
+        // <$class**$name="$toReplace">
+        $pattern = sprintf('/(?<=<%s).+?\K(?<=%s=\").+?(?=")/', $class, $name);
+        // replace ** with $value
+        $replaced = preg_replace($pattern, $value, $barcode, 1);
+        assert($replaced, "error in the pattern");
+        assert($replaced != $barcode, "No changes");
+        $barcode = $replaced;
+        return $barcode;
+    }
+
+    static public function setSvgValues(string &$barcode, array $replacements, string $class): string
+    {
+        foreach ($replacements as $key => $value) {
+            $barcode = SvgHelper::setSvgValue($barcode, $key, $value, $class);
+        }
+        return $barcode;
+    }
+
+    static public function insertAfter(string &$barcode, string $toInsert, string $afterRegex): string
+    {
+        $inserted = str_replace($afterRegex, $afterRegex . $toInsert, $barcode);
+        assert($inserted, "Error in regex expression");
+        assert($inserted != $barcode, "No matches found");
+        $barcode = $inserted;
+        return $barcode;
+    }
+
+    static public function addNumberBarcode(string &$barcode, int $id, int $barcodeHeight = 30, string $color = 'black', int $fontheight = 10, $sep = 0): string
+    {
+        $width = SvgHelper::getSvgValue($barcode, "width", 'svg');
+        assert(ctype_digit($width), "width must be a number");
+        $height = $barcodeHeight + $fontheight + $sep;
+        SvgHelper::setSvgValues($barcode, ["height" => $height, "viewBox" => sprintf("0 0 %u %u", $width, $height)], 'svg');
+
+        //dominant-baseline="middle" text-anchor="middle"
+        $numberSVG = sprintf(
+            '<text x="50%%" y="%u" font-size="%u" fill="%s">%u</text>',
+            $barcodeHeight + $fontheight,
+            $fontheight,
+            $color,
+            $id
+        );
+
+        // assumes only one </g>
+        SvgHelper::insertAfter($barcode, "\n\t" . $numberSVG, '</g>');
+        return $barcode;
     }
 }

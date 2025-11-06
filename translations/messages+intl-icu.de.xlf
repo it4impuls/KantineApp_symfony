@@ -75,7 +75,7 @@
       </trans-unit>
       <trans-unit id="_juxhIU" resname="Costumer %s %s already exists. ">
         <source>Costumer %s %s already exists. </source>
-        <target>__Costumer %s %s already exists. </target>
+        <target>Kunde %s %s existiert bereits. </target>
       </trans-unit>
       <trans-unit id="SyOsUra" resname="Costumer not found">
         <source>Costumer not found</source>
@@ -102,8 +102,12 @@
         <target>Bereich</target>
       </trans-unit>
       <trans-unit id="ZnSEFXp" resname="updated department %dep% for existing costumer: %firstname% %lastname% &amp;emsp; &lt;img src=&quot;/%barcode%&quot;&gt; ">
-        <source>updated department {dep} for existing costumer: {firstname} {lastname} &amp;emsp; &lt;img src="/{barcode}"&gt; </source>
+        <source>updated department %dep% for existing costumer: %firstname% %lastname% &amp;emsp; &lt;img src="/%barcode%"&gt; </source>
         <target><![CDATA[Fachbereich {dep} geupdated für bestehenden Teilnehmer: {firstname} {lastname} &emsp; <img src="/{barcode}"> ]]></target>
+      </trans-unit>
+      <trans-unit id="HOLKkg2" resname="%firstname% %lastname% in %dep% could not me added: %cause%">
+        <source>%firstname% %lastname% in %dep% could not me added: %cause%</source>
+        <target>{firstname} {lastname} in {dep} konnte nicht hinzugefügt werden: {cause}</target>
       </trans-unit>
     </body>
   </file>

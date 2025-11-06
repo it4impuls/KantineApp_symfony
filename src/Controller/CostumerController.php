@@ -24,6 +24,19 @@ final class CostumerController extends AbstractController
         private readonly ValidatorInterface $validator
     ) {}
 
+    private function flashCostumerAddError(Costumer $costumer, string $error)
+    {
+        $this->addFlash('error', new TranslatableMessage(
+            "%firstname% %lastname% in %dep% could not me added: %cause%",
+            [
+                '%cause%' => $error,
+                '%firstname%' => $costumer->getFirstname(),
+                '%lastname%' => $costumer->getLastname(),
+                '%dep%' => $costumer->getDepartment() ?? _("NO DEPARTMENT SET"),
+            ]
+        ));
+    }
+
     #[IsGranted('ROLE_ADMIN_COSTUMER_CREATE')]
     #[Route('/add_users', name: 'upload_users')]
     public function uploadUsers(Request $request): Response
@@ -47,11 +60,11 @@ final class CostumerController extends AbstractController
             }
 
             //rows
-            $lines = str_getcsv($fileField->getContent(), "\n");
+            $lines = str_getcsv($fileField->getContent(), "\n", '"', "\\");
             $deliminator = str_contains($lines[0], ";") ? ";" : ",";
             foreach ($lines as $line) {
                 if (!str_contains($line, $deliminator)) break;
-                $data = str_getcsv($line, $deliminator);
+                $data = str_getcsv($line, $deliminator, '"', "\\");
                 if (sizeof($data) < 2) break;
                 try {
                     $costumer = new Costumer();
@@ -59,47 +72,45 @@ final class CostumerController extends AbstractController
                         ->setActive(true)
                         ->setFirstname($data[0])
                         ->setLastname($data[1])
-                        ->setDepartment(Department: count($data) >= 3 ? $data[2]  : null);
+                        ->setDepartment(Department: count($data) >= 3 ? $data[2] : null);
 
                     $errors = $this->validator->validate($costumer);
                     if ($errors->count() > 0) {
                         foreach ($errors as $key => $error) {
+                            // update Dep
                             if ($error->getConstraint() instanceof UniqueEntity && $costumer->getDepartment()) {
-
                                 $cause = $error->getCause();
                                 if (count($cause) != 1) {
-                                    $this->addFlash('error', $error->getMessage());
-                                } else {
-                                    // save existing costumer with new department
-                                    $cause[0]->setDepartment($costumer->getDepartment());
-                                    $this->entityManager->persist($cause[0]);
-                                    $this->entityManager->flush();
-                                    $this->addFlash('notice', new TranslatableMessage(
-                                        'updated department %dep% for existing costumer: %firstname% %lastname% &emsp; <img src="/%barcode%"> ',
-                                        [
-                                            '%firstname%' => $cause[0]->getFirstname(),
-                                            '%lastname%' => $cause[0]->getLastname(),
-                                            '%dep%' => $cause[0]->getDepartment() ?? _("NO DEPARTMENT SET"),
-                                            '%barcode%' => $cause[0]->getBarcode()
-                                        ]
-                                    ));
+                                    $this->flashCostumerAddError($costumer, $error->getMessage());
+                                    break;
                                 }
-                            } else if ($error->getConstraint() instanceof UniqueEntity) {
-                                $this->addFlash('error', new TranslatableMessage(
-                                    'Costumer %firstname% %lastname% already exists',
+                                // save existing costumer with new department
+                                $cause[0]->setDepartment($costumer->getDepartment());
+                                $err_new = $this->validator->validate($cause[0]);
+                                if ($err_new->count() > 0) {
+                                    $this->flashCostumerAddError($costumer, $err_new[0]->getMessage());
+                                    break;
+                                }
+                                $this->entityManager->persist($cause[0]);
+                                $this->entityManager->flush();
+                                $this->addFlash('notice', new TranslatableMessage(
+                                    'updated department %dep% for existing costumer: %firstname% %lastname% &emsp; <img src="/%barcode%"> ',
                                     [
-                                        '%firstname%' => $costumer->getFirstname(),
-                                        '%lastname%' => $costumer->getLastname()
+                                        '%firstname%' => $cause[0]->getFirstname(),
+                                        '%lastname%' => $cause[0]->getLastname(),
+                                        '%dep%' => $cause[0]->getDepartment() ?? _("NO DEPARTMENT SET"),
+                                        '%barcode%' => $cause[0]->getBarcode()
                                     ]
                                 ));
+                                break;
                             } else {
-                                $this->addFlash('error', $error->getMessage());
+                                $this->flashCostumerAddError($costumer, $error->getMessage());
+                                break;
                             }
                         }
                     } else {
-                        $this->entityManager->persist($costumer);
-
                         // actually executes the queries (i.e. the INSERT query)
+                        $this->entityManager->persist($costumer);
                         $this->entityManager->flush();
                         $this->addFlash('notice', new TranslatableMessage(
                             'sucessfully added: %firstname% %lastname% in %dep% &emsp; <img src="/%barcode%"> ',
@@ -112,7 +123,7 @@ final class CostumerController extends AbstractController
                         ));
                     }
                 } catch (\Throwable $th) {
-                    $this->addFlash('error', (string)$th);
+                    $this->flashCostumerAddError($costumer, (string)$th);
                 }
             }
         }

@@ -621,6 +621,10 @@
         <source>A costumer with this name already exists</source>
         <target>Ein Kunde mit diesem Namen existiert bereits</target>
       </trans-unit>
+      <trans-unit id="YATkpEZ" resname="{{ value }} not a valid department. Possible departments: {{ choices }}">
+        <source>{{ value }} not a valid department. Possible departments: {{ choices }}</source>
+        <target>{{ value }} kein valider Bereich. Mögliche Bereiche: {{ choices }}</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

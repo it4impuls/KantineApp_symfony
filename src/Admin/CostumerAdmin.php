@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
+use App\Entity\Costumer;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 final class CostumerAdmin extends AbstractAdmin
 {
@@ -37,7 +41,9 @@ final class CostumerAdmin extends AbstractAdmin
             ->add('active', null, [
                 'editable' => true
             ])
-            ->add('department')
+            ->add('department', null, [
+                'choices' => Costumer::DEPARTMENTS,
+            ])
             ->add('enddate')
             ->add('Barcode', 'barcode')
             ->add(ListMapper::NAME_ACTIONS, null, [
@@ -51,7 +57,7 @@ final class CostumerAdmin extends AbstractAdmin
 
     protected function configureExportFields(): array
     {
-        return ['id', 'firstname', 'lastname'];
+        return ['id', 'firstname', 'lastname', 'department'];
     }
 
 
@@ -78,7 +84,9 @@ final class CostumerAdmin extends AbstractAdmin
             ->add('lastname')
             ->add('active')
             ->add('enddate')
-            ->add('department')
+            ->add('department', ChoiceType::class, [
+                'choices' => Costumer::DEPARTMENTS,
+            ])
         ;
     }
 
