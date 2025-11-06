@@ -39,7 +39,30 @@ class Costumer
     #[ORM\Column]
     private ?bool $active = null;
 
-    public const DEPARTMENTS = ["IT" => "IT", "BüMa" => "BÜMA", "Media" => "MEDIA", "Service" => "SERVICE", "Tischlerei" => "TISCHLEREI"];
+    // Brevia
+    // Vario
+    // HWS
+    // Büme Bueme-Tempus
+    // Media 
+    // Media-Tempus
+    // Tischlerei
+    // Tischlerei Tempus
+    // BVB
+    // Aperio
+
+    public const DEPARTMENTS = [
+        "IT" => "IT",
+        "IT-Tempus" => "IT-TEMPUS",
+        "Brevia" => "BREVIA",
+        "Vario" => "VARIO",
+        "HWS" => "HWS",
+        "Büme" => "BÜME",
+        "Büme-Tempus" => "BÜME-TEMPUS",
+        "Tischlerei" => "TISCHLEREI",
+        "Tischlerei-Tempus" => "TISCHLEREI-TEMPUS",
+        "BVB" => "BVB",
+        "Aperio" => "APERIO"
+    ];
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $enddate = null;
