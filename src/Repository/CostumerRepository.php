@@ -46,12 +46,34 @@ class CostumerRepository extends ServiceEntityRepository
             ->getQuery();
     }
 
+    private function guessKey(string $key): string
+    {
+        $vars = get_class_vars('App\Entity\Costumer');
+        $cleanKey = trim(strtolower($key));
+        if ($cleanKey == "id")
+            return "id";
+        else if ($cleanKey == "active")
+            return "active";
+        else if ($cleanKey == "firstname")
+            return "firstname";
+        else if ($cleanKey == "lastname")
+            return "lastname";
+        else if ($cleanKey == "department")
+            return "Department";
+        else if ($cleanKey == "enddate")
+            return "enddate";
+        else
+            return $key;
+    }
+
     public function filterBy(array $filters): Query
     {
-        $s = "test";
-
         $qb = $this->createQueryBuilder('c');
         foreach ($filters as $key => $value) {
+            // forgiving key:
+            // $key = $key == "department" ? "Department" : $key;
+            $key = $this->guessKey($key);
+
             // check if it should be treated as a literal or if it should be treated as a string
             $isLiteral = (ctype_digit($value) && $key == 'id') ||          // numeric id
                 filter_var($value, FILTER_VALIDATE_BOOLEAN); // boolean
@@ -59,6 +81,7 @@ class CostumerRepository extends ServiceEntityRepository
 
             // escape unescaped quotes not at beginning/end and stringify if not literal
             if (!$isLiteral) {
+                // escape non-start/end ' with "
                 $value = preg_replace("/(?<!\\\\|^)'(?!$)/", '"', $value);
                 // already stringified (starts and ends with ' -- " does not work)
                 $value = preg_replace("/^(?!')|(?<![^\\\\]')$/", "'", $value);

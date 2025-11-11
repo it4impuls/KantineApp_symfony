@@ -54,7 +54,7 @@ final class CostumerController extends AbstractController
     }
 
     #[IsGranted('ROLE_ADMIN_COSTUMER_VIEW')]
-    #[Route('/api/costumers/', name: 'get_costumers',)]
+    #[Route('/api/costumers', name: 'get_costumers',)]
     public function getCostumerFiltered(Request $request, SerializerInterface $serializer): Response | JsonResponse
     {
         // get Costumer in JSON compatible format
