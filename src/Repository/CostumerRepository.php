@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Costumer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
 
@@ -35,6 +36,36 @@ class CostumerRepository extends ServiceEntityRepository
     public function deleteOldInactive(): int
     {
         return $this->getOldInactive()->delete()->getQuery()->execute();
+    }
+
+    public function findByCode($id): Query
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery();
+    }
+
+    public function filterBy(array $filters): Query
+    {
+        $s = "test";
+
+        $qb = $this->createQueryBuilder('c');
+        foreach ($filters as $key => $value) {
+            // check if it should be treated as a literal or if it should be treated as a string
+            $isLiteral = (ctype_digit($value) && $key == 'id') ||          // numeric id
+                filter_var($value, FILTER_VALIDATE_BOOLEAN); // boolean
+
+
+            // escape unescaped quotes not at beginning/end and stringify if not literal
+            if (!$isLiteral) {
+                $value = preg_replace("/(?<!\\\\|^)'(?!$)/", '"', $value);
+                // already stringified (starts and ends with ' -- " does not work)
+                $value = preg_replace("/^(?!')|(?<![^\\\\]')$/", "'", $value);
+            }
+            $qb->andWhere(sprintf('c.%s = %s', $key, $value));
+        }
+        return $qb->orderBy('c.id', 'ASC')->getQuery();
     }
 
     //    /**

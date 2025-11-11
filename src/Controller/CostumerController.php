@@ -5,15 +5,19 @@ namespace App\Controller;
 use App\Entity\Costumer;
 use App\Repository\CostumerRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Persisters\Exception\UnrecognizedField;
+use JMS\Serializer\Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\When;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Translation\TranslatableMessage;
 
@@ -35,6 +39,40 @@ final class CostumerController extends AbstractController
                 '%dep%' => $costumer->getDepartment() ?? _("NO DEPARTMENT SET"),
             ]
         ));
+    }
+
+    #[IsGranted('ROLE_ADMIN_COSTUMER_VIEW')]
+    #[Route('/api/costumers/{id}', name: 'get_costumer')]
+    public function getCostumer($id): Response | JsonResponse
+    {
+        // get Costumer in JSON compatible format
+        $costumer = $this->entityManager->getRepository(Costumer::class)->findByCode($id)->getArrayResult();
+        if (!$costumer) throw $this->createNotFoundException(
+            'No product found for id ' . $id
+        );
+        return new JsonResponse($costumer);
+    }
+
+    #[IsGranted('ROLE_ADMIN_COSTUMER_VIEW')]
+    #[Route('/api/costumers/', name: 'get_costumers',)]
+    public function getCostumerFiltered(Request $request, SerializerInterface $serializer): Response | JsonResponse
+    {
+        // get Costumer in JSON compatible format
+        $filter = $request->query->all();
+        $costumers = $this->entityManager->getRepository(Costumer::class)->filterBy($filter)->getArrayResult();
+        if (!$costumers) throw $this->createNotFoundException(
+            'No costumer found with those attributes'
+        );
+
+        // $serialized = $serializer->serialize($costumers, 'json');
+
+        return new JsonResponse($costumers);
+    }
+
+    #[Route('/api/allowed_departments', name: 'get_allowed_departments')]
+    public function getAllowedDepartments(): JsonResponse
+    {
+        return new JsonResponse(Costumer::DEPARTMENTS);
     }
 
     #[IsGranted('ROLE_ADMIN_COSTUMER_CREATE')]
