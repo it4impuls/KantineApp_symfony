@@ -57,7 +57,7 @@ final class CostumerAdmin extends AbstractAdmin
 
     protected function configureExportFields(): array
     {
-        return ['id', 'firstname', 'lastname', 'department'];
+        return ['id', 'firstname', 'lastname', 'department', 'active'];
     }
 
 

@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use Sonata\UserBundle\Model\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -28,5 +31,21 @@ class SecurityController extends AbstractController
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
+
+    #[Route('/api/login', name: 'api_login', methods: ['POST'])]
+    public function apiLogin(#[CurrentUser] ?User $user, Request $request): Response
+    {
+        if (null === $user) {
+            return $this->json([
+                'message' => 'missing credentials',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+        $token = $user->getConfirmationToken();
+        $response = $this->json([
+            'user'  => $user->getUserIdentifier(),
+            'token' => $token,
+        ]);
+        return $response;
     }
 }

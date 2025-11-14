@@ -9,6 +9,7 @@ use App\Entity\Costumer;
 use App\Repository\OrderRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\When;
@@ -19,8 +20,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Translation\TranslatableMessage;
+use FOS\RestBundle\View\View;
 
-final class OrderController extends AbstractController
+final class OrderController extends AbstractFOSRestController
 {
 
     public function __construct(
@@ -28,11 +30,14 @@ final class OrderController extends AbstractController
         private readonly EntityManagerInterface $entityManager,
         private readonly ValidatorInterface $validator
     ) {}
-
-    #[Route('/success', name: 'task_success')]
-    public function index(): Response
+    public function getOrderAction(Request $request): Response
     {
-        return $this->render('base.html.twig');
+        $view = View::create();
+
+        $data = $this->entityManager->getRepository(Order::class)->findAll();
+
+        $view->setData($data);
+        return $this->handleView($view);
     }
 
     private function get_Costumer(int $id): Costumer | null

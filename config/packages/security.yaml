@@ -46,7 +46,23 @@ security:
                 lifetime: 2629746
                 path: /admin
 
-
+        api:
+            provider: app_user_provider
+            lazy: true
+            pattern: /api(.*)
+            context: user
+            # form_login:
+            #     login_path: api_login
+            #     check_path: api_login
+            json_login:
+                login_path: api_login
+                check_path: api_login
+            remember_me:
+                secret: '%env(APP_SECRET)%'
+                lifetime: 2629746
+                path: /api
+            # access_token:
+            #     token_handler: App\Security\AccessTokenHandler
         main:
             provider: app_user_provider
             context:             user
@@ -55,6 +71,7 @@ security:
                 check_path: app_login
                 default_target_path: app_order
                 enable_csrf: true
+            
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -63,7 +80,8 @@ security:
                 secret: '%env(APP_SECRET)%'
                 lifetime: 2629746
                 path: /
-
+            # access_token:
+            #     token_handler: App\Security\AccessTokenHandler
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
@@ -76,6 +94,9 @@ security:
         - { path: ^/admin/reset/.*$, role: PUBLIC_ACCESS }
         - { path: ^/login$, role: PUBLIC_ACCESS }
         - { path: ^/logout$, role: PUBLIC_ACCESS }
+        - { path: ^/api/login$, role: PUBLIC_ACCESS }
+
+        - { path: ^/api/.*, role: PUBLIC_ACCESS }
 
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.

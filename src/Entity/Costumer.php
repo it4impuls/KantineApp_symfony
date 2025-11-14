@@ -70,7 +70,7 @@ class Costumer
     /**
      * @var Collection<int, Order>
      */
-    #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'costumer')]
+    #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'Costumer')]
     private Collection $orders;
 
     protected File $Barcode;

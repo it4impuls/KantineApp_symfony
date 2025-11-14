@@ -3,10 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Costumer;
-use App\Repository\CostumerRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Persisters\Exception\UnrecognizedField;
-use JMS\Serializer\Serializer;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
+use FOS\RestBundle\View\View;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\When;
@@ -21,7 +20,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Translation\TranslatableMessage;
 
-final class CostumerController extends AbstractController
+final class CostumerController extends AbstractFOSRestController
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
@@ -43,36 +42,41 @@ final class CostumerController extends AbstractController
 
     #[IsGranted('ROLE_ADMIN_COSTUMER_VIEW')]
     #[Route('/api/costumers/{id}', name: 'get_costumer')]
-    public function getCostumer($id): Response | JsonResponse
+    public function getCostumer(Request $request, $id): Response | JsonResponse
     {
         // get Costumer in JSON compatible format
-        $costumer = $this->entityManager->getRepository(Costumer::class)->findByCode($id)->getArrayResult();
-        if (!$costumer) throw $this->createNotFoundException(
+        $data = $this->entityManager->getRepository(Costumer::class)->findByCode($id)->getArrayResult();
+        if (!$data) throw $this->createNotFoundException(
             'No product found for id ' . $id
         );
-        return new JsonResponse($costumer);
+
+        if ($request->getRequestFormat() == 'html') return new JsonResponse($data);
+        $view = $this->view($data);
+        return $this->handleView($view);
     }
 
     #[IsGranted('ROLE_ADMIN_COSTUMER_VIEW')]
     #[Route('/api/costumers', name: 'get_costumers',)]
-    public function getCostumerFiltered(Request $request, SerializerInterface $serializer): Response | JsonResponse
+    public function getCostumerFiltered(Request $request): Response | JsonResponse
     {
         // get Costumer in JSON compatible format
         $filter = $request->query->all();
-        $costumers = $this->entityManager->getRepository(Costumer::class)->filterBy($filter)->getArrayResult();
-        if (!$costumers) throw $this->createNotFoundException(
+        $data = $this->entityManager->getRepository(Costumer::class)->filterBy($filter)->getArrayResult();
+        if (!$data) throw $this->createNotFoundException(
             'No costumer found with those attributes'
         );
-
-        // $serialized = $serializer->serialize($costumers, 'json');
-
-        return new JsonResponse($costumers);
+        if ($request->getRequestFormat() == 'html') return new JsonResponse($data);
+        $view = $this->view($data);
+        return $this->handleView($view);
     }
 
     #[Route('/api/allowed_departments', name: 'get_allowed_departments')]
-    public function getAllowedDepartments(): JsonResponse
+    public function getAllowedDepartments(Request $request): Response
     {
-        return new JsonResponse(Costumer::DEPARTMENTS);
+        $data = Costumer::DEPARTMENTS;
+        if ($request->getRequestFormat() == 'html') return new JsonResponse($data);
+        $view = $this->view($data);
+        return $this->handleView($view);
     }
 
     #[IsGranted('ROLE_ADMIN_COSTUMER_CREATE')]
