@@ -50,7 +50,7 @@ final class CostumerController extends AbstractFOSRestController
             'No product found for id ' . $id
         );
 
-        if ($request->getRequestFormat() == 'html') return new JsonResponse($data);
+        if ($request->getRequestFormat() == 'html') return $this->json($data);
         $view = $this->view($data);
         return $this->handleView($view);
     }
@@ -65,7 +65,7 @@ final class CostumerController extends AbstractFOSRestController
         if (!$data) throw $this->createNotFoundException(
             'No costumer found with those attributes'
         );
-        if ($request->getRequestFormat() == 'html') return new JsonResponse($data);
+        if ($request->getRequestFormat() == 'html') return $this->json($data);
         $view = $this->view($data);
         return $this->handleView($view);
     }
@@ -74,7 +74,7 @@ final class CostumerController extends AbstractFOSRestController
     public function getAllowedDepartments(Request $request): Response
     {
         $data = Costumer::DEPARTMENTS;
-        if ($request->getRequestFormat() == 'html') return new JsonResponse($data);
+        if ($request->getRequestFormat() == 'html') return $this->json($data);
         $view = $this->view($data);
         return $this->handleView($view);
     }

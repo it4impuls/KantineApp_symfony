@@ -41,10 +41,8 @@ class SecurityController extends AbstractController
                 'message' => 'missing credentials',
             ], Response::HTTP_UNAUTHORIZED);
         }
-        $token = $user->getConfirmationToken();
         $response = $this->json([
-            'user'  => $user->getUserIdentifier(),
-            'token' => $token,
+            'user'  => $user->getUserIdentifier()
         ]);
         return $response;
     }

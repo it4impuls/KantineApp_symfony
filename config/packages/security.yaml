@@ -51,9 +51,6 @@ security:
             lazy: true
             pattern: /api(.*)
             context: user
-            # form_login:
-            #     login_path: api_login
-            #     check_path: api_login
             json_login:
                 login_path: api_login
                 check_path: api_login
@@ -61,6 +58,7 @@ security:
                 secret: '%env(APP_SECRET)%'
                 lifetime: 2629746
                 path: /api
+                always_remember_me: true
             # access_token:
             #     token_handler: App\Security\AccessTokenHandler
         main:
