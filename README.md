@@ -81,3 +81,9 @@ Per ssh auf den Server loggen.
 git pull
 APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
 ```
+
+
+# Import DB from django
+
+## using ImportFromDjango.sql
+Siehe Kommentare am Anfang von ImportFromDjango.sql
