@@ -86,4 +86,4 @@ APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
 # Import DB from django
 
 ## using ImportFromDjango.sql
-Siehe Kommentare am Anfang von ImportFromDjango.sql
+Siehe Kommentare am Anfang von [ImportFromDjango.sql](ImportFromDjango.sql)

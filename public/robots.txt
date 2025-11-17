@@ -1,4 +1,4 @@
-# robots.txt for http://example.com/
+# robots.txt for https://elbkantine.impuls-tempus.de
 
 User-agent: *
 Disallow: /
