@@ -19,6 +19,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Translation\TranslatableMessage;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 final class CostumerController extends AbstractFOSRestController
 {
@@ -62,9 +63,9 @@ final class CostumerController extends AbstractFOSRestController
         // get Costumer in JSON compatible format
         $filter = $request->query->all();
         $data = $this->entityManager->getRepository(Costumer::class)->filterBy($filter)->getArrayResult();
-        if (!$data) throw $this->createNotFoundException(
-            'No costumer found with those attributes'
-        );
+        // if (!$data) throw $this->createNotFoundException(
+        //     'No costumer found with those attributes'
+        // );
         if ($request->getRequestFormat() == 'html') return $this->json($data);
         $view = $this->view($data);
         return $this->handleView($view);
@@ -77,6 +78,51 @@ final class CostumerController extends AbstractFOSRestController
         if ($request->getRequestFormat() == 'html') return $this->json($data);
         $view = $this->view($data);
         return $this->handleView($view);
+    }
+
+
+    private function handle_upload_errors(Costumer $costumer, ConstraintViolationListInterface $errors): bool{
+        foreach ($errors as $key => $error) {
+            // Costumer already exists
+            if ($error->getConstraint() instanceof UniqueEntity && $costumer->getDepartment()) {
+                $cause = $error->getCause();
+                if (count($cause) != 1) {
+                    $this->flashCostumerAddError($costumer, $error->getMessage());
+                    return false;
+                }
+                $existing = $cause[0];
+
+                // nothing to update
+                if($existing->getDepartment() == $costumer->getDepartment()){
+                    $this->flashCostumerAddError($costumer, "Already exists.");
+                    return True;
+                }
+
+                // save existing costumer with new department
+                $existing->setDepartment($costumer->getDepartment());
+                $err_new = $this->validator->validate($existing);
+                if ($err_new->count() > 0) {
+                    $this->flashCostumerAddError($costumer, $err_new[0]->getMessage());
+                    return false;
+                }
+                $this->entityManager->persist($existing);
+                $this->entityManager->flush();
+                $this->addFlash('notice', new TranslatableMessage(
+                    'updated department %dep% for existing costumer: %firstname% %lastname% &emsp; <img src="/%barcode%"> ',
+                    [
+                        '%firstname%' => $existing->getFirstname(),
+                        '%lastname%' => $existing->getLastname(),
+                        '%dep%' => $existing->getDepartment() ?? _("NO DEPARTMENT SET"),
+                        '%barcode%' => $existing->getBarcode()
+                    ]
+                ));
+                return true;
+            } else {
+                $this->flashCostumerAddError($costumer, $error->getMessage());
+                return false;
+            }
+        }
+        return false;
     }
 
     #[IsGranted('ROLE_ADMIN_COSTUMER_CREATE')]
@@ -117,39 +163,8 @@ final class CostumerController extends AbstractFOSRestController
                         ->setDepartment(Department: count($data) >= 3 ? $data[2] : null);
 
                     $errors = $this->validator->validate($costumer);
-                    if ($errors->count() > 0) {
-                        foreach ($errors as $key => $error) {
-                            // update Dep
-                            if ($error->getConstraint() instanceof UniqueEntity && $costumer->getDepartment()) {
-                                $cause = $error->getCause();
-                                if (count($cause) != 1) {
-                                    $this->flashCostumerAddError($costumer, $error->getMessage());
-                                    break;
-                                }
-                                // save existing costumer with new department
-                                $cause[0]->setDepartment($costumer->getDepartment());
-                                $err_new = $this->validator->validate($cause[0]);
-                                if ($err_new->count() > 0) {
-                                    $this->flashCostumerAddError($costumer, $err_new[0]->getMessage());
-                                    break;
-                                }
-                                $this->entityManager->persist($cause[0]);
-                                $this->entityManager->flush();
-                                $this->addFlash('notice', new TranslatableMessage(
-                                    'updated department %dep% for existing costumer: %firstname% %lastname% &emsp; <img src="/%barcode%"> ',
-                                    [
-                                        '%firstname%' => $cause[0]->getFirstname(),
-                                        '%lastname%' => $cause[0]->getLastname(),
-                                        '%dep%' => $cause[0]->getDepartment() ?? _("NO DEPARTMENT SET"),
-                                        '%barcode%' => $cause[0]->getBarcode()
-                                    ]
-                                ));
-                                break;
-                            } else {
-                                $this->flashCostumerAddError($costumer, $error->getMessage());
-                                break;
-                            }
-                        }
+                    if ($errors->count()) {
+                        if(!$this->handle_upload_errors($costumer, $errors)) break;
                     } else {
                         // actually executes the queries (i.e. the INSERT query)
                         $this->entityManager->persist($costumer);
@@ -161,14 +176,15 @@ final class CostumerController extends AbstractFOSRestController
                                 '%lastname%' => $costumer->getLastname(),
                                 '%dep%' => $costumer->getDepartment() ?? _("NO DEPARTMENT SET"),
                                 '%barcode%' => $costumer->getBarcode()
-                            ]
-                        ));
+                                ]
+                            ));
+                        }
+                    } catch (\Throwable $th) {
+                        $this->flashCostumerAddError($costumer, (string)$th);
                     }
-                } catch (\Throwable $th) {
-                    $this->flashCostumerAddError($costumer, (string)$th);
                 }
+                
             }
-        }
 
         return $this->render('components/Form.html.twig', [
             'form' => $form,

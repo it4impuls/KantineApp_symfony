@@ -45,7 +45,7 @@ final class CostumerAdmin extends AbstractAdmin
                 'choices' => Costumer::DEPARTMENTS,
             ])
             ->add('enddate')
-            ->add('Barcode', 'barcode')
+            ->add('Barcode', 'barcode')                         // custom types defined in config/packages/sonata_doctrine_orm_admin.yaml
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
                     'show' => [],
@@ -98,7 +98,7 @@ final class CostumerAdmin extends AbstractAdmin
             ->add('lastname')
             ->add('active')
             ->add('enddate')
-            ->add('Barcode', 'barcode')
+            ->add('Barcode', 'barcode')             // custom types defined in config/packages/sonata_doctrine_orm_admin.yaml
             ->add('department')
         ;
     }

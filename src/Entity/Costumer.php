@@ -39,17 +39,6 @@ class Costumer
     #[ORM\Column]
     private ?bool $active = null;
 
-    // Brevia
-    // Vario
-    // HWS
-    // Büme Bueme-Tempus
-    // Media 
-    // Media-Tempus
-    // Tischlerei
-    // Tischlerei Tempus
-    // BVB
-    // Aperio
-
     public const DEPARTMENTS = [
         "IT" => "IT",
         "IT-Tempus" => "IT-TEMPUS",
