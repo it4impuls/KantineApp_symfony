@@ -31,6 +31,24 @@ jobs:
             .env.dev*
             deploy_prod.sh
             README.md
+      - name: Install composer packages and Generate secrets
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ env.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            cd ${{ env.FTP_DIR }} 
+            export APP_ENV=prod
+
+            # ensure correct php version (default php version is too old)
+            alias php='/usr/bin/${env.PHP_VERSION}'
+
+            # install dependencies
+            composer install --no-dev --optimize-autoloader
+
+            # compile assets
+            php bin/console asset-map:compile
 
   # initialize:
   #   name: Deploy to All-Inkl
