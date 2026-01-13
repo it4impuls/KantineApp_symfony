@@ -38,6 +38,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
+            ls -a
             cd ${{ vars.FTP_DIR }} 
             export APP_ENV=prod
 
