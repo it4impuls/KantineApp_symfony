@@ -20,7 +20,7 @@ final class OrderAdmin extends AbstractAdmin
     {
         $filter
             ->add('Costumer')
-            ->add('order_dateTime', DateRangeFilter::class)
+            ->add('order_dateTime', DateRangeFilter::class, ['format' => 'dd/MM/yyyy', 'widget' => 'single_text'])
             ->add('ordered_item')
             ->add('tax')
         ;
