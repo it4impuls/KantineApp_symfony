@@ -38,9 +38,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            ls -a
-            whoami
-            cd ${{ vars.FTP_DIR }} 
+            cd /www/htdocs/${{ secrets.FTP_USER }}/${{ vars.FTP_DIR }} 
             export APP_ENV=prod
 
             # ensure correct php version (default php version is too old)
