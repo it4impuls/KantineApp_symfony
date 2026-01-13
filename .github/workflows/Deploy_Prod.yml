@@ -39,6 +39,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           script: |
             ls -a
+            whoami
             cd ${{ vars.FTP_DIR }} 
             export APP_ENV=prod
 
