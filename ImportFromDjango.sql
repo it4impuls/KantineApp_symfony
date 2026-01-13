@@ -10,7 +10,7 @@
 -- Click on import
 -- select the file
 -- un-check Enable foreign key checks (we allow deletion of costumers while keeping orders)
---------------------------------------------------------
+-- ------------------------------------------------------
 --
 -- Table structure for table `kasseBE_user`
 --

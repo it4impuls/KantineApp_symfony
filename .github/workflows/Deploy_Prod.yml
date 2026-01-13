@@ -28,7 +28,6 @@ jobs:
             .vscode*/**
             .git*
             .git*/**
-            migrations*
             .env.dev*
             deploy_prod.sh
             README.md
