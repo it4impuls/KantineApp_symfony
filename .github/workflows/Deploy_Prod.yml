@@ -37,6 +37,7 @@ jobs:
           host: ${{ vars.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.PASSWORD }}
+          capture_stdout: true
           script: |
             cd /www/htdocs/${{ secrets.FTP_USER }}/${{ vars.FTP_DIR }} 
             export APP_ENV=prod
@@ -49,6 +50,9 @@ jobs:
 
             # compile assets
             php bin/console asset-map:compile
+
+      - name: Use captured output
+        run: echo "SSH output was ${{ steps.ssh.outputs.stdout }}"
 
   # initialize:
   #   name: Deploy to All-Inkl

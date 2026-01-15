@@ -13,6 +13,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Sonata\DoctrineORMAdminBundle\Filter\DateRangeFilter;
+use Sonata\Form\Type\DateRangePickerType;
 
 final class OrderAdmin extends AbstractAdmin
 {
@@ -20,7 +21,13 @@ final class OrderAdmin extends AbstractAdmin
     {
         $filter
             ->add('Costumer')
-            ->add('order_dateTime', DateRangeFilter::class, ['format' => 'dd/MM/yyyy', 'widget' => 'single_text'])
+            ->add('order_dateTime', DateRangeFilter::class, [
+                    'field_type'=> DateRangePickerType::class,
+                    'field_options' => [
+                    'field_options' => [
+                        'format' => 'dd.MM.yyyy'
+                     ],
+                ]])
             ->add('ordered_item')
             ->add('tax')
         ;

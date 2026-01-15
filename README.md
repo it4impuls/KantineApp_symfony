@@ -29,7 +29,6 @@ php bin/console secrets:decrypt-to-local --force
 ## DB Felder updaten
 Falls Felder geändert wurden (Änderungen in /src/Entity/**) muss die Datenbank [migriert](https://symfony.com/doc/current/the-fast-track/en/8-doctrine.html#migrating-the-database) werden. Mit
 ```bash
-cd kantine.impuls-reha.de       # Falls nicht schon im Ordner
 php bin/console make:migration
 ```
 Migration erstellen BEVOR der Code auf Github gepusht wird. Dies erstellt eine Datei im `migrations/` Ordner, welche auf den Server geladen werden muss. (siehe "Server Daten updaten")
