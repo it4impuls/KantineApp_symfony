@@ -30,7 +30,8 @@ jobs:
             .git*/**
             .env.dev*
             deploy_prod.sh
-            README.md
+            *.md
+            *.sql
       - name: Install composer packages and Generate secrets
         uses: appleboy/ssh-action@v1
         with:
