@@ -61,7 +61,9 @@
                 value="{{ choice.value }}"
                 class="input_invis" 
                 {# surely there is a better way to check wether this is selected #}
-                checked="{{ form.tax.vars.value == choice.value }}"
+                {% if form.tax.vars.value == choice.value %}
+                    checked
+                {% endif %}
                 />
         </label>
         {% endfor %}
