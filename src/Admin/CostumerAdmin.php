@@ -82,7 +82,7 @@ final class CostumerAdmin extends AbstractAdmin
             // ->add('id')
             ->add('firstname')
             ->add('lastname')
-            ->add('active')
+            ->add('active', null,['data'=>true])
             ->add('enddate')
             ->add('department', ChoiceType::class, [
                 'choices' => Costumer::DEPARTMENTS,
