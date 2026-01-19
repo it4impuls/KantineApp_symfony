@@ -28,7 +28,8 @@ final class OrderController extends AbstractFOSRestController
     public function __construct(
         private readonly LoggerInterface $logger,
         private readonly EntityManagerInterface $entityManager,
-        private readonly ValidatorInterface $validator
+        private readonly ValidatorInterface $validator,
+        private readonly LoggerInterface $logger_interface
     ) {}
     public function getOrderAction(Request $request): Response
     {
@@ -115,6 +116,7 @@ final class OrderController extends AbstractFOSRestController
                 $this->save_order($existing, $options);
             }
         }
+        $this->logger_interface->info("test");
         return $this->render_site($options);
     }
 

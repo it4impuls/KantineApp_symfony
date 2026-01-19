@@ -24,8 +24,7 @@ class OrderDTOType extends AbstractType
         "8,50€" => 8.50,
     ];
     private $taxes = [
-        "7%" => 7,
-        "19%" => 19
+        "7%" => 7
     ];
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

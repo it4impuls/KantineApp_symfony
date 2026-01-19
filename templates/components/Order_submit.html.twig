@@ -1,97 +1,102 @@
 
 
-{# #}
-<link rel="stylesheet" href="{{asset('styles/order_form.css')}}" />
-<script src="{{asset('scripts/order_form.js')}}"></script>
+<!DOCTYPE html>
+<html>
+    <body>
+        <link rel="stylesheet" href="{{asset('styles/order_form.css')}}" />
+        {# <script src="{{asset('scripts/order_form.js')}}"></script> #}
 
 
-{# we only want to show one message, dont add more then one flashes #}
-{% for label, messages in app.flashes|slice(0,1) %}
-    {% for message in messages %}
-        <twig:Alert type="{{label}}" message="{{message|trans}}" /> 
-    {% endfor %}
-{% endfor %}
-
-{# 
-    TODO: manually writing out how the form should be displayed should probably be done via form_themes:
-    https://symfony.com/doc/current/form/form_themes.html#create-your-own-form-theme
-#}
-{{ form_start(form) }}
-    
-    <div class="my-custom-class-for-errors">
-        {{ form_errors(form) }}
-    </div>
-    <label class=Costumer-label> 
-        {{ form.Costumer.vars.label }}
-        {{ form_widget(form.Costumer, {'attr': {'autofocus': true, class: 'costumer-input'}}) }}
-    </label>
-
-
-    <div id="menus" class="menus">
-    {% for choice in form.ordered_item.vars.choices %}
-        {% if loop.index%2 == 0 %}{% endif %}
-
-        <label class="menulabel btn" for="{{ form.ordered_item.vars.name }}_{{ choice.value }}">
-            {{ choice.label|trans }}
-            <input 
-                class="input_invis" 
-                type="radio" 
-                id="{{ form.ordered_item.vars.name }}_{{ choice.value }}" 
-                name="order_dto[{{ form.ordered_item.vars.name }}]" 
-                value="{{ choice.value }}"
-                {# surely there is a better way to check wether this is selected #}
-                checked="{{ form.tax.vars.value == choice.value }}"
-                
-                />
-        </label>
-        {% do form.ordered_item.setRendered() %}
-        
-    {% endfor %}
-    </div>
-    
-    
-    <div class="footer">
-        {% for choice in form.tax.vars.choices %}
-        <label class="btn tax tax-label"
-            > {{ choice.label|trans }}
-            <input
-                type="radio"
-                id="{{ form.tax.vars.name }}_{{ choice.value }}" 
-                name="order_dto[{{ form.tax.vars.name }}]" 
-                value="{{ choice.value }}"
-                class="input_invis" 
-                {# surely there is a better way to check wether this is selected #}
-                {% if form.tax.vars.value == choice.value %}
-                    checked
-                {% endif %}
-                />
-        </label>
+        {# we only want to show one message, dont add more then one flashes #}
+        {% for label, messages in app.flashes|slice(0,1) %}
+            {% for message in messages %}
+                <twig:Alert type="{{label}}" message="{{message|trans}}" /> 
+            {% endfor %}
         {% endfor %}
-        {% do form.tax.setRendered() %}
 
-        <label class="btn submit">
-            <!-- Submit Button -->
-            OK
-            {{ form_widget(form.save, {'attr': {'style':"display: none"}}) }}
-        </label>
-
-        {# if the user already ordered, display the update and cancel buttons, else just say that they are rendered, so symphony doesnt automatically render it #}
-        {%if override_form%}
-            <link rel="stylesheet" href="{{asset('styles/popUp.css')}}" />
-            <div class="popup-overlay alert">
-                <div class="popup-box">
-                    <p id="popup-message">{{"User already ordered, update order?"|trans}}</p>
-                    <div class="popup-buttons">
-                            {{ form_widget(form.update) }}
-                            {{ form_widget(form.cancel) }}
-                    </div>
-                </div>
-                
+        {# 
+            TODO: manually writing out how the form should be displayed should probably be done via form_themes:
+            https://symfony.com/doc/current/form/form_themes.html#create-your-own-form-theme
+        #}
+        {{ form_start(form) }}
+            
+            <div class="my-custom-class-for-errors">
+                {{ form_errors(form) }}
             </div>
-        {%else%}
-            {% do form.update.setRendered %}
-            {% do form.cancel.setRendered %}
-        {%endif%}
-    </div>
+            <label class=Costumer-label> 
+                {{ form.Costumer.vars.label }}
+                {{ form_widget(form.Costumer, {'attr': {'autofocus': true, class: 'costumer-input'}}) }}
+            </label>
 
-{{ form_end(form) }}
+
+            <div id="menus" class="menus">
+            {% for choice in form.ordered_item.vars.choices %}
+                {% if loop.index%2 == 0 %}{% endif %}
+
+                <label class="menulabel btn" for="{{ form.ordered_item.vars.name }}_{{ choice.value }}">
+                    {{ choice.label|trans }}
+                    <input 
+                        class="input_invis" 
+                        type="radio" 
+                        id="{{ form.ordered_item.vars.name }}_{{ choice.value }}" 
+                        name="order_dto[{{ form.ordered_item.vars.name }}]" 
+                        value="{{ choice.value }}"
+                        {# surely there is a better way to check wether this is selected #}
+                        checked="{{ form.tax.vars.value == choice.value }}"
+                        
+                        />
+                </label>
+                {% do form.ordered_item.setRendered() %}
+                
+            {% endfor %}
+            </div>
+            
+            
+            <div class="footer">
+                {% for choice in form.tax.vars.choices %}
+                {# <label class="btn tax tax-label"
+                    > {{ choice.label|trans }} #}
+                    <input
+                        type="hidden"
+                        id="{{ form.tax.vars.name }}_{{ choice.value }}" 
+                        name="order_dto[{{ form.tax.vars.name }}]" 
+                        value="{{ choice.value }}"
+                        class="input_invis" 
+                        {# surely there is a better way to check wether this is selected #}
+                        {% if form.tax.vars.value == choice.value %}
+                            checked
+                        {% endif %}
+                        />
+                {# </label> #}
+                {% endfor %}
+                {% do form.tax.setRendered() %}
+
+                <label class="btn submit">
+                    <!-- Submit Button -->
+                    OK
+                    {{ form_widget(form.save, {'attr': {'style':"display: none"}}) }}
+                </label>
+
+                {# if the user already ordered, display the update and cancel buttons, else just say that they are rendered, so symphony doesnt automatically render it #}
+                {%if override_form%}
+                    <link rel="stylesheet" href="{{asset('styles/popUp.css')}}" />
+                    <div class="popup-overlay alert">
+                        <div class="popup-box">
+                            <p id="popup-message">{{"User already ordered, update order?"|trans}}</p>
+                            <div class="popup-buttons">
+                                    {{ form_widget(form.update) }}
+                                    {{ form_widget(form.cancel) }}
+                            </div>
+                        </div>
+                        
+                    </div>
+                {%else%}
+                    {% do form.update.setRendered %}
+                    {% do form.cancel.setRendered %}
+                {%endif%}
+            </div>
+
+        {{ form_end(form) }}
+
+    </body>
+</html>
