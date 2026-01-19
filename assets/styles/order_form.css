@@ -30,8 +30,7 @@ body {
 	flex-direction: column;
 }
 
-.costumer-label {
-	display: flex;
+.Costumer-label {
 	width: 100%;
 }
 
