@@ -58,6 +58,12 @@ final class OrderController extends AbstractFOSRestController
         return $order;
     }
 
+    #[Route('/submit', name: 'submit_order', methods:['POST'])]
+    public function submitOrder(Request $request): Response
+    {
+        return new Response();
+    }
+
 
     #[Route('/', name: 'app_order')]
     public function orderForm(Request $request): Response
@@ -77,8 +83,9 @@ final class OrderController extends AbstractFOSRestController
             assert($cancelButton instanceof SubmitButton);
 
             if ($cancelButton->isClicked()) {
-                $order = new Order();
+                $orderDTO = new OrderFormDTO();
                 $form = $this->createForm(OrderDTOType::class, $orderDTO);
+                $options['form']= $form;
                 return $this->render_site($options);
             }
 
