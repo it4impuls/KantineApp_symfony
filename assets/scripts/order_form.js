@@ -5,5 +5,8 @@ window.addEventListener("load", async (event) => {
     document.addEventListener('keydown', (event) => {
         costumerInput.focus()
     });
+    document.addEventListener('click', (event) => {
+        costumerInput.focus()
+    })
 })
 

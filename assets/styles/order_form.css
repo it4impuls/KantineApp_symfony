@@ -38,7 +38,7 @@ body {
 	font-size: inherit;
 	width: inherit;
 	min-height: 20px;
-
+	font-size: calc(5px + 5vh);
 	flex-grow: 1;
 	flex-basis: 100px;
 }
