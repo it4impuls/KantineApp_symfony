@@ -27,7 +27,7 @@ final class CostumerAdmin extends AbstractAdmin
                 'inverse'  => true,
             ])
             ->add('enddate')
-            ->add('department')
+            ->add('Department')
             // ->add('Barcode', FieldDescriptionInterface::TYPE_HTML/*, ["required" => false, ['help' => '<img src="' . $this->getSubject()->getBarcode() . '" />']]*/)
         ;
     }
@@ -41,7 +41,7 @@ final class CostumerAdmin extends AbstractAdmin
             ->add('active', null, [
                 'editable' => true
             ])
-            ->add('department', null, [
+            ->add('Department', null, [
                 'choices' => Costumer::DEPARTMENTS,
             ])
             ->add('enddate')
@@ -57,7 +57,7 @@ final class CostumerAdmin extends AbstractAdmin
 
     protected function configureExportFields(): array
     {
-        return ['id', 'firstname', 'lastname', 'department', 'active'];
+        return ['id', 'firstname', 'lastname', 'Department', 'active'];
     }
 
 
@@ -84,7 +84,7 @@ final class CostumerAdmin extends AbstractAdmin
             ->add('lastname')
             ->add('active', null,[ 'data' => true ])
             ->add('enddate')
-            ->add('department', ChoiceType::class, [
+            ->add('Department', ChoiceType::class, [
                 'choices' => Costumer::DEPARTMENTS,
             ])
         ;
@@ -99,7 +99,7 @@ final class CostumerAdmin extends AbstractAdmin
             ->add('active')
             ->add('enddate')
             ->add('Barcode', 'barcode')             // custom types defined in config/packages/sonata_doctrine_orm_admin.yaml
-            ->add('department')
+            ->add('Department')
         ;
     }
 }

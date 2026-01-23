@@ -1,8 +1,8 @@
 name: Deploy to All-Inkl (Development)
 
 on:
-  # push:
-  #   branches: [main]
+  push:
+    branches: [dev]
   workflow_dispatch:
 
 jobs:
@@ -31,5 +31,6 @@ jobs:
             migrations*
             .env.dev*
             deploy_prod.sh
+            *.sql
             README.md
 

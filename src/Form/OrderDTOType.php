@@ -6,6 +6,7 @@ use App\Form\OrderFormDTO;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,15 +24,12 @@ class OrderDTOType extends AbstractType
         "7,90€" => 7.90,
         "8,50€" => 8.50,
     ];
-    private $taxes = [
-        "7%" => 7
-    ];
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('Costumer', null, ["required" => true])
             ->add('ordered_item', ChoiceType::class, ["choices" => $this->items, "expanded" => true, "required" => true])
-            ->add('tax', ChoiceType::class, ["choices" => $this->taxes, "expanded" => true,  "required" => true])
+            ->add('tax', HiddenType::class, ['data' => 7, "required" => true])
             ->add('save', SubmitType::class)
             ->add('update', SubmitType::class, ['attr' => ['class' => 'btn button']])
             ->add('cancel', SubmitType::class, ['attr' => ['class' => 'btn button']])

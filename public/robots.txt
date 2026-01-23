@@ -1,4 +1,4 @@
-# robots.txt for https://elbkantine.impuls-tempus.de
+# robots.txt for https://elbkantine.impuls-reha.de
 
 User-agent: *
 Disallow: /
