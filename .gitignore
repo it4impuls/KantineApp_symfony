@@ -25,3 +25,5 @@ php_errors.log
 /public/barcodes/**
 /public/uploads/**
 
+###< misc ###
+*.tar.gz
