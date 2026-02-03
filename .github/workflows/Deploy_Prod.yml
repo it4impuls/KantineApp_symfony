@@ -42,12 +42,16 @@ jobs:
           script: |
             cd /www/htdocs/${{ secrets.FTP_USER }}/${{ vars.FTP_DIR }} 
             export APP_ENV=prod
+            export APP_DEBUG=0
 
             # ensure correct php version (default php version is too old)
             alias php='/usr/bin/${vars.PHP_VERSION}'
 
             # install dependencies
             composer install --no-dev --optimize-autoloader
+
+            # recreate cache
+            php bin/console cache:clear --no-dev
 
             # compile assets
             php bin/console asset-map:compile

@@ -7,9 +7,9 @@
         {% block stylesheets %}
         {% endblock %}
         
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
+        {{ importmap('app') }}
+        {% block importmap %}{% endblock %}
+        {% block javascripts %}{% endblock %}
     </head>
     <body>
         {% block body %}

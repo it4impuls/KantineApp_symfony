@@ -6,7 +6,17 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{asset('scripts/order_form.js')}}"></script>
+    <script>
+    window.addEventListener("load", async (event) => {
+        var costumerInput = document.getElementById('order_dto_Costumer')
+        document.addEventListener('keydown', (event) => {
+            costumerInput.focus()
+        });
+        document.addEventListener('click', (event) => {
+            costumerInput.focus()
+        })
+    })
+    </script>
 {% endblock %}
 
 {% block title %} Kantine {% endblock %}
@@ -36,7 +46,7 @@
 
         <div id="menus" class="menus">
         {% for choice in form.ordered_item.vars.choices %}
-            {% if loop.index%2 == 0 %}{% endif %}
+            {% if loop.index % 2 == 0 %}{% endif %}
             
             <label class="menulabel btn" for="{{ form.ordered_item.vars.name }}_{{ choice.value }}">
                 {{ choice.label|trans }}
@@ -59,18 +69,6 @@
         
         <div class="footer">
         {{ form_widget(form.tax, {'attr': {'checked':'', 'type':'hidden'}}) }}
-            {# <input
-                type="hidden"
-                id="{{ form.tax.vars.name }}_{{ choice.value }}" 
-                name="order_dto[{{ form.tax.vars.name }}]" 
-                value="{{ choice.value }}"
-                class="input_invis" 
-                
-                {% if form.tax.vars.value == choice.value %}
-                    checked
-                {% endif %}
-                />
-            {% do form.tax.setRendered() %} #}
 
             <label class="btn submit">
                 <!-- Submit Button -->
@@ -79,7 +77,7 @@
             </label>
 
             {# if the user already ordered, display the update and cancel buttons, else just say that they are rendered, so symphony doesnt automatically render it #}
-            {%if override_form%}
+            {% if override_form %}
                 <link rel="stylesheet" href="{{asset('styles/popUp.css')}}" />
                 <div class="popup-overlay alert">
                     <div class="popup-box">
@@ -91,10 +89,10 @@
                     </div>
                     
                 </div>
-            {%else%}
+            {% else %}
                 {% do form.update.setRendered %}
                 {% do form.cancel.setRendered %}
-            {%endif%}
+            {% endif %}
         </div>
 
     {{ form_end(form) }}
