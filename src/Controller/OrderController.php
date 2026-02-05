@@ -61,13 +61,6 @@ final class OrderController extends AbstractFOSRestController
         return $order;
     }
 
-    #[Route('/submit', name: 'submit_order', methods:['POST'])]
-    public function submitOrder(Request $request): Response
-    {
-        $this->form->handleRequest($request);;
-        return new Response();
-    }
-
 
     #[Route('/', name: 'app_order')]
     public function orderForm(Request $request): Response
@@ -127,7 +120,6 @@ final class OrderController extends AbstractFOSRestController
                 $this->save_order($existing, $options);
             }
         }
-        $this->logger_interface->info("test");
         return $this->render_site($options);
     }
 
