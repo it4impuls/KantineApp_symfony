@@ -78,6 +78,7 @@ security:
                 secret: '%env(APP_SECRET)%'
                 lifetime: 2629746
                 path: /
+                secure: true
             # access_token:
             #     token_handler: App\Security\AccessTokenHandler
     # Easy way to control access for large sections of your site

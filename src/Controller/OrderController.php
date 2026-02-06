@@ -25,12 +25,10 @@ use Symfony\Component\Form\FormInterface;
 
 final class OrderController extends AbstractFOSRestController
 {
-    private FormInterface $form;
     public function __construct(
         private readonly LoggerInterface $logger,
         private readonly EntityManagerInterface $entityManager,
         private readonly ValidatorInterface $validator,
-        private readonly LoggerInterface $logger_interface
     ) {
         
     }
@@ -69,24 +67,24 @@ final class OrderController extends AbstractFOSRestController
         $orderDTO = new OrderFormDTO();
         $orderDTO->setTax(7);
         $order = new Order();
-        $this->form = $this->createForm(OrderDTOType::class, $orderDTO);
+        $form = $this->createForm(OrderDTOType::class, $orderDTO);
 
-        $options = ['form' =>$this->form,  'override_form' => null];
-        $this->form->handleRequest($request);
+        $options = ['form' =>$form,  'override_form' => null];
+        $form->handleRequest($request);
         
         // form is submitted (any submit button pressed)
-        if ( $this->form->isSubmitted() && $this->form->isValid()) {
-            $cancelButton =$this->form->get('cancel');
+        if ( $form->isSubmitted() && $form->isValid()) {
+            $cancelButton =$form->get('cancel');
             assert($cancelButton instanceof SubmitButton);
 
             if ($cancelButton->isClicked()) {
                 $orderDTO = new OrderFormDTO();
-               $this->form = $this->createForm(OrderDTOType::class, $orderDTO);
-                $options['form']=$this->form;
+               $form = $this->createForm(OrderDTOType::class, $orderDTO);
+                $options['form']=$form;
                 return $this->render_site($options);
             }
 
-            $orderDTO =$this->form->getData();
+            $orderDTO =$form->getData();
             $order = $this->makeOrderFromDTO($orderDTO);
             $existing = $this->already_ordered($order);
 
@@ -97,10 +95,10 @@ final class OrderController extends AbstractFOSRestController
                 return $this->render_site($options);
             }
 
-            $saveButton =$this->form->get('save');
+            $saveButton =$form->get('save');
             assert($saveButton instanceof SubmitButton);
 
-            $updateButton =$this->form->get('update');
+            $updateButton =$form->get('update');
             assert($updateButton instanceof SubmitButton);
 
             // normal OK submit
