@@ -56,7 +56,7 @@
                     value="{{ choice.value }}"
                     {# surely there is a better way to check wether this is selected #}
                     {# checked="{{ form.tax.vars.value == choice.value }}" #}
-                    
+                    required
                     />
             </label>
             {% do form.ordered_item.setRendered() %}
