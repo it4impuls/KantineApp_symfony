@@ -20,12 +20,12 @@ final class PerformanceListener
     {
         $duration = microtime(true) - $event->getRequest()->server->get('REQUEST_TIME_FLOAT');
         
-        // if ($duration > 0.1) {
+        if ($duration > 0.1) {
             $this->logger->warning('Slow request detected', [
                 'url' => $event->getRequest()->getUri(),
                 'duration' => $duration,
                 'memory' => memory_get_peak_usage(true) / 1024 / 1024,
             ]);
-        // }
+        }
     }
 }

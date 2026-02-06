@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,7 +26,7 @@ class OrderType extends AbstractType
                 "required" => true
             ])
             ->add('ordered_item', NumberType::class, ["required" => true])
-            ->add('tax', IntegerType::class, ["required" => true])
+            ->add('tax', HiddenType::class, ["required" => true])
             ->add('order_dateTime', DateTimeType::class, ["required" => true])
             ->add('cancel', SubmitType::class, ["required" => true])
             ->add('save', SubmitType::class, ['attr' => ['class' => 'btn']])

@@ -2,26 +2,12 @@ colors {
 	color: #548d95 #76c1c3 #ae7f21 #f0ae44 #789342 #b4db6f;
 }
 
-body {
-	font-size: calc(5px + 8vh);
-}
+
 
 form {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 90%;
-}
+	
 
-#login-form {
-	width: fit-content;
-	padding: 1vh;
-	border-radius: 4vh;
-	background-color: aliceblue;
-}
-
-body {
-	background-color: aliceblue;
+	font-size: calc(5px + 8vh);
 	font-family: verdana, arial;
 	height: 100%;
 	align-content: center;
@@ -81,8 +67,6 @@ input:focus {
 }
 
 .btn {
-	/* height: 11vh; */
-	/* font-size:calc(11px + 4vh); */
 	font-size: inherit;
 	min-height: 20px;
 	border-radius: 4vh;

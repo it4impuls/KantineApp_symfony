@@ -21,16 +21,19 @@ use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Translation\TranslatableMessage;
 use FOS\RestBundle\View\View;
+use Symfony\Component\Form\FormInterface;
 
 final class OrderController extends AbstractFOSRestController
 {
-
+    private FormInterface $form;
     public function __construct(
         private readonly LoggerInterface $logger,
         private readonly EntityManagerInterface $entityManager,
         private readonly ValidatorInterface $validator,
         private readonly LoggerInterface $logger_interface
-    ) {}
+    ) {
+        
+    }
     public function getOrderAction(Request $request): Response
     {
         $view = View::create();
@@ -66,23 +69,24 @@ final class OrderController extends AbstractFOSRestController
         $orderDTO = new OrderFormDTO();
         $orderDTO->setTax(7);
         $order = new Order();
-        $form = $this->createForm(OrderDTOType::class, $orderDTO);
+        $this->form = $this->createForm(OrderDTOType::class, $orderDTO);
 
-        $options = ['form' => $form,  'override_form' => null];
-        $form->handleRequest($request);
-
+        $options = ['form' =>$this->form,  'override_form' => null];
+        $this->form->handleRequest($request);
+        
         // form is submitted (any submit button pressed)
-        if ($form->isSubmitted() && $form->isValid()) {
-            $cancelButton = $form->get('cancel');
+        if ( $this->form->isSubmitted() && $this->form->isValid()) {
+            $cancelButton =$this->form->get('cancel');
             assert($cancelButton instanceof SubmitButton);
 
             if ($cancelButton->isClicked()) {
-                $order = new Order();
-                $form = $this->createForm(OrderDTOType::class, $orderDTO);
+                $orderDTO = new OrderFormDTO();
+               $this->form = $this->createForm(OrderDTOType::class, $orderDTO);
+                $options['form']=$this->form;
                 return $this->render_site($options);
             }
 
-            $orderDTO = $form->getData();
+            $orderDTO =$this->form->getData();
             $order = $this->makeOrderFromDTO($orderDTO);
             $existing = $this->already_ordered($order);
 
@@ -93,10 +97,10 @@ final class OrderController extends AbstractFOSRestController
                 return $this->render_site($options);
             }
 
-            $saveButton = $form->get('save');
+            $saveButton =$this->form->get('save');
             assert($saveButton instanceof SubmitButton);
 
-            $updateButton = $form->get('update');
+            $updateButton =$this->form->get('update');
             assert($updateButton instanceof SubmitButton);
 
             // normal OK submit
@@ -116,7 +120,6 @@ final class OrderController extends AbstractFOSRestController
                 $this->save_order($existing, $options);
             }
         }
-        $this->logger_interface->info("test");
         return $this->render_site($options);
     }
 

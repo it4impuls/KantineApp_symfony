@@ -33,7 +33,7 @@ class SecurityController extends AbstractController
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
-    #[Route('/api/login', name: 'api_login', methods: ['POST'])]
+    #[Route(['/api/login','/api/login/'], name: 'api_login', methods: ['POST'])]
     public function apiLogin(#[CurrentUser] ?User $user, Request $request): Response
     {
         if (null === $user) {
@@ -42,7 +42,8 @@ class SecurityController extends AbstractController
             ], Response::HTTP_UNAUTHORIZED);
         }
         $response = $this->json([
-            'user'  => $user->getUserIdentifier()
+            'user'  => $user->getUserIdentifier(),
+            'REMEMBERME' => $request->cookies->get('REMEMBERME')
         ]);
         return $response;
     }
