@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Controller;
+namespace Kantine\Controller;
 
-use App\Entity\Order;
-use App\Form\OrderFormDTO;
-use App\Form\OrderDTOType;
-use App\Entity\Costumer;
-use App\Repository\OrderRepository;
+use Kantine\Entity\Order;
+use Kantine\Form\OrderFormDTO;
+use Kantine\Form\OrderDTOType;
+use Kantine\Repository\OrderRepository;
+use Shared\Entity\Costumer;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\When;
 use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\Routing\Attribute\Route;
@@ -21,7 +20,7 @@ use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Translation\TranslatableMessage;
 use FOS\RestBundle\View\View;
-use Symfony\Component\Form\FormInterface;
+
 
 final class OrderController extends AbstractFOSRestController
 {
@@ -79,7 +78,7 @@ final class OrderController extends AbstractFOSRestController
 
             if ($cancelButton->isClicked()) {
                 $orderDTO = new OrderFormDTO();
-               $form = $this->createForm(OrderDTOType::class, $orderDTO);
+                $form = $this->createForm(OrderDTOType::class, $orderDTO);
                 $options['form']=$form;
                 return $this->render_site($options);
             }
@@ -125,7 +124,7 @@ final class OrderController extends AbstractFOSRestController
 
     private function render_site(&$options)
     {
-        return $this->render('components/Order_submit.html.twig', $options);
+        return $this->render('@Kantine/components/Order_submit.html.twig', $options);
     }
 
     private function already_ordered(Order $order): ?Order

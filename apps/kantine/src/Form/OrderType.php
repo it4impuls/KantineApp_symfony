@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Form;
+namespace Kantine\Form;
 
-use App\Entity\Costumer;
-use App\Entity\Order;
+use Shared\Entity\Costumer;
+use Kantine\Entity\Order;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;

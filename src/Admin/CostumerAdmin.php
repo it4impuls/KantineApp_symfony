@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Admin;
+namespace Shared\Admin;
 
-use App\Entity\Costumer;
+use Shared\Entity\Costumer;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -68,8 +68,7 @@ final class CostumerAdmin extends AbstractAdmin
         ) {
             $actions['barcodes'] = [
                 'ask_confirmation' => false,
-                'controller' => 'App\Controller\CostumerCRUDController::batchActionBarcodes',
-                // Or 'App/Controller/MergeController::batchMergeAction' base on how you declare your controller service.
+                'controller' => 'Shared\Controller\CostumerCRUDController::batchActionBarcodes',
             ];
         }
 

@@ -5,13 +5,6 @@ fos_rest:
     routing_loader: false
     view:
         view_response_listener:  true
-    # service:
-    #     serializer: Symfony\Component\Serializer\Serializer
-    # exception:
-    #     codes:
-    #         App\Exception\MyException: 403
-    #     messages:
-    #         App\Exception\MyException: Forbidden area.
     format_listener:
         rules:
             - { path: ^/api, prefer_extension: true, fallback_format: html, priorities: [ json, html ] }

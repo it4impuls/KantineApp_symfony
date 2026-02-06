@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Admin;
-
-use App\Entity\Costumer;
+namespace Kantine\Admin;
+use Kantine\Admin\OrderAdmin as oa;
+use Shared\Entity\Costumer;
 use DateTime;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -78,7 +78,7 @@ final class OrderAdmin extends AbstractAdmin
     }
 
     /**
-     * @phpstan-return T
+     * @phpstan-return OrderAdmin
      */
     protected function createNewInstance(): object
     {

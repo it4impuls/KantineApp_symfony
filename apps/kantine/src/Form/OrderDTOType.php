@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Form;
+namespace Kantine\Form;
 
-use App\Form\OrderFormDTO;
+use Kantine\Form\OrderFormDTO;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;

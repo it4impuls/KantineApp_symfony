@@ -2,7 +2,7 @@ security:
     # enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
-        App\Entity\SonataUserUser:
+        Shared\Entity\SonataUserUser:
             algorithm: auto
 
 
@@ -11,9 +11,9 @@ security:
         sonata_user_bundle:
             id: sonata.user.security.user_provider
         # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
+        shared_user_provider:
             entity:
-                class: App\Entity\SonataUserUser
+                class: Shared\Entity\SonataUserUser
                 property: username
     firewalls:
         dev:
@@ -47,7 +47,7 @@ security:
                 path: /admin
 
         api:
-            provider: app_user_provider
+            provider: shared_user_provider
             lazy: true
             pattern: /api(.*)
             context: user
@@ -62,7 +62,7 @@ security:
             # access_token:
             #     token_handler: App\Security\AccessTokenHandler
         main:
-            provider: app_user_provider
+            provider: shared_user_provider
             context:             user
             form_login:
                 login_path: app_login

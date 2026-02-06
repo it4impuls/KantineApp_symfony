@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Twig\Components;
+namespace Kantine\Twig\Components;
 
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace Shared\Controller;
 
 use Sonata\UserBundle\Model\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

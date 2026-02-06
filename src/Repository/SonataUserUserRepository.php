@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace Shared\Repository;
 
-use App\Entity\SonataUserUser;
+use Shared\Entity\SonataUserUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;

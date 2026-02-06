@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity;
+namespace Shared\Entity;
 
-use App\Repository\SonataUserUserRepository;
+use Shared\Repository\SonataUserUserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;

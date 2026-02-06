@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace Shared\Controller;
 
-use App\Entity\Costumer;
+use Shared\Entity\Costumer;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\View\View;

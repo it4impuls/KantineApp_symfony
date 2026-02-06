@@ -1,7 +1,7 @@
 controllers:
     resource:
         path: ../src/Controller/
-        namespace: App\Controller
+        namespace: Shared\Controller
     type: attribute
 
 sonata_user_admin_security:

@@ -1,12 +1,14 @@
 <?php
 
 
-namespace App\Admin;
+namespace Kantine\Admin;
 
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Exporter\DataSourceInterface;
 use Sonata\DoctrineORMAdminBundle\Exporter\DataSource;
 use Sonata\Exporter\Source\DoctrineORMQuerySourceIterator;
+
+use Kantine\Admin\OrderAdmin;
 
 class OrderDataSource implements DataSourceInterface
 {

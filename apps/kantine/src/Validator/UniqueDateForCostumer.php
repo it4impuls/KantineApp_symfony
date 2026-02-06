@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Validator;
+namespace Kantine\Validator;
 
 use Symfony\Component\Validator\Constraint;
 

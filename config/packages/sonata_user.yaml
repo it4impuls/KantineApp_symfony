@@ -3,7 +3,7 @@ sonata_user:
     manager_type: orm
 
     class:
-        user: App\Entity\SonataUserUser
+        user: Shared\Entity\SonataUserUser
 
     admin:
         user:

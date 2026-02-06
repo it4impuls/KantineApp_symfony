@@ -52,12 +52,14 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "Shared\\": "src/",
+            "Kantine\\": "apps/kantine/src/",
+            "Zeiterfassung\\": "apps/zeiterfassung/src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "Shared\\Tests\\": "tests/"
         }
     },
     "replace": {
@@ -71,9 +73,12 @@
     },
     "scripts": {
         "auto-scripts": {
-            "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "importmap:install": "symfony-cmd"
+            "importmap:install -ikantine": "symfony-cmd",
+            "importmap:install -izeiterfassung": "symfony-cmd",
+            "cache:clear -ikantine": "symfony-cmd",
+            "cache:clear -izeiterfassung": "symfony-cmd",
+            "assets:install %PUBLIC_DIR% -ikantine": "symfony-cmd",
+            "assets:install %PUBLIC_DIR% -izeiterfassung --no-cleanup": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

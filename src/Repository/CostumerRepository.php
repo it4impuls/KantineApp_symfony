@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace Shared\Repository;
 
-use App\Entity\Costumer;
+use Shared\Entity\Costumer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
@@ -48,7 +48,6 @@ class CostumerRepository extends ServiceEntityRepository
 
     private function guessKey(string $key): string
     {
-        $vars = get_class_vars('App\Entity\Costumer');
         $cleanKey = trim(strtolower($key));
         if ($cleanKey == "id")
             return "id";

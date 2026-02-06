@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Validator;
+namespace Kantine\Validator;
 
-use App\Repository\OrderRepository;
+use Kantine\Repository\OrderRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;

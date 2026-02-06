@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Form;
+namespace Kantine\Form;
 
 
 class OrderFormDTO

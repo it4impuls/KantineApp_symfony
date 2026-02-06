@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Entity;
+namespace Shared\Entity;
 
-use App\Repository\CostumerRepository;
+use Shared\Repository\CostumerRepository;
+use Kantine\Entity\Order;
 use DateInterval;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;

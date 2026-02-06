@@ -25,7 +25,7 @@
     {# we only want to show one message, dont add more then one flashes #}
     {% for label, messages in app.flashes|slice(0,1) %}
         {% for message in messages %}
-            <twig:Alert type="{{label}}" message="{{message|trans}}" /> 
+            <Kantine:twig:Alert type="{{label}}" message="{{message|trans}}" /> 
         {% endfor %}
     {% endfor %}
 
@@ -54,6 +54,7 @@
                     id="{{ form.ordered_item.vars.name }}_{{ choice.value }}" 
                     name="order_dto[{{ form.ordered_item.vars.name }}]" 
                     value="{{ choice.value }}"
+                    required
                     {# surely there is a better way to check wether this is selected #}
                     {# checked="{{ form.tax.vars.value == choice.value }}" #}
                     

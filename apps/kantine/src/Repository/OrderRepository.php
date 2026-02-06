@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace Kantine\Repository;
 
-use App\Entity\Order;
+use Kantine\Entity\Order;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;

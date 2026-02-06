@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Entity;
+namespace Kantine\Entity;
 
-use App\Repository\OrderRepository;
-use App\Validator\UniqueDateForCostumer;
+use Kantine\Repository\OrderRepository;
+use Kantine\Validator\UniqueDateForCostumer;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Shared\Entity\Costumer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
