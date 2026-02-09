@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Translation\TranslatableMessage;
 use FOS\RestBundle\View\View;
 
-
+#[Route("/kantine","kantine")]
 final class OrderController extends AbstractFOSRestController
 {
     public function __construct(

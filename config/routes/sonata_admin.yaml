@@ -14,3 +14,14 @@ sonata_user_admin_security:
 sonata_user_admin_resetting:
     resource: '@SonataUserBundle/Resources/config/routing/admin_resetting.xml'
     prefix: /admin/resetting
+
+
+
+zeiterfassung_admin_area:
+    resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
+    prefix: /zeiterfassung/admin
+
+zeiterfassung_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /zeiterfassung/admin

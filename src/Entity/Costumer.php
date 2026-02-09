@@ -51,7 +51,8 @@ class Costumer
         "Tischlerei" => "TISCHLEREI",
         "Tischlerei-Tempus" => "TISCHLEREI-TEMPUS",
         "BVB" => "BVB",
-        "Aperio" => "APERIO"
+        "Aperio" => "APERIO",
+        "" => ""
     ];
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -201,6 +202,11 @@ class Costumer
         $this->Department = trim(strtoupper($Department));
 
         return $this;
+    }
+
+    public function getUsername()
+    {
+        return $this->getFirstname(). " ". $this->getLastname();
     }
 }
 

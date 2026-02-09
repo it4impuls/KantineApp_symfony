@@ -46,21 +46,23 @@ security:
                 lifetime: 2629746
                 path: /admin
 
-        api:
+        api_login:
             provider: shared_user_provider
-            lazy: true
-            pattern: /api(.*)
+            pattern: ^/api/login
             context: user
+            stateless: true
             json_login:
-                login_path: api_login
-                check_path: api_login
-            remember_me:
-                secret: '%env(APP_SECRET)%'
-                lifetime: 2629746
-                path: /api
-                always_remember_me: true
-            # access_token:
-            #     token_handler: App\Security\AccessTokenHandler
+                check_path: /api/login
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        zeiterfassung:
+            pattern:   ^/zeiterfassung
+            provider: shared_user_provider
+            context:             user
+            stateless: true
+            jwt: ~
+
         main:
             provider: shared_user_provider
             context:             user
@@ -91,17 +93,17 @@ security:
         - { path: ^/admin/request$, role: PUBLIC_ACCESS }
         - { path: ^/admin/check-email$, role: PUBLIC_ACCESS }
         - { path: ^/admin/reset/.*$, role: PUBLIC_ACCESS }
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/login$, role: PUBLIC_ACCESS }
         - { path: ^/logout$, role: PUBLIC_ACCESS }
-        - { path: ^/api/login$, role: PUBLIC_ACCESS }
-
-        - { path: ^/api/.*, role: PUBLIC_ACCESS }
 
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.
         # Change these rules to adapt them to your needs
         - { path: ^/admin/, role: ROLE_USER }
-        - { path: ^/.*, role: ROLE_USER }
+        - { path: ^/kantine/, role: ROLE_USER }
+        - { path: ^/zeiterfassung/, role: ROLE_USER }
+        - { path: ^/.*, role: PUBLIC_ACCESS }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/, roles: ROLE_USER }
 
@@ -110,6 +112,8 @@ security:
         ROLE_ADMIN_ORDER_ALL: [ROLE_ADMIN_ORDER_CREATE, ROLE_ADMIN_ORDER_LIST, ROLE_ADMIN_ORDER_DELETE, ROLE_ADMIN_ORDER_EDIT, ROLE_ADMIN_ORDER_EXPORT, ROLE_ADMIN_ORDER_VIEW]
         # ROLE_ADMIN_USER_ALL: [ROLE_ADMIN_USER_CREATE, ROLE_ADMIN_USER_LIST, ROLE_ADMIN_USER_DELETE, ROLE_ADMIN_USER_EDIT, ROLE_ADMIN_USER_EXPORT, ROLE_ADMIN_USER_VIEW]        
 
+        ROLE_USER_KANTINE: [ROLE_ADMIN_ORDER_ALL]
+        ROLE_FA: [ROLE_ADMIN_COSTUMER_VIEW, ROLE_ADMIN_COSTUMER_LIST, ROLE_ADMIN_ATTENDANCE_ALL]
         ROLE_ADMIN: [ROLE_USER, ROLE_ADMIN_COSTUMER_ALL, ROLE_ADMIN_ORDER_ALL]
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 

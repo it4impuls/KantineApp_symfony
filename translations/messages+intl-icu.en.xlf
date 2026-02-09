@@ -73,6 +73,34 @@
         <source>Order Create</source>
         <target>Order Create</target>
       </trans-unit>
+      <trans-unit id="UwSrmOW" resname="Department">
+        <source>Department</source>
+        <target>Department</target>
+      </trans-unit>
+      <trans-unit id="TSuzaPk" resname="Übersicht">
+        <source>Übersicht</source>
+        <target>Time Entries</target>
+      </trans-unit>
+      <trans-unit id="jryzJEK" resname="Time Entry List">
+        <source>Time Entry List</source>
+        <target>Time Entry List</target>
+      </trans-unit>
+      <trans-unit id="YVTiGwg" resname="Time Entry Create">
+        <source>Time Entry Create</source>
+        <target>Time Entry Create</target>
+      </trans-unit>
+      <trans-unit id="HOLKkg2" resname="%firstname% %lastname% in %dep% could not me added: %cause%">
+        <source>%firstname% %lastname% in %dep% could not me added: %cause%</source>
+        <target>%firstname% %lastname% in %dep% could not me added: %cause%</target>
+      </trans-unit>
+      <trans-unit id="ZnSEFXp" resname="updated department %dep% for existing costumer: %firstname% %lastname% &amp;emsp; &lt;img src=&quot;/%barcode%&quot;&gt; ">
+        <source>updated department %dep% for existing costumer: %firstname% %lastname% &amp;emsp; &lt;img src="/%barcode%"&gt; </source>
+        <target><![CDATA[__updated department %dep% for existing costumer: %firstname% %lastname% &emsp; <img src="/%barcode%"> ]]></target>
+      </trans-unit>
+      <trans-unit id="k13JI7C" resname="sucessfully added: %firstname% %lastname% in %dep% &amp;emsp; &lt;img src=&quot;/%barcode%&quot;&gt; ">
+        <source>sucessfully added: %firstname% %lastname% in %dep% &amp;emsp; &lt;img src="/%barcode%"&gt; </source>
+        <target><![CDATA[__sucessfully added: %firstname% %lastname% in %dep% &emsp; <img src="/%barcode%"> ]]></target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

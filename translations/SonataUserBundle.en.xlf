@@ -595,15 +595,23 @@
       </trans-unit>
       <trans-unit id="AYBFwgO" resname="show.group_default">
         <source>show.group_default</source>
-        <target>__show.group_default</target>
+        <target>Group</target>
       </trans-unit>
       <trans-unit id="oWTNLVb" resname="list.label__actions">
         <source>list.label__actions</source>
-        <target>__list.label__actions</target>
+        <target>Actions</target>
       </trans-unit>
       <trans-unit id="uRSZ_kR" resname="form.group_default">
         <source>form.group_default</source>
-        <target>__form.group_default</target>
+        <target>Group</target>
+      </trans-unit>
+      <trans-unit id="sLXSOsk" resname="list.label_department">
+        <source>list.label_department</source>
+        <target>Department</target>
+      </trans-unit>
+      <trans-unit id="QZSBDRu" resname="form.label_department">
+        <source>form.label_department</source>
+        <target>Department</target>
       </trans-unit>
     </body>
   </file>

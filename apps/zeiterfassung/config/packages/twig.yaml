@@ -1,4 +1,4 @@
 twig:
     paths:
-        '%kernel.project_dir%/apps/kantine/templates': Kantine
+        '%kernel.project_dir%/apps/zeiterfassung/templates': Zeiterfassung
         # '%kernel.project_dir%/apps/kantine/templates': ~

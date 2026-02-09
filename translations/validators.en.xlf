@@ -473,6 +473,90 @@
         <source>This value is not a valid Twig template.</source>
         <target>This value is not a valid Twig template.</target>
       </trans-unit>
+      <trans-unit id="nkWt_7E" resname="This file is not a valid video.">
+        <source>This file is not a valid video.</source>
+        <target>This file is not a valid video.</target>
+      </trans-unit>
+      <trans-unit id="pi554ed" resname="The size of the video could not be detected.">
+        <source>The size of the video could not be detected.</source>
+        <target>The size of the video could not be detected.</target>
+      </trans-unit>
+      <trans-unit id="vpXeOI1" resname="The video width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.">
+        <source>The video width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.</source>
+        <target>The video width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.</target>
+      </trans-unit>
+      <trans-unit id="Tg7PpYm" resname="The video width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.">
+        <source>The video width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.</source>
+        <target>The video width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.</target>
+      </trans-unit>
+      <trans-unit id="9Atub01" resname="The video height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.">
+        <source>The video height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.</source>
+        <target>The video height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.</target>
+      </trans-unit>
+      <trans-unit id="ARDe4Ma" resname="The video height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.">
+        <source>The video height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.</source>
+        <target>The video height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.</target>
+      </trans-unit>
+      <trans-unit id="Hu1SHH5" resname="The video has too few pixels ({{ pixels }} pixels). Minimum amount expected is {{ min_pixels }} pixels.">
+        <source>The video has too few pixels ({{ pixels }} pixels). Minimum amount expected is {{ min_pixels }} pixels.</source>
+        <target>The video has too few pixels ({{ pixels }} pixels). Minimum amount expected is {{ min_pixels }} pixels.</target>
+      </trans-unit>
+      <trans-unit id=".F2vLbx" resname="The video has too many pixels ({{ pixels }} pixels). Maximum amount expected is {{ max_pixels }} pixels.">
+        <source>The video has too many pixels ({{ pixels }} pixels). Maximum amount expected is {{ max_pixels }} pixels.</source>
+        <target>The video has too many pixels ({{ pixels }} pixels). Maximum amount expected is {{ max_pixels }} pixels.</target>
+      </trans-unit>
+      <trans-unit id="ZCHRfZl" resname="The video ratio is too big ({{ ratio }}). Allowed maximum ratio is {{ max_ratio }}.">
+        <source>The video ratio is too big ({{ ratio }}). Allowed maximum ratio is {{ max_ratio }}.</source>
+        <target>The video ratio is too big ({{ ratio }}). Allowed maximum ratio is {{ max_ratio }}.</target>
+      </trans-unit>
+      <trans-unit id="3yvRyPG" resname="The video ratio is too small ({{ ratio }}). Minimum ratio expected is {{ min_ratio }}.">
+        <source>The video ratio is too small ({{ ratio }}). Minimum ratio expected is {{ min_ratio }}.</source>
+        <target>The video ratio is too small ({{ ratio }}). Minimum ratio expected is {{ min_ratio }}.</target>
+      </trans-unit>
+      <trans-unit id="IsTnFJs" resname="The video is square ({{ width }}x{{ height }}px). Square videos are not allowed.">
+        <source>The video is square ({{ width }}x{{ height }}px). Square videos are not allowed.</source>
+        <target>The video is square ({{ width }}x{{ height }}px). Square videos are not allowed.</target>
+      </trans-unit>
+      <trans-unit id="XH2fDoA" resname="The video is landscape oriented ({{ width }}x{{ height }}px). Landscape oriented videos are not allowed.">
+        <source>The video is landscape oriented ({{ width }}x{{ height }}px). Landscape oriented videos are not allowed.</source>
+        <target>The video is landscape oriented ({{ width }}x{{ height }}px). Landscape oriented videos are not allowed.</target>
+      </trans-unit>
+      <trans-unit id="FKlt5yH" resname="The video is portrait oriented ({{ width }}x{{ height }}px). Portrait oriented videos are not allowed.">
+        <source>The video is portrait oriented ({{ width }}x{{ height }}px). Portrait oriented videos are not allowed.</source>
+        <target>The video is portrait oriented ({{ width }}x{{ height }}px). Portrait oriented videos are not allowed.</target>
+      </trans-unit>
+      <trans-unit id="H0f_07G" resname="The video file is corrupted.">
+        <source>The video file is corrupted.</source>
+        <target>The video file is corrupted.</target>
+      </trans-unit>
+      <trans-unit id="S_6Zqk2" resname="The video contains multiple streams. Only one stream is allowed.">
+        <source>The video contains multiple streams. Only one stream is allowed.</source>
+        <target>The video contains multiple streams. Only one stream is allowed.</target>
+      </trans-unit>
+      <trans-unit id="QUdz1Q8" resname="Unsupported video codec &quot;{{ codec }}&quot;.">
+        <source>Unsupported video codec "{{ codec }}".</source>
+        <target>Unsupported video codec "{{ codec }}".</target>
+      </trans-unit>
+      <trans-unit id="qAXzZp_" resname="Unsupported video container &quot;{{ container }}&quot;.">
+        <source>Unsupported video container "{{ container }}".</source>
+        <target>Unsupported video container "{{ container }}".</target>
+      </trans-unit>
+      <trans-unit id="IPYUmwN" resname="The image file is corrupted.">
+        <source>The image file is corrupted.</source>
+        <target>The image file is corrupted.</target>
+      </trans-unit>
+      <trans-unit id=".4PEOjp" resname="The image has too few pixels ({{ pixels }} pixels). Minimum amount expected is {{ min_pixels }} pixels.">
+        <source>The image has too few pixels ({{ pixels }} pixels). Minimum amount expected is {{ min_pixels }} pixels.</source>
+        <target>The image has too few pixels ({{ pixels }} pixels). Minimum amount expected is {{ min_pixels }} pixels.</target>
+      </trans-unit>
+      <trans-unit id="EJE2_B5" resname="The image has too many pixels ({{ pixels }} pixels). Maximum amount expected is {{ max_pixels }} pixels.">
+        <source>The image has too many pixels ({{ pixels }} pixels). Maximum amount expected is {{ max_pixels }} pixels.</source>
+        <target>The image has too many pixels ({{ pixels }} pixels). Maximum amount expected is {{ max_pixels }} pixels.</target>
+      </trans-unit>
+      <trans-unit id="eRZIN0." resname="This filename does not match the expected charset.">
+        <source>This filename does not match the expected charset.</source>
+        <target>This filename does not match the expected charset.</target>
+      </trans-unit>
       <trans-unit id=".SEaaBa" resname="This form should not contain extra fields.">
         <source>This form should not contain extra fields.</source>
         <target>This form should not contain extra fields.</target>
@@ -616,6 +700,18 @@
       <trans-unit id="3qwupMP" resname="A costumer with {{ value }} this name already exists">
         <source>A costumer with {{ value }} this name already exists</source>
         <target>A costumer with the name {{ value }} already exists</target>
+      </trans-unit>
+      <trans-unit id="JyAwzHd" resname="Please select a user.">
+        <source>Please select a user.</source>
+        <target>Please select a user.</target>
+      </trans-unit>
+      <trans-unit id="YATkpEZ" resname="{{ value }} not a valid department. Possible departments: {{ choices }}">
+        <source>{{ value }} not a valid department. Possible departments: {{ choices }}</source>
+        <target>{{ value }} not a valid department. Possible departments: {{ choices }}</target>
+      </trans-unit>
+      <trans-unit id="8VA2XFL" resname="A costumer with this name already exists">
+        <source>A costumer with this name already exists</source>
+        <target>A costumer with this name already exists</target>
       </trans-unit>
     </body>
   </file>

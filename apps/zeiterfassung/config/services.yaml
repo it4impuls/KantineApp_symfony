@@ -13,21 +13,24 @@ services:
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
-    Kantine\:
+    Zeiterfassung\:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    Zeiterfassung\Admin\TimeEntryAdmin:
+        class: Zeiterfassung\Admin\TimeEntryAdmin
+        arguments:
+            - ~
+            - Zeiterfassung\Entity\TimeEntry
+            - ~
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Übersicht", group: "Übersicht" }
+
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    Kantine\Admin\OrderDataSource:
-        decorates: 'sonata.admin.data_source.orm'
 
-
-    admin.order:
-        class: Kantine\Admin\OrderAdmin
-        tags:
-            - { name: sonata.admin, model_class: Kantine\Entity\Order, controller: ~, manager_type: orm, group: Kantine, label: Order}

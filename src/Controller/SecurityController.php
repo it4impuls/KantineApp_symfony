@@ -2,9 +2,11 @@
 
 namespace Shared\Controller;
 
+use Shared\Entity\SonataUserUser;
 use Sonata\UserBundle\Model\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\RememberMeFactory;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -35,19 +37,37 @@ class SecurityController extends AbstractController
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
-    #[Route(['/api/login','/api/login/'], name: 'api_login', methods: ['POST'])]
-    public function apiLogin(#[CurrentUser] ?User $user, Request $request): Response
+    #[Route('/api/login', name: 'api_login', methods: ['POST'])]
+    public function apiLogin(#[CurrentUser] ?User $editor, Request $request): Response
     {
-        if (null === $user) {
+        
+        // $request->getContent()
+        if (null === $editor) {
             return $this->json([
-                'message' => 'missing credentials',
+                'error' => 'Invalid credentials'
             ], Response::HTTP_UNAUTHORIZED);
         }
-        $token = $request->attributes->get("_security_remember_me_cookie");
-        $response = $this->json([
-            'user'  => $user->getUserIdentifier(),
-            $token->getName() => $token->getValue()
-        ]);
-        return $response;
+
+        return $this->json([
+            'id' => $editor->getId(),
+            'username' => $editor->getUsername(),
+            'roles' => $editor->getRoles(),
+        ], Response::HTTP_OK);
     }
+
+    // #[Route(['/api/login','/api/login/'], name: 'api_login', methods: ['POST'])]
+    // public function apiLogin(#[CurrentUser] ?User $user, Request $request): Response
+    // {
+    //     if (null === $user) {
+    //         return $this->json([
+    //             'message' => 'missing credentials',
+    //         ], Response::HTTP_UNAUTHORIZED);
+    //     }
+    //     $token = $request->attributes->get("_security_remember_me_cookie");
+    //     $response = $this->json([
+    //         'user'  => $user->getUserIdentifier(),
+    //         $token->getName() => $token->getValue()
+    //     ]);
+    //     return $response;
+    // }
 }

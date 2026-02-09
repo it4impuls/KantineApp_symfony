@@ -513,6 +513,14 @@
         <source>admin</source>
         <target>admin</target>
       </trans-unit>
+      <trans-unit id="48SznW1" resname="Shared">
+        <source>Shared</source>
+        <target>Shared</target>
+      </trans-unit>
+      <trans-unit id="TSuzaPk" resname="Übersicht">
+        <source>Übersicht</source>
+        <target>Time Entries</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -4,5 +4,6 @@ twig_component:
         # Namespace & directory for components
         Shared\Twig\Components\: 'components/'
         Kantine\Twig\Components\: 'apps/kantine/templates/components/'
+        Zeiterfassung\Twig\Components\: 'apps/zeiterfassung/templates/components/'
 
         

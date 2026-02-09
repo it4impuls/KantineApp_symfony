@@ -473,6 +473,90 @@
         <source>This value is not a valid Twig template.</source>
         <target>Dieser Wert ist kein valides Twig-Template.</target>
       </trans-unit>
+      <trans-unit id="nkWt_7E" resname="This file is not a valid video.">
+        <source>This file is not a valid video.</source>
+        <target>Diese Datei ist kein gültiges Video.</target>
+      </trans-unit>
+      <trans-unit id="pi554ed" resname="The size of the video could not be detected.">
+        <source>The size of the video could not be detected.</source>
+        <target>Die Größe des Videos konnte nicht ermittelt werden.</target>
+      </trans-unit>
+      <trans-unit id="vpXeOI1" resname="The video width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.">
+        <source>The video width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.</source>
+        <target>Das Video ist zu breit ({{ width }}px). Die zulässige maximale Breite ist {{ max_width }}px.</target>
+      </trans-unit>
+      <trans-unit id="Tg7PpYm" resname="The video width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.">
+        <source>The video width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.</source>
+        <target>Das Video ist nicht breit genug ({{ width }}px). Die erwartete Mindestbreite ist {{ min_width }}px.</target>
+      </trans-unit>
+      <trans-unit id="9Atub01" resname="The video height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.">
+        <source>The video height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.</source>
+        <target>Die Videohöhe ist zu hoch ({{ height }}px). Die zulässige maximale Höhe ist {{ max_height }}px.</target>
+      </trans-unit>
+      <trans-unit id="ARDe4Ma" resname="The video height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.">
+        <source>The video height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.</source>
+        <target>Die Videohöhe ist zu klein ({{ height }}px). Die erwartete Mindesthöhe ist {{ min_height }}px.</target>
+      </trans-unit>
+      <trans-unit id="Hu1SHH5" resname="The video has too few pixels ({{ pixels }} pixels). Minimum amount expected is {{ min_pixels }} pixels.">
+        <source>The video has too few pixels ({{ pixels }} pixels). Minimum amount expected is {{ min_pixels }} pixels.</source>
+        <target>Das Video hat zu wenige Pixel ({{ pixels }}). Die erwartete Mindestanzahl ist {{ min_pixels }}.</target>
+      </trans-unit>
+      <trans-unit id=".F2vLbx" resname="The video has too many pixels ({{ pixels }} pixels). Maximum amount expected is {{ max_pixels }} pixels.">
+        <source>The video has too many pixels ({{ pixels }} pixels). Maximum amount expected is {{ max_pixels }} pixels.</source>
+        <target>Das Video hat zu viele Pixel ({{ pixels }}). Die erwartete Höchstanzahl ist {{ max_pixels }}.</target>
+      </trans-unit>
+      <trans-unit id="ZCHRfZl" resname="The video ratio is too big ({{ ratio }}). Allowed maximum ratio is {{ max_ratio }}.">
+        <source>The video ratio is too big ({{ ratio }}). Allowed maximum ratio is {{ max_ratio }}.</source>
+        <target>Das Video-Seitenverhältnis ist zu hoch ({{ ratio }}). Das zulässige maximale Verhältnis ist {{ max_ratio }}.</target>
+      </trans-unit>
+      <trans-unit id="3yvRyPG" resname="The video ratio is too small ({{ ratio }}). Minimum ratio expected is {{ min_ratio }}.">
+        <source>The video ratio is too small ({{ ratio }}). Minimum ratio expected is {{ min_ratio }}.</source>
+        <target>Das Video-Seitenverhältnis ist zu klein ({{ ratio }}). Das erwartete Mindestverhältnis ist {{ min_ratio }}.</target>
+      </trans-unit>
+      <trans-unit id="IsTnFJs" resname="The video is square ({{ width }}x{{ height }}px). Square videos are not allowed.">
+        <source>The video is square ({{ width }}x{{ height }}px). Square videos are not allowed.</source>
+        <target>Das Video ist quadratisch ({{ width }}x{{ height }}px). Quadratische Videos sind nicht erlaubt.</target>
+      </trans-unit>
+      <trans-unit id="XH2fDoA" resname="The video is landscape oriented ({{ width }}x{{ height }}px). Landscape oriented videos are not allowed.">
+        <source>The video is landscape oriented ({{ width }}x{{ height }}px). Landscape oriented videos are not allowed.</source>
+        <target>Das Video ist im Querformat ({{ width }}x{{ height }} px). Querformat-Videos sind nicht erlaubt.</target>
+      </trans-unit>
+      <trans-unit id="FKlt5yH" resname="The video is portrait oriented ({{ width }}x{{ height }}px). Portrait oriented videos are not allowed.">
+        <source>The video is portrait oriented ({{ width }}x{{ height }}px). Portrait oriented videos are not allowed.</source>
+        <target>Das Video ist hochkant ausgerichtet ({{ width }}x{{ height }}px). Hochkant-Videos sind nicht erlaubt.</target>
+      </trans-unit>
+      <trans-unit id="H0f_07G" resname="The video file is corrupted.">
+        <source>The video file is corrupted.</source>
+        <target>Die Videodatei ist beschädigt.</target>
+      </trans-unit>
+      <trans-unit id="S_6Zqk2" resname="The video contains multiple streams. Only one stream is allowed.">
+        <source>The video contains multiple streams. Only one stream is allowed.</source>
+        <target>Das Video enthält mehrere Streams. Es ist nur ein Stream erlaubt.</target>
+      </trans-unit>
+      <trans-unit id="QUdz1Q8" resname="Unsupported video codec &quot;{{ codec }}&quot;.">
+        <source>Unsupported video codec "{{ codec }}".</source>
+        <target>Nicht unterstützter Videocodec "{{ codec }}".</target>
+      </trans-unit>
+      <trans-unit id="qAXzZp_" resname="Unsupported video container &quot;{{ container }}&quot;.">
+        <source>Unsupported video container "{{ container }}".</source>
+        <target>Nicht unterstützter Videocontainer "{{ container }}".</target>
+      </trans-unit>
+      <trans-unit id="IPYUmwN" resname="The image file is corrupted.">
+        <source>The image file is corrupted.</source>
+        <target>Die Bilddatei ist beschädigt.</target>
+      </trans-unit>
+      <trans-unit id=".4PEOjp" resname="The image has too few pixels ({{ pixels }} pixels). Minimum amount expected is {{ min_pixels }} pixels.">
+        <source>The image has too few pixels ({{ pixels }} pixels). Minimum amount expected is {{ min_pixels }} pixels.</source>
+        <target>Das Bild hat zu wenige Pixel ({{ pixels }}). Erwartete Mindestanzahl ist {{ min_pixels }}.</target>
+      </trans-unit>
+      <trans-unit id="EJE2_B5" resname="The image has too many pixels ({{ pixels }} pixels). Maximum amount expected is {{ max_pixels }} pixels.">
+        <source>The image has too many pixels ({{ pixels }} pixels). Maximum amount expected is {{ max_pixels }} pixels.</source>
+        <target>Das Bild hat zu viele Pixel ({{ pixels }}). Erwartete Höchstanzahl ist {{ max_pixels }}.</target>
+      </trans-unit>
+      <trans-unit id="eRZIN0." resname="This filename does not match the expected charset.">
+        <source>This filename does not match the expected charset.</source>
+        <target>Dieser Dateiname entspricht nicht dem erwarteten Zeichensatz.</target>
+      </trans-unit>
       <trans-unit id=".SEaaBa" resname="This form should not contain extra fields.">
         <source>This form should not contain extra fields.</source>
         <target>Dieses Formular sollte keine zusätzlichen Felder enthalten.</target>
@@ -615,15 +699,19 @@
       </trans-unit>
       <trans-unit id="3qwupMP" resname="A costumer with {{ value }} this name already exists">
         <source>A costumer with {{ value }} this name already exists</source>
-        <target>Ein Kunde mit dem Namen {{ value }} existiert bereits</target>
+        <target>Ein Teilnehmer mit dem Namen {{ value }} existiert bereits</target>
       </trans-unit>
       <trans-unit id="8VA2XFL" resname="A costumer with this name already exists">
         <source>A costumer with this name already exists</source>
-        <target>Ein Kunde mit diesem Namen existiert bereits</target>
+        <target>Ein Teilnehmer mit diesem Namen existiert bereits</target>
       </trans-unit>
       <trans-unit id="YATkpEZ" resname="{{ value }} not a valid department. Possible departments: {{ choices }}">
         <source>{{ value }} not a valid department. Possible departments: {{ choices }}</source>
         <target>{{ value }} kein valider Bereich. Mögliche Bereiche: {{ choices }}</target>
+      </trans-unit>
+      <trans-unit id="JyAwzHd" resname="Please select a user.">
+        <source>Please select a user.</source>
+        <target>Bitte Teilnehmer Auswählen.</target>
       </trans-unit>
     </body>
   </file>

@@ -24,11 +24,12 @@ class Kernel extends BaseKernel
     public function registerBundles(): iterable
     {
         $sharedBundles = require $this->getSharedConfigDir().'/bundles.php';
+        if($this->id)
         $appBundles = require $this->getAppConfigDir().'/bundles.php';
 
         // load common bundles, such as the FrameworkBundle, as well as
         // specific bundles required exclusively for the app itself
-        foreach (array_merge($sharedBundles, $appBundles) as $class => $envs) {
+        foreach (array_merge($sharedBundles, $appBundles??[]) as $class => $envs) {
             if ($envs[$this->environment] ?? $envs['all'] ?? false) {
                 yield new $class();
             }
@@ -52,6 +53,7 @@ class Kernel extends BaseKernel
         // load common config files, such as the framework.yaml, as well as
         // specific configs required exclusively for the app itself
         $this->doConfigureContainer($container, $this->getSharedConfigDir());
+        if($this->id)
         $this->doConfigureContainer($container, $this->getAppConfigDir());
     }
 
@@ -60,6 +62,7 @@ class Kernel extends BaseKernel
         // load common routes files, such as the routes/framework.yaml, as well as
         // specific routes required exclusively for the app itself
         $this->doConfigureRoutes($routes, $this->getSharedConfigDir());
+        if($this->id)
         $this->doConfigureRoutes($routes, $this->getAppConfigDir());
     }
 
