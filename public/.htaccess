@@ -29,6 +29,7 @@ DirectoryIndex index.php
     RewriteEngine On
 
     # Use different apps depending on url
+    # for some reason this sets REDIRECT_APP_ID
     # SetEnvIf Request_URI ^.*$ APP_ID=kantine
     SetEnvIf Request_URI ^kantine.*$ APP_ID=kantine
     SetEnvIf Request_URI ^zeiterfassung.*$ APP_ID=zeiterfassung
@@ -48,9 +49,9 @@ DirectoryIndex index.php
     RewriteRule ^ - [E=HTTP_AUTHORIZATION:%0]
 
     # redirect old kantine app
-    RewriteCond %{REQUEST_URI} (^/$)
-    RewriteCond %{REQUEST_URI} (^/admin)
-    RewriteRule ^(.*)$ https://kantine.impuls-reha.de/kantine/$1 [L,R=301]
+    # RewriteCond %{REQUEST_URI} (^/$)
+    # RewriteCond %{REQUEST_URI} (^/admin)
+    # RewriteRule ^(.*)$ https://kantine.impuls-reha.de/kantine/$1 [L,R=301]
 
     # Redirect to URI without front controller to prevent duplicate content
     # (with and without `/index.php`). Only do this redirect on the initial
