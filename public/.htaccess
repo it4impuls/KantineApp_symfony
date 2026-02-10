@@ -29,7 +29,7 @@ DirectoryIndex index.php
     RewriteEngine On
 
     # Use different apps depending on url
-    SetEnvIf Request_URI ^.*$ APP_ID=kantine
+    # SetEnvIf Request_URI ^.*$ APP_ID=kantine
     SetEnvIf Request_URI ^kantine.*$ APP_ID=kantine
     SetEnvIf Request_URI ^zeiterfassung.*$ APP_ID=zeiterfassung
 
