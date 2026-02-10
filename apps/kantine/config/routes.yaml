@@ -3,7 +3,3 @@ controllers:
         path: ../src/Controller/
         namespace: Kantine\Controller
     type: attribute
-
-admin_kantine:
-    resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
-    prefix: /kantine/admin

@@ -5,6 +5,10 @@
 # to each configured DirectoryIndex file (e.g. index.php, index.html, index.pl).
 DirectoryIndex index.php
 
+
+# RedirectPermanent / https://kantine.impuls-reha.de/kantine
+
+
 # By default, Apache does not evaluate symbolic links if you did not enable this
 # feature in your server configuration. Uncomment the following line if you
 # install assets as symlinks or if you experience problems related to symlinks
@@ -24,7 +28,7 @@ DirectoryIndex index.php
 
     RewriteEngine On
 
-    # lets see if env writing is possible
+    # Use different apps depending on url
     SetEnvIf Request_URI ^.*$ APP_ID=kantine
     SetEnvIf Request_URI ^kantine.*$ APP_ID=kantine
     SetEnvIf Request_URI ^zeiterfassung.*$ APP_ID=zeiterfassung
@@ -42,6 +46,11 @@ DirectoryIndex index.php
     # Sets the HTTP_AUTHORIZATION header removed by Apache
     RewriteCond %{HTTP:Authorization} .+
     RewriteRule ^ - [E=HTTP_AUTHORIZATION:%0]
+
+    # redirect old kantine app
+    RewriteCond %{REQUEST_URI} (^/$)
+    RewriteCond %{REQUEST_URI} (^/admin)
+    RewriteRule ^(.*)$ https://kantine.impuls-reha.de/kantine/$1 [L,R=301]
 
     # Redirect to URI without front controller to prevent duplicate content
     # (with and without `/index.php`). Only do this redirect on the initial

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shared\Admin\Entity;
+namespace Shared\Admin;
 
 use Shared\Entity\Costumer;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -19,7 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 
 // custom admin to add Department
-final class UserAdmin extends ModelUserAdmin
+final class UserAmin extends ModelUserAdmin
 {
 
     protected function configureListFields(ListMapper $list): void
