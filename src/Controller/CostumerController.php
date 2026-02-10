@@ -225,6 +225,7 @@ final class CostumerController extends AbstractFOSRestController
                 ->setActive(true);
             $errors = $this->validator->validate($costumer);
             if ($errors->count() > 0) {
+                continue;
                 return new Response((string)$errors);
             }
             $this->entityManager->persist($costumer);
