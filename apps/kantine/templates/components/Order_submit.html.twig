@@ -25,7 +25,7 @@
     {# we only want to show one message, dont add more then one flashes #}
     {% for label, messages in app.flashes|slice(0,1) %}
         {% for message in messages %}
-            {{message}}
+            {# {{message}} #}
             <twig:Kantine:Alert type="{{label}}" message="{{message|trans}}" /> 
         {% endfor %}
     {% endfor %}
@@ -49,6 +49,9 @@
         {% for choice in form.ordered_item.vars.choices %}
             <label class="menulabel btn" for="{{ form.ordered_item.vars.name }}_{{ choice.value }}">
                 {{ choice.label|trans }}
+                {# {{form.ordered_item.vars.value}}
+                {{choice.value}}
+                {{form.ordered_item.vars.value==choice.value}} #}
                 <input 
                     class="input_invis" 
                     type="radio" 
@@ -57,7 +60,7 @@
                     value="{{ choice.value }}"
                     required
                     {# surely there is a better way to check wether this is selected #}
-                    checked="{{ form.ordered_item.vars.value == choice.value }}"
+                    {{ form.ordered_item.vars.value == choice.value ? 'checked':'' }}
                     
                     />
             </label>

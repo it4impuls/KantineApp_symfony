@@ -65,6 +65,7 @@ final class OrderController extends AbstractFOSRestController
         // creates a task object and initializes some data for this example
         $orderDTO = new OrderFormDTO();
         $orderDTO->setTax(7);
+        $emptyOrderDTO = clone $orderDTO;
         $order = new Order();
         $form = $this->createForm(OrderDTOType::class, $orderDTO);
 
@@ -77,8 +78,8 @@ final class OrderController extends AbstractFOSRestController
             assert($cancelButton instanceof SubmitButton);
 
             if ($cancelButton->isClicked()) {
-                $orderDTO = new OrderFormDTO();
-                $form = $this->createForm(OrderDTOType::class, $orderDTO);
+                // $orderDTO = new OrderFormDTO();
+                $form = $this->createForm(OrderDTOType::class, $emptyOrderDTO);
                 $options['form']=$form;
                 return $this->render_site($options);
             }
@@ -109,12 +110,14 @@ final class OrderController extends AbstractFOSRestController
 
                     //try saving, if error write in $options['alert']
                     $this->save_order($order, $options);
+                    $options['form']=$this->createForm(OrderDTOType::class, $emptyOrderDTO);
                 }
             } elseif ($updateButton->isClicked()) {
                 $existing->setOrderedItem($order->getOrderedItem());
                 $existing->setTax($order->getTax());
                 $existing->setOrderDateTime($order->getOrderDateTime());
                 $this->save_order($existing, $options);
+                $options['form']=$this->createForm(OrderDTOType::class, $emptyOrderDTO);
             }
         }
         return $this->render_site($options);
