@@ -49,9 +49,9 @@ DirectoryIndex index.php
     RewriteRule ^ - [E=HTTP_AUTHORIZATION:%0]
 
     # redirect old kantine app
-    RewriteCond %{REQUEST_URI} ^/$
-    RewriteCond %{REQUEST_URI} ^/admin/.*$
-    RewriteRule ^(.*)$ https://kantine.impuls-reha.de/kantine/$1 [L,R=301]
+    # RewriteCond %{REQUEST_URI} ^/$
+    # RewriteCond %{REQUEST_URI} ^admin/(.*)$
+    # RewriteRule ^(.*)$ https://kantine.impuls-reha.de/kantine/$1 [L,R=301]
 
     # Redirect to URI without front controller to prevent duplicate content
     # (with and without `/index.php`). Only do this redirect on the initial

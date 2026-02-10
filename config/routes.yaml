@@ -4,3 +4,16 @@ controllers:
         namespace: Shared\Controller
     type: attribute
 
+kantine_redirect:
+    path: /
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+    defaults:
+        path: 'https://kantine.impuls-reha.de'
+        permanent: true
+
+kantine_admin_redirect:
+    path: /admin
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+    defaults:
+        path: 'https://kantine.impuls-reha.de/admin'
+        permanent: true

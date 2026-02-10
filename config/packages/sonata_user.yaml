@@ -7,7 +7,7 @@ sonata_user:
 
     admin:
         user:
-            class: Sonata\UserBundle\Admin\Entity\UserAdmin
+            class: Shared\Admin\UserAmin
             controller: '%sonata.admin.configuration.default_controller%'
             translation: SonataUserBundle
 

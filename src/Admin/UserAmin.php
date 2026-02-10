@@ -21,6 +21,10 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 // custom admin to add Department
 final class UserAmin extends ModelUserAdmin
 {
+    // public function __construct(UserManagerInterface $userManager)
+    // {
+    //     return parent::__construct($userManager);
+    // }
 
     protected function configureListFields(ListMapper $list): void
     {
@@ -55,11 +59,13 @@ final class UserAmin extends ModelUserAdmin
                 ->add('email')
                 ->add('Department', ChoiceType::class, [
                     'choices' => Costumer::DEPARTMENTS,
+                    'required' => false,
+                    'data' => ''
                 ])
                 ->add('plainPassword', PasswordType::class, [
                     'required' => (!$this->hasSubject() || null === $this->getSubject()->getId()),
                 ])
-                ->add('enabled', null)
+                ->add('enabled', null, ['data' => true])
             ->end()
             ->with('roles', ['class' => 'col-md-8'])
                 ->add('realRoles', RolesMatrixType::class, [
