@@ -69,7 +69,7 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
-                default_target_path: app_order
+                default_target_path: kantine/app_order
                 enable_csrf: true
             
             logout:
