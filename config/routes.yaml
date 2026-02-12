@@ -15,5 +15,5 @@ kantine_admin_redirect:
     path: /admin
     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
     defaults:
-        route: 'kantineapp_order'
+        route: 'sonata_admin_redirect'
         permanent: true

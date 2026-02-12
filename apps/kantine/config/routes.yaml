@@ -4,19 +4,19 @@ controllers:
         namespace: Kantine\Controller
     type: attribute
 
-admin_area:
+kantine_admin_area:
     resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
     prefix: /kantine/admin
 
-sonata_user_admin_security:
+kantine_sonata_user_admin_security:
     resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
     prefix: /kantine/admin
 
-sonata_user_admin_resetting:
+kantine_sonata_user_admin_resetting:
     resource: '@SonataUserBundle/Resources/config/routing/admin_resetting.xml'
     prefix: /kantine/admin/resetting
 
-_sonata_admin:
+_kantine_sonata_admin:
     resource: .
     type: sonata_admin
     prefix: /kantine/admin

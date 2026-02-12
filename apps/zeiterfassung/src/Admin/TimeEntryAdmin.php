@@ -165,7 +165,7 @@ final class TimeEntryAdmin extends AbstractAdmin
             'callback' => function ($qb, $alias, $field, $value) {
                 if (!$value || !$value->hasValue()) return false;
                 $this->ensureUserJoin($qb, $alias);
-                $qb->andWhere("u.department = :dept")
+                $qb->andWhere("u.Department = :dept")
                     ->setParameter('dept', $value->getValue());
                 return true;
             }

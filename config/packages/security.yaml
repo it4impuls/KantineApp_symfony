@@ -31,7 +31,7 @@ security:
 
         admin:
             lazy: true
-            pattern: /admin(.*)
+            pattern: /(kantine|zeiterfassung)/admin(.*)
             provider: sonata_user_bundle
             context: user
             form_login:
@@ -44,7 +44,7 @@ security:
             remember_me:
                 secret: '%env(APP_SECRET)%'
                 lifetime: 2629746
-                path: /admin
+                path: /(kantine|zeiterfassung)/admin
 
         api_login:
             provider: shared_user_provider
