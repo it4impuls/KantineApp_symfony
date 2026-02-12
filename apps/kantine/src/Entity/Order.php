@@ -63,6 +63,16 @@ class Order
         return $this;
     }
 
+    public function getOrderFormatted(): ?string
+    {
+        return number_format($this->ordered_item, 2, ',', '.').'€';
+    }
+
+    public function getOrderNum(): ?float
+    {
+        return (float)$this->ordered_item;
+    }
+
     public function getOrderedItem(): ?string
     {
         return $this->ordered_item;
