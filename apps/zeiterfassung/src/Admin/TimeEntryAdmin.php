@@ -2,7 +2,7 @@
 
 namespace Zeiterfassung\Admin;
 
-use Shared\Entity\Costumer as User;
+use Shared\Entity\Costumer;
 use Sonata\Form\Type\DatePickerType;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
@@ -12,11 +12,11 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
-use Sonata\AdminBundle\Filter\ModelAutocompleteFilter;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sonata\DoctrineORMAdminBundle\Filter\CallbackFilter;
+use Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 final class TimeEntryAdmin extends AbstractAdmin
 {
@@ -26,6 +26,16 @@ final class TimeEntryAdmin extends AbstractAdmin
     // -------------------------------------------------------------------
     // Helper to avoid duplicate user join in filters
     // -------------------------------------------------------------------
+
+    private function costumerToStr(Costumer $user): string
+    {
+        if (!$user instanceof Costumer) {
+            return (string)$user;
+        }
+        $dept = $user->getDepartment() ?? 'No Dept';
+        return sprintf('[%s] %s', $dept, $user->getUsername());
+    }
+
     private function ensureUserJoin($qb, string $alias): void
     {
         $joins = $qb->getDQLPart('join');
@@ -75,17 +85,11 @@ final class TimeEntryAdmin extends AbstractAdmin
             'btn_add' => false,         
             'required' => true,
             'placeholder' => 'Select user',
-            'property' => 'username', 
+            'property' => ['firstname', 'lastname'], 
             'minimum_input_length' => 1,
-            'admin_code' => 'Shared\Admin\CustomerAdmin',
             'to_string_callback' => function ($user, $property) {
-                if (!$user instanceof User) {
-                    return (string)$user;
-                }
-                $dept = method_exists($user, 'getDepartment') && $user->getDepartment() 
-                    ? $user->getDepartment() 
-                    : 'No Dept';
-                return sprintf('[%s] %s', $dept, $user->getUsername());
+                return $this->costumerToStr($user);
+                
             },
             'constraints' => [
                 new NotNull([
@@ -125,50 +129,27 @@ final class TimeEntryAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         // user
-         $filter->add('user', CallbackFilter::class, [
-            'label' => 'User',
-            'field_type' => ModelAutocompleteType::class,
+        $filter->add(
+            'user', 
+            ModelFilter::class,
+            [
+                'field_type' => ModelAutocompleteType::class,
+                'field_options' =>[
+                    'property'=> ['firstname', 'lastname'],
+                    'minimum_input_length' => 1,
+                    'to_string_callback' => function ($user, $property) {
+                        return $this->costumerToStr($user);
+                        
+                    },
+                ]
+            ]
+    );
+
+        $filter->add('user.Department', ChoiceFilter::class, [
+            'field_type' => ChoiceType::class,
             'field_options' => [
-                'btn_add' => false,
-                'required' => false,
-                'placeholder' => 'Select user',
-                'property' => 'username',
-                'minimum_input_length' => 1,
-            ],
-            'callback' => function ($qb, $alias, $field, $value) {
-                if (!$value || !$value->getValue()) return false;
-
-                $search = $value->getValue();
-
-                $alreadyJoined = false;
-                foreach ($qb->getDQLPart('join')[$alias] ?? [] as $join) {
-                    if ($join->getAlias() === 'u') {
-                        $alreadyJoined = true;
-                        break;
-                    }
-                }
-
-                if (!$alreadyJoined) {
-                    $qb->leftJoin("$alias.user", "u");
-                }
-
-                $qb->andWhere('CONCAT(u.firstname, \' \', u.lastname) LIKE :search')
-                ->setParameter('search', '%' . $search . '%');
-
-                return true;
-            },
-        ]);
-
-        $filter->add('department', CallbackFilter::class, [
-            'label' => 'Department',
-            'field_type' => TextType::class,
-            'callback' => function ($qb, $alias, $field, $value) {
-                if (!$value || !$value->hasValue()) return false;
-                $this->ensureUserJoin($qb, $alias);
-                $qb->andWhere("u.Department = :dept")
-                    ->setParameter('dept', $value->getValue());
-                return true;
-            }
+                'choices'=>Costumer::DEPARTMENTS
+            ]
         ]);
 
         $filter->add('missingCheckinCheckout', CallbackFilter::class, [
