@@ -9,11 +9,15 @@ use DateTime;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Sonata\DoctrineORMAdminBundle\Filter\DateRangeFilter;
 use Sonata\Form\Type\DateRangePickerType;
+use Symfony\Component\Form\Extension\Core\DataTransformer\MoneyToLocalizedStringTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
 final class OrderAdmin extends AbstractAdmin
 {
@@ -41,11 +45,10 @@ final class OrderAdmin extends AbstractAdmin
                 'choice_label' => 'id',
             ])
             ->add('order_dateTime')
-            ->add('ordered_item')
+            ->add('orderFormatted')
             ->add('tax')
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
-                    'show' => [],
                     'edit' => [],
                     'delete' => [],
                 ],
@@ -61,7 +64,7 @@ final class OrderAdmin extends AbstractAdmin
 
     protected function configureExportFields(): array
     {
-        return ['Costumer.id', 'order_dateTime', 'ordered_item', 'tax'];
+        return ['Costumer.id', 'order_dateTime', 'OrderNum', 'tax'];
     }
 
     protected function configureFormFields(FormMapper $form): void
@@ -72,7 +75,7 @@ final class OrderAdmin extends AbstractAdmin
                 'choice_label' => 'id',
             ])
             // ->add('order_dateTime')
-            ->add('ordered_item')
+            ->add('ordered_item', MoneyType::class, [])
             ->add('tax')
         ;
     }
@@ -96,7 +99,7 @@ final class OrderAdmin extends AbstractAdmin
                 'choice_label' => 'id',
             ])
             ->add('order_dateTime')
-            ->add('ordered_item')
+            ->add('ordered_item', FieldDescriptionInterface::TYPE_CURRENCY, ['currency' => 'EUR', 'data_transformer' => new MoneyToLocalizedStringTransformer(locale:'deDE'),])
             ->add('tax')
         ;
     }
