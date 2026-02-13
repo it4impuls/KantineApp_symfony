@@ -79,48 +79,45 @@ final class TimeEntryAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $form): void
     {
-    $form
-        ->add('user', ModelAutocompleteType::class, [
-            'label' => 'User',
-            'btn_add' => false,         
-            'required' => true,
-            'placeholder' => 'Select user',
-            'property' => ['firstname', 'lastname'], 
-            'minimum_input_length' => 1,
-            'to_string_callback' => function ($user, $property) {
-                return $this->costumerToStr($user);
-                
-            },
-            'constraints' => [
-                new NotNull([
-                    'message' => 'Please select a user.',
-                ]),
-            ],
-        ])
-        ->add('checkinTime', DateTimePickerType::class, [
-            'label' => 'Check-in',
-            'widget' => 'single_text',
-            'html5' => false,
-            'help' => '(Format: dd.mm.yyyy hh:mm)',
-            'format' => 'dd.MM.yyyy HH:mm',
-            'required' => true,
-            'datepicker_options' => [
-                            'allowInputToggle' => true,
+        $form
+            ->add('user', ModelAutocompleteType::class, [
+                'label' => 'User',
+                'btn_add' => false,
+                'required' => true,
+                'placeholder' => 'Select user',
+                'property' => ['firstname', 'lastname'],
+                'minimum_input_length' => 1,
+                'to_string_callback' => fn($user, $property) =>  $this->costumerToStr($user),
+                'constraints' => [
+                    new NotNull([
+                        'message' => 'Please select a user.',
+                    ]),
+                ],
+            ])
+            ->add('checkinTime', DateTimePickerType::class, [
+                'label' => 'Check-in',
+                'widget' => 'single_text',
+                'html5' => false,
+                'help' => '(Format: dd.mm.yyyy hh:mm)',
+                'format' => 'dd.MM.yyyy HH:mm',
+                'required' => true,
+                'datepicker_options' => [
+                    'allowInputToggle' => true,
 
-                        ],
-        ])
-        ->add('checkoutTime', DateTimePickerType::class, [
-            'label' => 'Check-out',
-            'widget' => 'single_text',
-            'html5' => false,
-            'help' => '(Format: dd.mm.yyyy hh:mm)',
-            'format' => 'dd.MM.yyyy HH:mm',
-            'required' => false,
-            'datepicker_options' => [
-                            'allowInputToggle' => true,
+                ],
+            ])
+            ->add('checkoutTime', DateTimePickerType::class, [
+                'label' => 'Check-out',
+                'widget' => 'single_text',
+                'html5' => false,
+                'help' => '(Format: dd.mm.yyyy hh:mm)',
+                'format' => 'dd.MM.yyyy HH:mm',
+                'required' => false,
+                'datepicker_options' => [
+                    'allowInputToggle' => true,
 
-                        ],
-        ]);
+                ],
+            ]);
     }
 
     // -------------------------------------------------------------------
@@ -130,25 +127,24 @@ final class TimeEntryAdmin extends AbstractAdmin
     {
         // user
         $filter->add(
-            'user', 
+            'user',
             ModelFilter::class,
             [
                 'field_type' => ModelAutocompleteType::class,
-                'field_options' =>[
-                    'property'=> ['firstname', 'lastname'],
+                'field_options' => [
+                    'property' => ['firstname', 'lastname'],
                     'minimum_input_length' => 1,
                     'to_string_callback' => function ($user, $property) {
                         return $this->costumerToStr($user);
-                        
                     },
                 ]
             ]
-    );
+        );
 
         $filter->add('user.Department', ChoiceFilter::class, [
             'field_type' => ChoiceType::class,
             'field_options' => [
-                'choices'=>Costumer::DEPARTMENTS
+                'choices' => Costumer::DEPARTMENTS
             ]
         ]);
 
@@ -184,17 +180,17 @@ final class TimeEntryAdmin extends AbstractAdmin
                 'format' => 'dd.MM.yyyy',
                 'html5' => false,
                 'attr' => ['class' => 'custom-datepicker'],
-                            'datepicker_options' => [
-                            'allowInputToggle' => true,
+                'datepicker_options' => [
+                    'allowInputToggle' => true,
 
-                        ],
+                ],
             ],
             'callback' => function ($qb, $alias, $field, $value) {
                 if (!$value || !$value->hasValue()) return false;
 
                 $from = $value->getValue();
                 $qb->andWhere("$alias.checkinTime >= :from")
-                ->setParameter('from', $from);
+                    ->setParameter('from', $from);
 
                 return true;
             }
@@ -208,22 +204,21 @@ final class TimeEntryAdmin extends AbstractAdmin
                 'format' => 'dd.MM.yyyy',
                 'html5' => false,
                 'attr' => ['class' => 'custom-datepicker'],
-                            'datepicker_options' => [
-                            'allowInputToggle' => true,
+                'datepicker_options' => [
+                    'allowInputToggle' => true,
 
-                        ],
+                ],
             ],
             'callback' => function ($qb, $alias, $field, $value) {
                 if (!$value || !$value->hasValue()) return false;
 
                 $to = $value->getValue();
                 $qb->andWhere("$alias.checkinTime <= :to")
-                ->setParameter('to', $to);
+                    ->setParameter('to', $to);
 
                 return true;
             }
         ]);
-
     }
 
     // -------------------------------------------------------------------
@@ -265,5 +260,4 @@ final class TimeEntryAdmin extends AbstractAdmin
         '_sort_by'    => 'checkinTime',
         'today' => ['type' => null, 'value' => true],
     ];
-
 }
