@@ -12,7 +12,9 @@ use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 
 final class CostumerAdmin extends AbstractAdmin
 {
@@ -27,7 +29,12 @@ final class CostumerAdmin extends AbstractAdmin
                 'inverse'  => true,
             ])
             ->add('enddate')
-            ->add('Department')
+            ->add('Department', ChoiceFilter::class, [
+            'field_type' => ChoiceType::class,
+            'field_options' => [
+                'choices' => Costumer::DEPARTMENTS
+            ]
+        ]);
             // ->add('Barcode', FieldDescriptionInterface::TYPE_HTML/*, ["required" => false, ['help' => '<img src="' . $this->getSubject()->getBarcode() . '" />']]*/)
         ;
     }
@@ -81,7 +88,7 @@ final class CostumerAdmin extends AbstractAdmin
             // ->add('id')
             ->add('firstname')
             ->add('lastname')
-            ->add('active', null,[ 'data' => true ])
+            ->add('active', null, ['data' => true])
             ->add('enddate')
             ->add('Department', ChoiceType::class, [
                 'choices' => Costumer::DEPARTMENTS,

@@ -30,4 +30,5 @@ services:
     admin.order:
         class: Kantine\Admin\OrderAdmin
         tags:
-            - { name: sonata.admin, model_class: Kantine\Entity\Order, controller: ~, manager_type: orm, group: Kantine, label: Order}
+            - { name: sonata.admin, model_class: Kantine\Entity\Order, controller: ~, manager_type: orm, group: Kantine, label: Order, show_in_roles_matrix: false}
+

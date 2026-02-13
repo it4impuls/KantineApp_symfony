@@ -5,11 +5,11 @@ sonata_user:
     class:
         user: Shared\Entity\SonataUserUser
 
-    admin:
-        user:
-            class: Shared\Admin\UserAmin
-            controller: '%sonata.admin.configuration.default_controller%'
-            translation: SonataUserBundle
+    # admin:
+    #     user:
+    #         class: Shared\Admin\UserAmin
+    #         controller: '%sonata.admin.configuration.default_controller%'
+    #         translation: SonataUserBundle
 
     profile:
         default_avatar: bundles/sonatauser/default_avatar.png # Default avatar displayed if the user doesn't have one

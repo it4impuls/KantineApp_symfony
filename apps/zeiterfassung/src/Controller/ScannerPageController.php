@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\CurlHttpClient;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 
@@ -35,9 +36,11 @@ class ScannerPageController extends AbstractController
 
         $userEntity = $this->em->getRepository(Costumer::class)->find($data['barcode']);
         if (!$userEntity) {
-            return new JsonResponse(['error' => 'Could not create local user'], 500);
+            throw $this->createNotFoundException('User with id '. $data['barcode'] .' not found');
         }
-
+        if (!$userEntity->isActive())
+            // new Exc
+            throw $this->createAccessDeniedException('User with id '. $data['barcode'] .' not found');
         
         $lastEntry = $this->em->getRepository(TimeEntry::class)->getTimeEntryForUser($userEntity);
         $now = new \DateTime();

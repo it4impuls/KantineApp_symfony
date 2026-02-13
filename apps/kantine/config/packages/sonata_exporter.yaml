@@ -1,4 +1,0 @@
-sonata_exporter:
-    exporter:
-        default_writers:
-            - xlsx

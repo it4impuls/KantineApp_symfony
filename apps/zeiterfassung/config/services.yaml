@@ -20,15 +20,19 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    Zeiterfassung\Admin\TimeEntryAdmin:
+    admin.TimeEntryAdmin:
         class: Zeiterfassung\Admin\TimeEntryAdmin
         arguments:
             - ~
             - Zeiterfassung\Entity\TimeEntry
             - ~
         tags:
-            - { name: sonata.admin, manager_type: orm, label: "Übersicht", group: "Übersicht" }
+            - { name: sonata.admin, manager_type: orm, label: "Zeiteinträge", group: "Zeiterfassung", show_in_roles_matrix: false }
 
+    admin.FAUser:
+        class: Zeiterfassung\Admin\FAUserAdmin
+        tags:
+            - { name: sonata.admin, model_class: Zeiterfassung\Entity\FAUser, controller: ~, manager_type: orm, group: Zeiterfassung, label: Fachanleiter, show_in_roles_matrix: false }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

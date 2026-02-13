@@ -4,6 +4,8 @@ security:
     password_hashers:
         Shared\Entity\SonataUserUser:
             algorithm: auto
+        Zeiterfassung\Entity\FAUser:
+            algorithm: auto
 
 
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
@@ -87,13 +89,6 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # Admin login page needs to be accessed without credential
-        # - { path: ^/admin/login$, role: PUBLIC_ACCESS }
-        # - { path: ^/admin/logout$, role: PUBLIC_ACCESS }
-        # - { path: ^/admin/login_check$, role: PUBLIC_ACCESS }
-        # - { path: ^/admin/request$, role: PUBLIC_ACCESS }
-        # - { path: ^/admin/check-email$, role: PUBLIC_ACCESS }
-        # - { path: ^/admin/reset/.*$, role: PUBLIC_ACCESS }
-        # - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/login$, role: PUBLIC_ACCESS }
         - { path: ^/logout$, role: PUBLIC_ACCESS }
         - { path: ^/(zeiterfassung|kantine)/admin/login$, role: PUBLIC_ACCESS }
@@ -102,21 +97,16 @@ security:
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.
         # Change these rules to adapt them to your needs
-        # - { path: ^/admin/, role: ROLE_USER }
-        # - { path: ^/kantine/, role: ROLE_USER }
-        # - { path: ^/zeiterfassung/, role: ROLE_USER }
         - { path: ^/.*, role: ROLE_USER }
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/, roles: ROLE_USER }
 
     role_hierarchy:
-        ROLE_ADMIN_COSTUMER_ALL: [ROLE_ADMIN_COSTUMER_CREATE, ROLE_ADMIN_COSTUMER_LIST, ROLE_ADMIN_COSTUMER_DELETE, ROLE_ADMIN_COSTUMER_EDIT, ROLE_ADMIN_COSTUMER_EXPORT, ROLE_ADMIN_COSTUMER_VIEW]
-        ROLE_ADMIN_ORDER_ALL: [ROLE_ADMIN_ORDER_CREATE, ROLE_ADMIN_ORDER_LIST, ROLE_ADMIN_ORDER_DELETE, ROLE_ADMIN_ORDER_EDIT, ROLE_ADMIN_ORDER_EXPORT, ROLE_ADMIN_ORDER_VIEW]
-        ROLE_ADMIN_ATTENDANCE_ALL: [ROLE_ADMIN_ATTENDANCE_CREATE, ROLE_ADMIN_ATTENDANCE_LIST, ROLE_ADMIN_ATTENDANCE_DELETE, ROLE_ADMIN_ATTENDANCE_EDIT, ROLE_ADMIN_ATTENDANCE_EXPORT, ROLE_ADMIN_ATTENDANCE_VIEW]        
+        # ROLE_ADMIN_COSTUMER_ALL: [ROLE_ADMIN_COSTUMER_CREATE, ROLE_ADMIN_COSTUMER_LIST, ROLE_ADMIN_COSTUMER_DELETE, ROLE_ADMIN_COSTUMER_EDIT, ROLE_ADMIN_COSTUMER_EXPORT, ROLE_ADMIN_COSTUMER_VIEW]
+        # ROLE_ADMIN_ORDER_ALL: [ROLE_ADMIN_ORDER_CREATE, ROLE_ADMIN_ORDER_LIST, ROLE_ADMIN_ORDER_DELETE, ROLE_ADMIN_ORDER_EDIT, ROLE_ADMIN_ORDER_EXPORT, ROLE_ADMIN_ORDER_VIEW]
+        # ROLE_ADMIN_TIMEENTRY_ALL: [ROLE_ADMIN_TIMEENTRY_CREATE, ROLE_ADMIN_TIMEENTRY_LIST, ROLE_ADMIN_TIMEENTRY_DELETE, ROLE_ADMIN_TIMEENTRY_EDIT, ROLE_ADMIN_TIMEENTRY_EXPORT, ROLE_ADMIN_TIMEENTRY_VIEW]        
 
         ROLE_USER_KANTINE:      [ROLE_ADMIN_ORDER_ALL]
-        ROLE_FA:                [ROLE_ADMIN_COSTUMER_VIEW, ROLE_ADMIN_COSTUMER_LIST, ROLE_ADMIN_ATTENDANCE_ALL]
-        ROLE_ADMIN:             [ROLE_USER, ROLE_ADMIN_COSTUMER_ALL, ROLE_ADMIN_ORDER_ALL, ROLE_FA, ROLE_USER_KANTINE ]
+        ROLE_FA:                [ROLE_ADMIN_COSTUMER_VIEW, ROLE_ADMIN_COSTUMER_LIST, ROLE_ADMIN_TIMEENTRY_ALL]
+        ROLE_ADMIN:             [ROLE_USER, ROLE_ADMIN_ORDER_ALL, ROLE_FA, ROLE_USER_KANTINE ]
         ROLE_SUPER_ADMIN:       [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
 when@test:

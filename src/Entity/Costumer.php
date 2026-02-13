@@ -40,6 +40,7 @@ class Costumer
     #[ORM\Column]
     private ?bool $active = null;
 
+    // name_to_display => name in database
     public const DEPARTMENTS = [
         "IT" => "IT",
         "IT-Tempus" => "IT-TEMPUS",

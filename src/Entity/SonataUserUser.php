@@ -19,16 +19,4 @@ class SonataUserUser extends BaseUser implements UserInterface, PasswordAuthenti
     #[ORM\GeneratedValue]
     #[ORM\Column(type: Types::INTEGER)]
     protected $id;
-
-    #[Choice(choices: Costumer::DEPARTMENTS, message: '{{ value }} not a valid department. Possible departments: {{ choices }}')]
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Department = null;
-
-    public function getDepartment():  ?string{
-        return $this->Department;
-    }
-
-    public function setDepartment(string $Department):  void{
-        $this->Department = $Department;
-    }
 }
