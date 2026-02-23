@@ -7,6 +7,7 @@ use Kantine\Admin\OrderAdmin as oa;
 use Shared\Entity\Costumer;
 use DateTime;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
@@ -53,6 +54,11 @@ final class OrderAdmin extends AbstractAdmin
                     'delete' => [],
                 ],
             ]);
+    }
+
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[DatagridInterface::SORT_ORDER] = 'DESC';
     }
 
     // public function getDataSourceIterator()

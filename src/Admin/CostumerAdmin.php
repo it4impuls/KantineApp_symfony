@@ -6,6 +6,7 @@ namespace Shared\Admin;
 
 use Shared\Entity\Costumer;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
@@ -60,6 +61,11 @@ final class CostumerAdmin extends AbstractAdmin
                     'delete' => [],
                 ],
             ]);
+    }
+
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[DatagridInterface::SORT_ORDER] = 'DESC';
     }
 
     protected function configureExportFields(): array
