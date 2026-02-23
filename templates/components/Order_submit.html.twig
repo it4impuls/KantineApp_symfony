@@ -48,6 +48,8 @@
         {% for choice in form.ordered_item.vars.choices %}
             <label class="menulabel btn" for="{{ form.ordered_item.vars.name }}_{{ choice.value }}">
                 {{ choice.label|trans }}
+                {# {{form.ordered_item.vars.value}}
+                {{choice.value}} #}
                 <input 
                     class="input_invis" 
                     type="radio" 
@@ -55,7 +57,8 @@
                     name="order_dto[{{ form.ordered_item.vars.name }}]" 
                     value="{{ choice.value }}"
                     {# surely there is a better way to check wether this is selected #}
-                    checked="{{ form.tax.vars.value == choice.value }}"
+
+                    {{ form.ordered_item.vars.value == choice.value ? "checked":"" }}
                     required
                     />
             </label>
