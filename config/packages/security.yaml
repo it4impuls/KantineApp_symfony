@@ -91,8 +91,8 @@ security:
         # Admin login page needs to be accessed without credential
         - { path: ^/login$, role: PUBLIC_ACCESS }
         - { path: ^/logout$, role: PUBLIC_ACCESS }
-        # - { path: ^/(zeiterfassung|kantine)/admin/login$, role: PUBLIC_ACCESS }
-        # - { path: ^/(zeiterfassung|kantine)/admin/logout$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/login$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/logout$, role: PUBLIC_ACCESS }
 
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.
