@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 
-#[Route(path: '/zeiterfassung', name: 'zeiterfassung')]
+// #[Route(path: '/zeiterfassung', name: 'zeiterfassung')]
 class ScannerPageController extends AbstractController
 {
     public function __construct(

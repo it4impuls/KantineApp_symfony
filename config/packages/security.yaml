@@ -33,7 +33,7 @@ security:
 
         admin:
             lazy: true
-            pattern: /(kantine|zeiterfassung)/admin(.*)
+            pattern: /admin(.*)
             provider: sonata_user_bundle
             context: user
             form_login:
@@ -46,7 +46,7 @@ security:
             remember_me:
                 secret: '%env(APP_SECRET)%'
                 lifetime: 2629746
-                path: /(kantine|zeiterfassung)/admin
+                path: /admin
 
         api_login:
             provider: shared_user_provider
@@ -71,7 +71,7 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
-                default_target_path: kantine/app_order
+                default_target_path: app_kantine
                 enable_csrf: true
             
             logout:
@@ -91,8 +91,8 @@ security:
         # Admin login page needs to be accessed without credential
         - { path: ^/login$, role: PUBLIC_ACCESS }
         - { path: ^/logout$, role: PUBLIC_ACCESS }
-        - { path: ^/(zeiterfassung|kantine)/admin/login$, role: PUBLIC_ACCESS }
-        - { path: ^/(zeiterfassung|kantine)/admin/logout$, role: PUBLIC_ACCESS }
+        # - { path: ^/(zeiterfassung|kantine)/admin/login$, role: PUBLIC_ACCESS }
+        # - { path: ^/(zeiterfassung|kantine)/admin/logout$, role: PUBLIC_ACCESS }
 
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.

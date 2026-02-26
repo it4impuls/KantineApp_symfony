@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Translation\TranslatableMessage;
 use FOS\RestBundle\View\View;
 
-#[Route("/kantine","kantine")]
+
 final class OrderController extends AbstractFOSRestController
 {
     public function __construct(
@@ -59,7 +59,7 @@ final class OrderController extends AbstractFOSRestController
     }
 
 
-    #[Route('/', name: 'app_order')]
+    #[Route('/', name: 'app_kantine')]
     public function orderForm(Request $request): Response
     {
         // creates a task object and initializes some data for this example

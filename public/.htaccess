@@ -5,9 +5,16 @@
 # to each configured DirectoryIndex file (e.g. index.php, index.html, index.pl).
 DirectoryIndex index.php
 
-
+Listen 8080 https
 # RedirectPermanent / https://kantine.impuls-reha.de/kantine
 
+# <VirtualHost *>
+#     ServerName zeiterfassung.impuls-tempus.de/
+# </VirtualHost>
+
+# <VirtualHost *>
+#     ServerName elbkantine.impuls-tempus.de/
+# </VirtualHost>
 
 # By default, Apache does not evaluate symbolic links if you did not enable this
 # feature in your server configuration. Uncomment the following line if you
@@ -31,8 +38,8 @@ DirectoryIndex index.php
     # Use different apps depending on url
     # for some reason this sets REDIRECT_APP_ID
     # SetEnvIf Request_URI ^.*$ APP_ID=kantine
-    SetEnvIf Request_URI ^/kantine.*$ APP_ID=kantine
-    SetEnvIf Request_URI ^/zeiterfassung.*$ APP_ID=zeiterfassung
+    SetEnvIf Host ^elbkantine\. APP_ID=kantine
+    SetEnvIf Host ^zeiterfassung\. APP_ID=zeiterfassung
 
     # Determine the RewriteBase automatically and set it as environment variable.
     # If you are using Apache aliases to do mass virtual hosting or installed the
