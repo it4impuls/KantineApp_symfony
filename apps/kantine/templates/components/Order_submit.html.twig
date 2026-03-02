@@ -87,7 +87,10 @@
                         <p id="popup-message">{{"User already ordered, update order?"|trans}}</p>
                         <div class="popup-buttons">
                                 {{ form_widget(form.update) }}
-                                {{ form_widget(form.cancel) }}
+                                {# {{ form_widget(form.cancel) }} #}
+                                <a href="{{ path('app_kantine') }}" > 
+                                    <button class="button btn" style="pointer-events: none;">{{'cancel'|trans}}</button>
+                                </a>
                         </div>
                     </div>
                     

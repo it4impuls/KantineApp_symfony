@@ -5,7 +5,6 @@ namespace Kantine\Form;
 use Shared\Entity\Costumer;
 use Kantine\Entity\Order;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -28,7 +27,7 @@ class OrderType extends AbstractType
             ->add('ordered_item', NumberType::class, ["required" => true])
             ->add('tax', HiddenType::class, ["required" => true])
             ->add('order_dateTime', DateTimeType::class, ["required" => true])
-            ->add('cancel', SubmitType::class, ["required" => true])
+            // ->add('cancel', SubmitType::class, ["required" => true])
             ->add('save', SubmitType::class, ['attr' => ['class' => 'btn']])
         ;
     }

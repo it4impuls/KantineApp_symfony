@@ -74,15 +74,15 @@ final class OrderController extends AbstractFOSRestController
         
         // form is submitted (any submit button pressed)
         if ( $form->isSubmitted() && $form->isValid()) {
-            $cancelButton =$form->get('cancel');
-            assert($cancelButton instanceof SubmitButton);
+            // $cancelButton =$form->get('cancel');
+            // assert($cancelButton instanceof SubmitButton);
 
-            if ($cancelButton->isClicked()) {
-                // $orderDTO = new OrderFormDTO();
-                $form = $this->createForm(OrderDTOType::class, $emptyOrderDTO);
-                $options['form']=$form;
-                return $this->render_site($options);
-            }
+            // if ($cancelButton->isClicked()) {
+            //     // $orderDTO = new OrderFormDTO();
+            //     $form = $this->createForm(OrderDTOType::class, $emptyOrderDTO);
+            //     $options['form']=$form;
+            //     return $this->render_site($options);
+            // }
 
             $orderDTO =$form->getData();
             $order = $this->makeOrderFromDTO($orderDTO);
