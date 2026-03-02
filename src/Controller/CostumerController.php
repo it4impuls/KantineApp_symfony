@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Controller;
+namespace Shared\Controller;
 
-use App\Entity\Costumer;
+use Shared\Entity\Costumer;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
-use FOS\RestBundle\View\View;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\When;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -16,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -225,6 +222,7 @@ final class CostumerController extends AbstractFOSRestController
                 ->setActive(true);
             $errors = $this->validator->validate($costumer);
             if ($errors->count() > 0) {
+                continue;
                 return new Response((string)$errors);
             }
             $this->entityManager->persist($costumer);

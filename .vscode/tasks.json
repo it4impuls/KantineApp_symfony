@@ -11,32 +11,32 @@
         {
             "label": "compile assets",
             "type": "shell",
-            "command": "APP_ENV=dev APP_DEBUG=1 php bin/console asset-map:compile",
+            "command": "APP_ENV=dev APP_DEBUG=1 APP_ID=kantine php bin/console asset-map:compile",
             "problemMatcher": []
         },
         {
             "label": "make migrations",
             "type": "shell",
-            "command": "APP_ENV=dev APP_DEBUG=1 php bin/console make:migration",
+            "command": "APP_ENV=dev APP_DEBUG=1 APP_ID=kantine php bin/console make:migration",
             "problemMatcher": []
         },
         {
             "label": "migrate",
             "type": "shell",
-            "command": "APP_ENV=dev APP_DEBUG=1 php bin/console doctrine:migrations:migrate",
+            "command": "APP_ENV=dev APP_DEBUG=1 APP_ID=kantine php bin/console doctrine:migrations:migrate",
             "problemMatcher": [],
             "dependsOn": "make migrations"
         },
         {
             "label": "extract translations",
             "type": "shell",
-            "command": "APP_ENV=dev APP_DEBUG=1 php bin/console translation:extract --force de",
+            "command": "APP_ENV=dev APP_DEBUG=1 APP_ID=kantine php bin/console translation:extract --force de",
             "problemMatcher": [],
         },
         {
             "label": "clear cache",
             "type": "shell",
-            "command": "APP_ENV=dev APP_DEBUG=1 php bin/console cache:clear && APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear && ",
+            "command": "APP_ENV=dev APP_DEBUG=1 APP_ID=kantine php bin/console cache:clear && APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear && ",
             "problemMatcher": [],
         },
     ]

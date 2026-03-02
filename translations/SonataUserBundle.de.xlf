@@ -689,6 +689,14 @@
         <source>form.group_default</source>
         <target>Gruppe</target>
       </trans-unit>
+      <trans-unit id="sLXSOsk" resname="list.label_department">
+        <source>list.label_department</source>
+        <target>Department</target>
+      </trans-unit>
+      <trans-unit id="QZSBDRu" resname="form.label_department">
+        <source>form.label_department</source>
+        <target>Department</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

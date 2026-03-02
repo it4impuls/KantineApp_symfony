@@ -1,0 +1,12 @@
+{%if message%}
+<link rel="stylesheet" href="{{asset('styles/popUp.css')}}" />
+<div class="popup-overlay alert alert-{{ type }}">
+    <div class="popup-box">
+        <p id="popup-message">{{ message|trans }}</p>
+        <div class="popup-buttons">
+                <a  class="button btn " href="{{ path('app_kantine') }}">OK</a>
+        </div>
+    </div>
+    
+</div>
+{%endif%}

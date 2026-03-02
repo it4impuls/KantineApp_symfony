@@ -22,11 +22,21 @@ doctrine:
             default:
                 auto_mapping: true
                 mappings:
-                    App:
+                    Shared:
                         is_bundle: false
                         dir: '%kernel.project_dir%/src/'
-                        prefix: 'App\'
-                        alias: App
+                        prefix: 'Shared\'
+                        alias: Shared
+                    Kantine:
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/apps/kantine/src/'
+                        prefix: 'Kantine\'
+                        alias: Kantine
+                    Zeiterfassung:
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/apps/zeiterfassung/src/'
+                        prefix: 'Zeiterfassung\'
+                        alias: Zeiterfassung
                     SonataUserBundle: ~
 
 when@test:

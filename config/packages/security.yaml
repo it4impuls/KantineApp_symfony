@@ -2,7 +2,9 @@ security:
     # enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
-        App\Entity\SonataUserUser:
+        Shared\Entity\SonataUserUser:
+            algorithm: auto
+        Zeiterfassung\Entity\FAUser:
             algorithm: auto
 
 
@@ -11,9 +13,9 @@ security:
         sonata_user_bundle:
             id: sonata.user.security.user_provider
         # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
+        shared_user_provider:
             entity:
-                class: App\Entity\SonataUserUser
+                class: Shared\Entity\SonataUserUser
                 property: username
     firewalls:
         dev:
@@ -46,28 +48,30 @@ security:
                 lifetime: 2629746
                 path: /admin
 
-        api:
-            provider: app_user_provider
-            lazy: true
-            pattern: /api(.*)
+        api_login:
+            provider: shared_user_provider
+            pattern: ^/api/login
             context: user
+            stateless: true
             json_login:
-                login_path: api_login
-                check_path: api_login
-            remember_me:
-                secret: '%env(APP_SECRET)%'
-                lifetime: 2629746
-                path: /api
-                always_remember_me: true
-            # access_token:
-            #     token_handler: App\Security\AccessTokenHandler
+                check_path: /api/login
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        zeiterfassung:
+            pattern:   ^/api
+            provider: shared_user_provider
+            context:             user
+            stateless: true
+            jwt: ~
+
         main:
-            provider: app_user_provider
+            provider: shared_user_provider
             context:             user
             form_login:
                 login_path: app_login
                 check_path: app_login
-                default_target_path: app_order
+                default_target_path: app_kantine
                 enable_csrf: true
             
             logout:
@@ -85,33 +89,25 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # Admin login page needs to be accessed without credential
-        - { path: ^/admin/login$, role: PUBLIC_ACCESS }
-        - { path: ^/admin/logout$, role: PUBLIC_ACCESS }
-        - { path: ^/admin/login_check$, role: PUBLIC_ACCESS }
-        - { path: ^/admin/request$, role: PUBLIC_ACCESS }
-        - { path: ^/admin/check-email$, role: PUBLIC_ACCESS }
-        - { path: ^/admin/reset/.*$, role: PUBLIC_ACCESS }
         - { path: ^/login$, role: PUBLIC_ACCESS }
         - { path: ^/logout$, role: PUBLIC_ACCESS }
-        - { path: ^/api/login$, role: PUBLIC_ACCESS }
-
-        - { path: ^/api/.*, role: PUBLIC_ACCESS }
+        - { path: ^/admin/login$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/logout$, role: PUBLIC_ACCESS }
 
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.
         # Change these rules to adapt them to your needs
-        - { path: ^/admin/, role: ROLE_USER }
         - { path: ^/.*, role: ROLE_USER }
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/, roles: ROLE_USER }
 
     role_hierarchy:
-        ROLE_ADMIN_COSTUMER_ALL: [ROLE_ADMIN_COSTUMER_CREATE, ROLE_ADMIN_COSTUMER_LIST, ROLE_ADMIN_COSTUMER_DELETE, ROLE_ADMIN_COSTUMER_EDIT, ROLE_ADMIN_COSTUMER_EXPORT, ROLE_ADMIN_COSTUMER_VIEW]
-        ROLE_ADMIN_ORDER_ALL: [ROLE_ADMIN_ORDER_CREATE, ROLE_ADMIN_ORDER_LIST, ROLE_ADMIN_ORDER_DELETE, ROLE_ADMIN_ORDER_EDIT, ROLE_ADMIN_ORDER_EXPORT, ROLE_ADMIN_ORDER_VIEW]
-        # ROLE_ADMIN_USER_ALL: [ROLE_ADMIN_USER_CREATE, ROLE_ADMIN_USER_LIST, ROLE_ADMIN_USER_DELETE, ROLE_ADMIN_USER_EDIT, ROLE_ADMIN_USER_EXPORT, ROLE_ADMIN_USER_VIEW]        
+        # ROLE_ADMIN_COSTUMER_ALL: [ROLE_ADMIN_COSTUMER_CREATE, ROLE_ADMIN_COSTUMER_LIST, ROLE_ADMIN_COSTUMER_DELETE, ROLE_ADMIN_COSTUMER_EDIT, ROLE_ADMIN_COSTUMER_EXPORT, ROLE_ADMIN_COSTUMER_VIEW]
+        # ROLE_ADMIN_ORDER_ALL: [ROLE_ADMIN_ORDER_CREATE, ROLE_ADMIN_ORDER_LIST, ROLE_ADMIN_ORDER_DELETE, ROLE_ADMIN_ORDER_EDIT, ROLE_ADMIN_ORDER_EXPORT, ROLE_ADMIN_ORDER_VIEW]
+        # ROLE_ADMIN_TIMEENTRY_ALL: [ROLE_ADMIN_TIMEENTRY_CREATE, ROLE_ADMIN_TIMEENTRY_LIST, ROLE_ADMIN_TIMEENTRY_DELETE, ROLE_ADMIN_TIMEENTRY_EDIT, ROLE_ADMIN_TIMEENTRY_EXPORT, ROLE_ADMIN_TIMEENTRY_VIEW]        
 
-        ROLE_ADMIN: [ROLE_USER, ROLE_ADMIN_COSTUMER_ALL, ROLE_ADMIN_ORDER_ALL]
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_USER_KANTINE:      [ROLE_ADMIN_ORDER_ALL]
+        ROLE_FA:                [ROLE_ADMIN_COSTUMER_VIEW, ROLE_ADMIN_COSTUMER_LIST, ROLE_ADMIN_TIMEENTRY_ALL]
+        ROLE_ADMIN:             [ROLE_USER, ROLE_ADMIN_ORDER_ALL, ROLE_FA, ROLE_USER_KANTINE ]
+        ROLE_SUPER_ADMIN:       [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
 when@test:
     security:

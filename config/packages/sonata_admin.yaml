@@ -9,6 +9,7 @@ sonata_admin:
 
         role_admin: ROLE_ADMIN
         role_super_admin: ROLE_SUPER_ADMIN
+        
 
 
         # acl security information

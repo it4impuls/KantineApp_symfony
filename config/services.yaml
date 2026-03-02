@@ -13,7 +13,7 @@ services:
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
-    App\:
+    Shared\:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
@@ -22,20 +22,13 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    Sonata\UserBundle\Model\UserManagerInterface: '@sonata.user.manager.user'
 
-    # admin.user:
-    #     class: App\Admin\UserAdmin
-    #     tags:
-    #         - { name: sonata.admin, model_class: App\Entity\User, controller: ~, manager_type: orm, group: admin, label: User }
-    App\Admin\OrderDataSource:
+    Kantine\Admin\OrderDataSource:
         decorates: 'sonata.admin.data_source.orm'
 
     admin.costumer:
-        class: App\Admin\CostumerAdmin
+        class: Shared\Admin\CostumerAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Costumer, controller: ~, manager_type: orm, group: App, label: Costumer }
+            - { name: sonata.admin, model_class: Shared\Entity\Costumer, controller: ~, manager_type: orm, group: Shared, label: Costumer, show_in_roles_matrix: false }
 
-    admin.order:
-        class: App\Admin\OrderAdmin
-        tags:
-            - { name: sonata.admin, model_class: App\Entity\Order, controller: ~, manager_type: orm, group: App, label: Order, data_source: ~ }

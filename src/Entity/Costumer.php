@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Entity;
+namespace Shared\Entity;
 
-use App\Repository\CostumerRepository;
+use Shared\Repository\CostumerRepository;
+use Kantine\Entity\Order;
 use DateInterval;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -39,6 +40,7 @@ class Costumer
     #[ORM\Column]
     private ?bool $active = null;
 
+    // name_to_display => name in database
     public const DEPARTMENTS = [
         "IT" => "IT",
         "IT-Tempus" => "IT-TEMPUS",
@@ -50,7 +52,8 @@ class Costumer
         "Tischlerei" => "TISCHLEREI",
         "Tischlerei-Tempus" => "TISCHLEREI-TEMPUS",
         "BVB" => "BVB",
-        "Aperio" => "APERIO"
+        "Aperio" => "APERIO",
+        "" => ""
     ];
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -200,6 +203,11 @@ class Costumer
         $this->Department = trim(strtoupper($Department));
 
         return $this;
+    }
+
+    public function getUsername()
+    {
+        return $this->getFirstname(). " ". $this->getLastname();
     }
 }
 
