@@ -37,7 +37,7 @@ class ScannerPageController extends AbstractController
         }
         if (!$userEntity->isActive())
             // new Exc
-            throw $this->createAccessDeniedException('User with id '. $data['barcode'] .' not found');
+            throw $this->createAccessDeniedException('User with id '. $data['barcode'] .'('.$userEntity->getUsername().') is not active');
         
         $lastEntry = $this->em->getRepository(TimeEntry::class)->getTimeEntryForUser($userEntity);
         $now = new \DateTime();
@@ -63,34 +63,35 @@ class ScannerPageController extends AbstractController
                     'user_ID' => $userEntity->getId(),
                     'time' => $now->format('H:i:s')
                 ], 200);
+                
+            } else {
+                // 2) Last entry already has checkin + checkout → just update checkout
+                $lastEntry->setCheckoutTime($now);
+                $this->em->flush();
             }
-
-            // 2) Last entry already has checkin + checkout → just update checkout
-            $lastEntry->setCheckoutTime($now);
-            $this->em->flush();
 
             return new JsonResponse([
                 'status' => 'checkout_update_existing',
                 'user_ID' => $userEntity->getId(),
                 'time' => $now->format('H:i:s')
             ], 200);
+        } else {
+
+            // 3) No entry today → create new checkin
+            $newEntry = new TimeEntry();
+            $newEntry->setUser($userEntity);
+            $newEntry->setCheckinTime($now);
+            $newEntry->setCheckoutTime(null);
+            $this->em->persist($newEntry);
+            $this->em->flush();
+
+            return new JsonResponse([
+                'status' => 'checkin',
+                'user' => $userEntity->getFirstname(). " ". $userEntity->getLastname(),
+                'time' => $now->format('H:i:s'),
+                'cooldown_until' => (clone $now)->modify('+15 minutes')->format('H:i:s')
+            ], 201);
         }
-
-        // 3) No entry today → create new checkin
-        $newEntry = new TimeEntry();
-        $newEntry->setUser($userEntity);
-        $newEntry->setCheckinTime($now);
-        $newEntry->setCheckoutTime(null);
-        $this->em->persist($newEntry);
-        $this->em->flush();
-
-        return new JsonResponse([
-            'status' => 'checkin',
-            'user' => $userEntity->getFirstname(). " ". $userEntity->getLastname(),
-            'time' => $now->format('H:i:s'),
-            'cooldown_until' => (clone $now)->modify('+15 minutes')->format('H:i:s')
-        ], 201);
-
         
     }
 
