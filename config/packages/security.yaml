@@ -59,7 +59,7 @@ security:
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
         zeiterfassung:
-            pattern:   ^/zeiterfassung
+            pattern:   ^/api
             provider: shared_user_provider
             context:             user
             stateless: true

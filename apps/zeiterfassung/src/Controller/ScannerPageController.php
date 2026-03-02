@@ -3,14 +3,11 @@
 namespace Zeiterfassung\Controller;
 
 use Zeiterfassung\Entity\TimeEntry;
-use Shared\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Shared\Entity\Costumer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpClient\CurlHttpClient;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 

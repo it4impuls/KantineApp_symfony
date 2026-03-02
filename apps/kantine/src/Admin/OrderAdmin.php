@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 namespace Kantine\Admin;
-use Kantine\Admin\OrderAdmin as oa;
 use Shared\Entity\Costumer;
 use DateTime;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -17,7 +16,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Sonata\DoctrineORMAdminBundle\Filter\DateRangeFilter;
 use Sonata\Form\Type\DateRangePickerType;
 use Symfony\Component\Form\Extension\Core\DataTransformer\MoneyToLocalizedStringTransformer;
-use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
 final class OrderAdmin extends AbstractAdmin

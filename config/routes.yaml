@@ -3,17 +3,3 @@ controllers:
         path: ../src/Controller/
         namespace: Shared\Controller
     type: attribute
-
-# kantine_redirect:
-#     path: /
-#     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
-#     defaults:
-#         route: 'app_kantine'
-#         permanent: true
-
-# kantine_admin_redirect:
-#     path: /admin
-#     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
-#     defaults:
-#         route: 'sonata_admin_redirect'
-#         permanent: true

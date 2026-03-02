@@ -66,6 +66,9 @@ php bin/console secrets:set APP_SECRET --random
 
 DB Zugangsdaten setzen (siehe "Update DB Zugangsdaten").
 
+## JWT keypair
+`php bin/console lexik:jwt:generate-keypair`
+
 ## Datenbank migration
 
 ### Option 1: Bestehende Datenbank importieren
