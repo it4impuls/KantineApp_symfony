@@ -57,14 +57,8 @@ final class OrderAdmin extends AbstractAdmin
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::SORT_ORDER] = 'DESC';
+        $sortValues[DatagridInterface::SORT_BY] = 'id';
     }
-
-    // public function getDataSourceIterator()
-    // {
-    //     $datasourceit = parent::getDataSourceIterator();
-    //     $datasourceit->setDateTimeFormat('d/m/Y'); //change this to suit your needs
-    //     return $datasourceit;
-    // }
 
     protected function configureExportFields(): array
     {

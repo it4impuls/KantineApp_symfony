@@ -22,12 +22,8 @@ services:
 
     admin.TimeEntryAdmin:
         class: Zeiterfassung\Admin\TimeEntryAdmin
-        arguments:
-            - ~
-            - Zeiterfassung\Entity\TimeEntry
-            - ~
         tags:
-            - { name: sonata.admin, manager_type: orm, label: "Zeiteinträge", group: "Zeiterfassung", show_in_roles_matrix: false }
+            - { name: sonata.admin, model_class: Zeiterfassung\Entity\TimeEntry, controller: ~, manager_type: orm, label: "Zeiteinträge", group: "Zeiterfassung", show_in_roles_matrix: false }
 
     admin.FAUser:
         class: Zeiterfassung\Admin\FAUserAdmin
