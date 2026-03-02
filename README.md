@@ -54,7 +54,7 @@ cd kantine.impuls-reha.de
 ```
 
 
-## Secrets hochladen/setzen
+## Secrets hochladen/setzen / generate JWT
 Falls Secrets und decrypt key in `/config/secrets/prod/` von einer vorherigen installation vorhanden sind, lade diese auf den Server hoch. Die Dateien haben das Format `prod.{{secret_name}}.{{random_hex}}.php`, sowie `prod.decrypt.private.php`, `prod.encrypt.public.php`, `prod.list.php`.
 
 Falls eines dieser Dateien nicht vorhanden ist, müssen die Secrets [neu generiert werden](https://symfony.com/doc/current/configuration/secrets.html#generate-cryptographic-keys):
@@ -62,12 +62,11 @@ Falls eines dieser Dateien nicht vorhanden ist, müssen die Secrets [neu generie
 export APP_RUNTIME_ENV=prod 
 php bin/console secrets:generate-keys
 php bin/console secrets:set APP_SECRET --random
+php bin/console secrets:set JWT_PASSPHRASE --random
+php bin/console lexik:jwt:generate-keypair
 ```
 
 DB Zugangsdaten setzen (siehe "Update DB Zugangsdaten").
-
-## JWT keypair
-`php bin/console lexik:jwt:generate-keypair`
 
 ## Datenbank migration
 
