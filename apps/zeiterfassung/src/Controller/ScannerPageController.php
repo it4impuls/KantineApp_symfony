@@ -14,6 +14,8 @@ use Symfony\Component\Routing\Attribute\Route;
 // #[Route(path: '/zeiterfassung', name: 'zeiterfassung')]
 class ScannerPageController extends AbstractController
 {
+    
+    static $cooldown = '+1 minutes';
     public function __construct(
         private readonly EntityManagerInterface $em
     ) {}
@@ -46,7 +48,7 @@ class ScannerPageController extends AbstractController
         if ($lastEntry) {
             // 1) If last entry has no checkout, update it (normal checkout)
             if ($lastEntry->getCheckoutTime() === null) {
-                $cooldownEnd = (clone $lastEntry->getCheckinTime())->modify('+1 minutes');
+                $cooldownEnd = (clone $lastEntry->getCheckinTime())->modify($this::$cooldown);
                 if ($now < $cooldownEnd) {
                     $remaining = $cooldownEnd->getTimestamp() - $now->getTimestamp();
                     return new JsonResponse([
@@ -89,7 +91,7 @@ class ScannerPageController extends AbstractController
                 'status' => 'checkin',
                 'user' => $userEntity->getUsername(),
                 'time' => $now->format('H:i:s'),
-                'cooldown_until' => (clone $now)->modify('+15 minutes')->format('H:i:s')
+                'cooldown_until' => (clone $now)->modify($this::$cooldown)->format('H:i:s')
             ], 201);
         }
         
