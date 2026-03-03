@@ -35,8 +35,8 @@ class ScannerPageController extends AbstractController
         if (!$userEntity) {
             throw $this->createNotFoundException('User with id '. $data['barcode'] .' not found');
         }
+        assert( $userEntity instanceof Costumer);
         if (!$userEntity->isActive())
-            // new Exc
             throw $this->createAccessDeniedException('User with id '. $data['barcode'] .'('.$userEntity->getUsername().') is not active');
         
         $lastEntry = $this->em->getRepository(TimeEntry::class)->getTimeEntryForUser($userEntity);
@@ -46,7 +46,7 @@ class ScannerPageController extends AbstractController
         if ($lastEntry) {
             // 1) If last entry has no checkout, update it (normal checkout)
             if ($lastEntry->getCheckoutTime() === null) {
-                $cooldownEnd = (clone $lastEntry->getCheckinTime())->modify('+15 minutes');
+                $cooldownEnd = (clone $lastEntry->getCheckinTime())->modify('+1 minutes');
                 if ($now < $cooldownEnd) {
                     $remaining = $cooldownEnd->getTimestamp() - $now->getTimestamp();
                     return new JsonResponse([
@@ -87,7 +87,7 @@ class ScannerPageController extends AbstractController
 
             return new JsonResponse([
                 'status' => 'checkin',
-                'user' => $userEntity->getFirstname(). " ". $userEntity->getLastname(),
+                'user' => $userEntity->getUsername(),
                 'time' => $now->format('H:i:s'),
                 'cooldown_until' => (clone $now)->modify('+15 minutes')->format('H:i:s')
             ], 201);

@@ -52,7 +52,7 @@ jobs:
             composer install --no-dev --optimize-autoloader
 
             # recreate cache
-            php bin/console cache:clear --no-dev
+            php bin/console cache:clear
 
             # compile assets
             php bin/console asset-map:compile
