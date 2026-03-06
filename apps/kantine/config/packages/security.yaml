@@ -1,0 +1,76 @@
+security:
+    
+  
+    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        # main:
+        #     lazy: true
+        #     provider: sonata_user_bundle
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#the-firewall
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+        
+            
+        admin:
+            lazy: true
+            pattern: ^/admin(.*)
+            provider: shared_user_provider
+            context: user
+            form_login:
+                login_path: sonata_user_admin_security_login
+                check_path: sonata_user_admin_security_check
+                default_target_path: sonata_admin_dashboard
+            logout:
+                path: sonata_user_admin_security_logout
+                target: sonata_user_admin_security_login
+            remember_me:
+                secret: '%env(APP_SECRET)%'
+                lifetime: 2629746
+                path: ^/admin
+
+
+        main:
+            provider: shared_user_provider
+            context:             user
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                default_target_path: app_kantine
+                enable_csrf: true
+            
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
+            remember_me:
+                secret: '%env(APP_SECRET)%'
+                lifetime: 2629746
+                path: /
+                secure: true
+            # access_token:
+            #     token_handler: App\Security\AccessTokenHandler
+
+    role_hierarchy:
+        ROLE_USER_KANTINE:      [ROLE_ADMIN_ORDER_ALL]
+        ROLE_ADMIN:             [ROLE_USER, ROLE_ADMIN_ORDER_ALL, ROLE_FA, ROLE_USER_KANTINE ]
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # Admin login page needs to be accessed without credential
+        - { path: ^/login$, role: PUBLIC_ACCESS }
+        - { path: ^/logout$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/login$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/logout$, role: PUBLIC_ACCESS }
+        # - { path: ^/fa, role: ROLE_USER }
+
+        # Secured part of the site
+        # This config requires being logged for the whole site and having the admin role for the admin part.
+        # Change these rules to adapt them to your needs
+        - { path: ^/.*, role: ROLE_USER }

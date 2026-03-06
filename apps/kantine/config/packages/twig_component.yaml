@@ -1,0 +1,5 @@
+twig_component:
+    defaults:
+        Kantine\Twig\Components\: 'apps/kantine/templates/components/'
+
+        

@@ -16,8 +16,6 @@ doctrine:
         profiling_collect_backtrace: '%kernel.debug%'
         use_savepoints: true
     orm:
-            
-
         entity_managers:
             default:
                 auto_mapping: true
