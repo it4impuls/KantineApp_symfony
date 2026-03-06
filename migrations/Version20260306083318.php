@@ -20,9 +20,9 @@ final class Version20260306083318 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user__user ADD discr VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE user__user ADD discr VARCHAR(255) NOT NULL DEFAULT \'sonatauseruser\'');
         // set existing users as admin type
-        $this->addSql('UPDATE user__user SET discr = \'sonatauseruser\'');
+        // $this->addSql('UPDATE user__user SET discr = \'sonatauseruser\'');
     }
 
     public function down(Schema $schema): void

@@ -226,17 +226,18 @@ final class TimeEntryAdmin extends AbstractAdmin
         ]);
     }
 
-    protected function configureDefaultFilterValues(array &$filterValues): void
-    {
-        $user = $this->ts->getToken()->getUser();
-        if(!$user instanceof FaUser) return;
-        $filterValues['user__Department'] = [
-            'value' => $user->getDepartment(),
-        ];
-        $filterValues['today'] = [
-            'value' => 1,
-        ];
-    }
+    //super annoying, dont do this
+    // protected function configureDefaultFilterValues(array &$filterValues): void
+    // {
+    //     $user = $this->ts->getToken()->getUser();
+    //     if(!$user instanceof FaUser) return;
+    //     $filterValues['user__Department'] = [
+    //         'value' => $user->getDepartment(),
+    //     ];
+    //     $filterValues['today'] = [
+    //         'value' => 1,
+    //     ];
+    // }
 
     // -------------------------------------------------------------------
     // LIST VIEW
