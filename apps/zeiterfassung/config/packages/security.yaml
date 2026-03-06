@@ -1,0 +1,77 @@
+security:
+  
+    role_hierarchy:
+        # ROLE_ADMIN_TIMEENTRY_ALL: [ROLE_ADMIN_TIMEENTRY_CREATE, ROLE_ADMIN_TIMEENTRY_LIST, ROLE_ADMIN_TIMEENTRY_DELETE, ROLE_ADMIN_TIMEENTRY_EDIT, ROLE_ADMIN_TIMEENTRY_EXPORT, ROLE_ADMIN_TIMEENTRY_VIEW]
+        ROLE_FA: [ROLE_ADMIN_TIMEENTRY_ALL, ROLE_ADMIN_COSTUMER_EDIT, ROLE_ADMIN_COSTUMER_LIST]
+        
+    # encoders:
+    #     FOS\UserBundle\Model\UserInterface: bcrypt
+
+    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+    providers:
+        sonata_user_bundle:
+            id: sonata.user.security.user_provider
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        # main:
+        #     lazy: true
+        #     provider: sonata_user_bundle
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#the-firewall
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+
+        admin:
+            lazy: true
+            pattern: ^/admin(.*)
+            provider: sonata_user_bundle
+            context: user
+            form_login:
+                login_path: sonata_user_admin_security_login
+                check_path: sonata_user_admin_security_check
+                default_target_path: sonata_admin_dashboard
+            logout:
+                path: sonata_user_admin_security_logout
+                target: sonata_user_admin_security_login
+            remember_me:
+                secret: '%env(APP_SECRET)%'
+                lifetime: 2629746
+                path: ^/admin
+
+        api_login:
+            provider: sonata_user_bundle
+            pattern: ^/api/login
+            context: user
+            stateless: true
+            json_login:
+                check_path: /api/login
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        zeiterfassung:
+            pattern:   ^/api
+            provider: sonata_user_bundle
+            context:             user
+            stateless: true
+            jwt: ~
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # Admin login page needs to be accessed without credential
+        - { path: ^/admin/login$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/logout$, role: PUBLIC_ACCESS }
+        - { path: ^/fa/login$, role: PUBLIC_ACCESS }
+        - { path: ^/fa/logout$, role: PUBLIC_ACCESS }
+        # - { path: ^/fa, role: ROLE_USER }
+
+        # Secured part of the site
+        # This config requires being logged for the whole site and having the admin role for the admin part.
+        # Change these rules to adapt them to your needs
+        - { path: ^/.*, role: ROLE_USER }

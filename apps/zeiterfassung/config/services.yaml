@@ -20,16 +20,20 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    admin.TimeEntryAdmin:
+
+
+    admin.TimeEntry:
         class: Zeiterfassung\Admin\TimeEntryAdmin
+        arguments:
+        - '@security.token_storage'
         tags:
-            - { name: sonata.admin, model_class: Zeiterfassung\Entity\TimeEntry, controller: ~, manager_type: orm, label: "Zeiteinträge", group: "Zeiterfassung", show_in_roles_matrix: false }
+            - { name: sonata.admin, model_class: Zeiterfassung\Entity\TimeEntry, controller: ~, manager_type: orm, group: Zeiterfassung, label: "Zeiteinträge", show_in_roles_matrix: false}
 
-    admin.FAUser:
-        class: Zeiterfassung\Admin\FAUserAdmin
+
+    admin.FA:
+        class: Zeiterfassung\Admin\FaUserAdmin
         tags:
-            - { name: sonata.admin, model_class: Zeiterfassung\Entity\FAUser, controller: ~, manager_type: orm, group: Zeiterfassung, label: Fachanleiter, show_in_roles_matrix: false }
-
+            - { name: sonata.admin, model_class: Zeiterfassung\Entity\FaUser, controller: ~, manager_type: orm, group: Zeiterfassung, label: Fachanleiter, show_in_roles_matrix: false }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 

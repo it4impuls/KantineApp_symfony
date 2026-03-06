@@ -17,11 +17,16 @@ use Sonata\DoctrineORMAdminBundle\Filter\CallbackFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\UsageTrackingTokenStorage;
+use Zeiterfassung\Entity\FaUser;
 
 final class TimeEntryAdmin extends AbstractAdmin
 {
     protected $baseRouteName = 'admin_time_entry';
     protected $baseRoutePattern = 'attendance';
+    public function __construct(private UsageTrackingTokenStorage $ts)
+    {
+    }
 
     // -------------------------------------------------------------------
     // Helper to avoid duplicate user join in filters
@@ -220,6 +225,19 @@ final class TimeEntryAdmin extends AbstractAdmin
             }
         ]);
     }
+
+    //super annoying, dont do this
+    // protected function configureDefaultFilterValues(array &$filterValues): void
+    // {
+    //     $user = $this->ts->getToken()->getUser();
+    //     if(!$user instanceof FaUser) return;
+    //     $filterValues['user__Department'] = [
+    //         'value' => $user->getDepartment(),
+    //     ];
+    //     $filterValues['today'] = [
+    //         'value' => 1,
+    //     ];
+    // }
 
     // -------------------------------------------------------------------
     // LIST VIEW

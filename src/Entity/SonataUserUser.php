@@ -8,8 +8,15 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Sonata\UserBundle\Entity\BaseUser;
 use Doctrine\DBAL\Types\Types;
-use Symfony\Component\Validator\Constraints\Choice;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\InheritanceType;
+use Symfony\Component\Serializer\Annotation\DiscriminatorMap;
+use Zeiterfassung\Entity\FaUser;
 
+
+#[InheritanceType('SINGLE_TABLE')]
+#[DiscriminatorColumn(name: 'discr', type: 'string')]
+#[DiscriminatorMap(['SonataUser' => SonataUserUser::class, 'FaUser' => FaUser::class])]
 #[ORM\Entity(repositoryClass: SonataUserUserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
 #[ORM\Table(name: 'user__user')]

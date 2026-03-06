@@ -5,20 +5,5 @@ sonata_user:
     class:
         user: Shared\Entity\SonataUserUser
 
-    # admin:
-    #     user:
-    #         class: Shared\Admin\UserAmin
-    #         controller: '%sonata.admin.configuration.default_controller%'
-    #         translation: SonataUserBundle
-
     profile:
         default_avatar: bundles/sonatauser/default_avatar.png # Default avatar displayed if the user doesn't have one
-    # resetting:
-    #     email:
-    #         address: sonata@localhost
-    #         sender_name: Sonata Admin
-    # mailer: custom.mailer.service.id
-
-    # sonata_user:
-    #     security_acl: true
-    #     manager_type: orm 

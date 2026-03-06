@@ -12,7 +12,7 @@
             "label": "compile assets",
             "type": "shell",
             "command": "APP_ENV=dev APP_DEBUG=1 APP_ID=kantine php bin/console asset-map:compile",
-            "problemMatcher": []
+            "problemMatcher": [],
         },
         {
             "label": "make migrations",
@@ -36,7 +36,7 @@
         {
             "label": "clear cache",
             "type": "shell",
-            "command": "APP_ENV=dev APP_DEBUG=1 APP_ID=kantine php bin/console cache:clear && APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear && ",
+            "command": "php bin/console cache:clear -ikantine && php bin/console cache:clear -izeiterfassung",
             "problemMatcher": [],
         },
     ]

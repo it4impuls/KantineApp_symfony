@@ -31,4 +31,3 @@ services:
         class: Shared\Admin\CostumerAdmin
         tags:
             - { name: sonata.admin, model_class: Shared\Entity\Costumer, controller: ~, manager_type: orm, group: Shared, label: Costumer, show_in_roles_matrix: false }
-
