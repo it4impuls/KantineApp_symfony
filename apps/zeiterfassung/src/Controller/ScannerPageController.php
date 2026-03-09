@@ -39,7 +39,7 @@ class ScannerPageController extends AbstractController
         }
         assert( $userEntity instanceof Costumer);
         if (!$userEntity->isActive())
-            throw $this->createAccessDeniedException('User with id '. $data['barcode'] .'('.$userEntity->getUsername().') is not active');
+            throw $this->createAccessDeniedException('User with id '. $data['barcode'] .'('.$userEntity->getFullName().') is not active');
         
         $lastEntry = $this->em->getRepository(TimeEntry::class)->getTimeEntryForUser($userEntity);
         $now = new \DateTime();
@@ -89,7 +89,7 @@ class ScannerPageController extends AbstractController
 
             return new JsonResponse([
                 'status' => 'checkin',
-                'user' => $userEntity->getUsername(),
+                'user' => $userEntity->getFullName(),
                 'time' => $now->format('H:i:s'),
                 'cooldown_until' => (clone $now)->modify($this::$cooldown)->format('H:i:s')
             ], 201);

@@ -2,24 +2,28 @@
 
 namespace Zeiterfassung\Admin;
 
+use Zeiterfassung\Entity\FaUser;
 use Shared\Entity\Costumer;
+
+use Doctrine\ORM\QueryBuilder;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\UsageTrackingTokenStorage;
+
 use Sonata\Form\Type\DatePickerType;
+use Sonata\Form\Type\DateTimePickerType;
+use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
+use Sonata\DoctrineORMAdminBundle\Filter\CallbackFilter;
+use Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Sonata\Form\Type\DateTimePickerType;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Symfony\Component\Validator\Constraints\NotNull;
-use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
-use Sonata\DoctrineORMAdminBundle\Filter\CallbackFilter;
-use Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\UsageTrackingTokenStorage;
-use Zeiterfassung\Entity\FaUser;
+
 
 final class TimeEntryAdmin extends AbstractAdmin
 {
@@ -39,10 +43,10 @@ final class TimeEntryAdmin extends AbstractAdmin
             return (string)$user;
         }
         $dept = $user->getDepartment() ?? 'No Dept';
-        return sprintf('[%s] %s', $dept, $user->getUsername());
+        return sprintf('[%s] %s', $dept, $user->getFullName());
     }
 
-    private function ensureUserJoin($qb, string $alias): void
+    private function ensureUserJoin(QueryBuilder $qb, string $alias): void
     {
         $joins = $qb->getDQLPart('join');
         if (isset($joins[$alias])) {
@@ -237,7 +241,7 @@ final class TimeEntryAdmin extends AbstractAdmin
         $list
             ->addIdentifier('user', null, [
                 'label' => 'Name',
-                'associated_property' => 'username',
+                'associated_property' => 'fullName',
             ])
             ->add('user.department', null, ['label' => 'Department'])
             ->add('checkinTime', null, ['label' => 'Check-in', 'format' => 'd.m.Y - H:i:s'])
@@ -254,7 +258,7 @@ final class TimeEntryAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $show): void
     {
         $show
-            ->add('user.username', null, ['label' => 'Name'])
+            ->add('user.fullName', null, ['label' => 'Name'])
             ->add('user.department', null, ['label' => 'Department'])
             ->add('checkinTime', null, ['label' => 'Check-in'])
             ->add('checkoutTime', null, ['label' => 'Check-out']);

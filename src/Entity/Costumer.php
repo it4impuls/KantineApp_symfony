@@ -205,7 +205,7 @@ class Costumer
         return $this;
     }
 
-    public function getUsername()
+    public function getFullName()
     {
         return $this->getFirstname(). " ". $this->getLastname();
     }
