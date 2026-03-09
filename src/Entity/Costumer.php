@@ -266,7 +266,7 @@ class SvgHelper
         $width = SvgHelper::getSvgValue($barcode, "width", 'svg');
         assert(ctype_digit($width), "width must be a number");
         $height = $barcodeHeight + $fontheight + $sep;
-        SvgHelper::setSvgValues($barcode, ["height" => $height, "viewBox" => sprintf("0 0 %u %u", $width, $height)], 'svg');
+        SvgHelper::setSvgValues($barcode, ["height" => $height, "viewBox" => sprintf("0 0 %u %u", $width, $height), "text-anchor"=>"middle"], 'svg');
 
         //dominant-baseline="middle" text-anchor="middle"
         $numberSVG = sprintf(

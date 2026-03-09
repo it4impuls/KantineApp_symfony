@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\DateTimePickerType;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
@@ -226,18 +227,7 @@ final class TimeEntryAdmin extends AbstractAdmin
         ]);
     }
 
-    //super annoying, dont do this
-    // protected function configureDefaultFilterValues(array &$filterValues): void
-    // {
-    //     $user = $this->ts->getToken()->getUser();
-    //     if(!$user instanceof FaUser) return;
-    //     $filterValues['user__Department'] = [
-    //         'value' => $user->getDepartment(),
-    //     ];
-    //     $filterValues['today'] = [
-    //         'value' => 1,
-    //     ];
-    // }
+    
 
     // -------------------------------------------------------------------
     // LIST VIEW
@@ -273,9 +263,28 @@ final class TimeEntryAdmin extends AbstractAdmin
     // -------------------------------------------------------------------
     // DEFAULT SORTING + TODAY FILTER
     // -------------------------------------------------------------------
-    protected $datagridValues = [
-        '_sort_order' => 'DESC',
-        '_sort_by'    => 'checkinTime',
-        'today' => ['type' => null, 'value' => true],
-    ];
+    // protected $datagridValues = [
+    //     '_sort_order' => 'DESC',
+    //     '_sort_by'    => 'checkinTime',
+    //     'today' => ['type' => null, 'value' => true],
+    // ];
+
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[DatagridInterface::SORT_ORDER] = 'DESC';
+        $sortValues[DatagridInterface::SORT_BY] = 'id';
+    }
+
+    //super annoying, dont do this, cant apply any other filters
+    // protected function configureDefaultFilterValues(array &$filterValues): void
+    // {
+    //     $user = $this->ts->getToken()->getUser();
+    //     if(!$user instanceof FaUser) return;
+    //     $filterValues['user__Department'] = [
+    //         'value' => $user->getDepartment(),
+    //     ];
+    //     $filterValues['today'] = [
+    //         'value' => 1,
+    //     ];
+    // }
 }
