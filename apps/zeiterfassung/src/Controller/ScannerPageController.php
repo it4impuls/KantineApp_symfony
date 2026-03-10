@@ -20,6 +20,11 @@ class ScannerPageController extends AbstractController
         private readonly EntityManagerInterface $em
     ) {}
 
+    #[Route('/', name: 'main')]
+    public function main(){
+        return $this->redirectToRoute('sonata_admin_dashboard');
+    }
+
     #[Route('/api', name: 'scanner_api', methods: ['POST'])]
     public function scannerApi(Request $request): JsonResponse
     {
@@ -95,80 +100,6 @@ class ScannerPageController extends AbstractController
             ], 201);
         }
         
-    }
-
-    #[Route('/TimeEntries/{id}', name: 'gettimeentrie', methods: ['GET'])]
-    private function getTimeEntry(Request $request, int $id): JsonResponse{
-        return new JsonResponse($this->em->getRepository(TimeEntry::class)->find($id));
-    }
-
-
-    private function setCheckIn(Costumer $user, array $data): JsonResponse
-    {
-        $todayStart = (new \DateTime())->setTime(0, 0, 0);
-        $todayEnd = (new \DateTime())->setTime(23, 59, 59);
-
-        $existing = $this->em->getRepository(TimeEntry::class)->createQueryBuilder('t')
-            ->where('t.user = :user')
-            ->andWhere('t.checkinTime BETWEEN :start AND :end')
-            ->setParameter('user', $user)
-            ->setParameter('start', $todayStart)
-            ->setParameter('end', $todayEnd)
-            ->getQuery()
-            ->getResult();
-
-        if (count($existing) > 0) {
-            // Overwrite today's first entry's check-in
-            $entry = $existing[0];
-            $entry->setCheckinTime(new \DateTime($data['checkin']));
-            $this->em->flush();
-
-            return new JsonResponse(['status' => 'checkin_overwritten']);
-        }
-
-        $entry = new TimeEntry();
-        $entry->setUser($user);
-        $entry->setCheckinTime(new \DateTime($data['checkin']));
-        $entry->setCheckoutTime(null);
-        $this->em->persist($entry);
-        $this->em->flush();
-
-        return new JsonResponse(['status' => 'checkin_set']);
-    }
-
-    private function setCheckout(Costumer $user, array $data): JsonResponse
-    {
-        $todayStart = (new \DateTime())->setTime(0, 0, 0);
-        $todayEnd = (new \DateTime())->setTime(23, 59, 59);
-
-        $entries = $this->em->getRepository(TimeEntry::class)->createQueryBuilder('t')
-            ->where('t.user = :user')
-            ->andWhere('t.checkinTime BETWEEN :start AND :end')
-            ->setParameter('user', $user)
-            ->setParameter('start', $todayStart)
-            ->setParameter('end', $todayEnd)
-            ->orderBy('t.checkinTime', 'DESC')
-            ->getQuery()
-            ->getResult();
-
-        if (count($entries) === 0) {
-            // No entry exists → create new with only checkout time
-            $entry = new TimeEntry();
-            $entry->setUser($user);
-            $entry->setCheckinTime($todayStart); // or minimal placeholder
-            $entry->setCheckoutTime(new \DateTime($data['checkout']));
-            $this->em->persist($entry);
-            $this->em->flush();
-
-            return new JsonResponse(['status' => 'checkout_created']);
-        }
-
-        // Overwrite the checkout of the first entry
-        $entry = $entries[0];
-        $entry->setCheckoutTime(new \DateTime($data['checkout']));
-        $this->em->flush();
-
-        return new JsonResponse(['status' => 'checkout_overwritten']);
     }
 
 }

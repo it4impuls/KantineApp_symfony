@@ -21,7 +21,7 @@ return function (InputInterface $input, array $context): Application {
 
     $application = new Application($kernel);
     $application->getDefinition()
-        ->addOption(new InputOption('--id', '-i', InputOption::VALUE_REQUIRED, 'The App ID'))
+        ->addOption(new InputOption('--id', '-i', InputOption::VALUE_OPTIONAL, 'The App ID'))
     ;
 
     return $application;
