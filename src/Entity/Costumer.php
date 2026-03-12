@@ -186,7 +186,8 @@ class Costumer
         // 
         $filename = join(DIRECTORY_SEPARATOR, [$dirname, (string)$this->getId() . '.svg']);
         if (!file_exists($filename)) {
-            $barcode = SvgHelper::generateBarcode($this->getId());
+            $barcode = (new BarcodeGeneratorSVG())->getBarcode($this->getId(), BarcodeGeneratorSVG::TYPE_CODE_128);
+            //SvgHelper::generateBarcode($this->getId());
             file_put_contents($filename, $barcode);
         }
 
@@ -211,6 +212,8 @@ class Costumer
     }
 }
 
+
+/* OBSOLETE, numbers should not be shown anymore*/
 class SvgHelper
 {
     static public function generateBarcode(int $id): string

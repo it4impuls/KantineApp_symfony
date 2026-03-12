@@ -8,6 +8,7 @@ use Shared\Entity\Costumer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 
@@ -30,21 +31,22 @@ class ScannerPageController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
         if (!$data) {
-            return new JsonResponse(['error' => 'No data provided'], 400);
+            return $this->json(['error' => 'No data provided'], 400);
         }
 
         // ------------- 2) Barcode scanning (legacy) -------------
         if (!isset($data['barcode'])) {
-            return new JsonResponse(['error' => 'No barcode provided'], 400);
+            return $this->json(['error' => 'No barcode provided'], 400);
         }
 
         $userEntity = $this->em->getRepository(Costumer::class)->find($data['barcode']);
         if (!$userEntity) {
-            throw $this->createNotFoundException('User with id '. $data['barcode'] .' not found');
+            return $this->json(['error' => 'User with id '. $data['barcode'] .' not found'], 404);
         }
+        
         assert( $userEntity instanceof Costumer);
         if (!$userEntity->isActive())
-            throw $this->createAccessDeniedException('User with id '. $data['barcode'] .'('.$userEntity->getFullName().') is not active');
+            return $this->json(['error' => 'User with id '. $data['barcode'] .'('.$userEntity->getFullName().') is not active'], 403);
         
         $lastEntry = $this->em->getRepository(TimeEntry::class)->getTimeEntryForUser($userEntity);
         $now = new \DateTime();
