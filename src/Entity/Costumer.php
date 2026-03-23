@@ -43,14 +43,16 @@ class Costumer
     // name_to_display => name in database
     public const DEPARTMENTS = [
         "IT" => "IT",
-        "IT-Tempus" => "IT-TEMPUS",
+        "IT Tempus/Alia" => "IT-TEMPUS",
         "Brevia" => "BREVIA",
         "Vario" => "VARIO",
-        "HWS" => "HWS",
+        "Service" => "HWS",
         "Büme" => "BÜME",
-        "Büme-Tempus" => "BÜME-TEMPUS",
+        "Büme Tempus/Alia" => "BÜME-TEMPUS",
         "Tischlerei" => "TISCHLEREI",
-        "Tischlerei-Tempus" => "TISCHLEREI-TEMPUS",
+        "Tischlerei Tempus/Alia" => "TISCHLEREI-TEMPUS",
+        "Malerei" => "MALEREI",
+        "Media" => "MEDIA",
         "BVB" => "BVB",
         "Aperio" => "APERIO",
         "" => ""
@@ -186,7 +188,8 @@ class Costumer
         // 
         $filename = join(DIRECTORY_SEPARATOR, [$dirname, (string)$this->getId() . '.svg']);
         if (!file_exists($filename)) {
-            $barcode = SvgHelper::generateBarcode($this->getId());
+            $barcode = (new BarcodeGeneratorSVG())->getBarcode($this->getId(), BarcodeGeneratorSVG::TYPE_CODE_128);
+            //SvgHelper::generateBarcode($this->getId());
             file_put_contents($filename, $barcode);
         }
 
@@ -205,12 +208,14 @@ class Costumer
         return $this;
     }
 
-    public function getUsername()
+    public function getFullName()
     {
         return $this->getFirstname(). " ". $this->getLastname();
     }
 }
 
+
+/* OBSOLETE, numbers should not be shown anymore*/
 class SvgHelper
 {
     static public function generateBarcode(int $id): string
@@ -266,7 +271,7 @@ class SvgHelper
         $width = SvgHelper::getSvgValue($barcode, "width", 'svg');
         assert(ctype_digit($width), "width must be a number");
         $height = $barcodeHeight + $fontheight + $sep;
-        SvgHelper::setSvgValues($barcode, ["height" => $height, "viewBox" => sprintf("0 0 %u %u", $width, $height)], 'svg');
+        SvgHelper::setSvgValues($barcode, ["height" => $height, "viewBox" => sprintf("0 0 %u %u", $width, $height), "text-anchor"=>"middle"], 'svg');
 
         //dominant-baseline="middle" text-anchor="middle"
         $numberSVG = sprintf(

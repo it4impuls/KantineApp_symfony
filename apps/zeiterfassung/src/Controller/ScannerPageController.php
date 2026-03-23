@@ -8,6 +8,7 @@ use Shared\Entity\Costumer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 
@@ -20,26 +21,32 @@ class ScannerPageController extends AbstractController
         private readonly EntityManagerInterface $em
     ) {}
 
+    #[Route('/', name: 'main')]
+    public function main(){
+        return $this->redirectToRoute('sonata_admin_dashboard');
+    }
+
     #[Route('/api', name: 'scanner_api', methods: ['POST'])]
     public function scannerApi(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         if (!$data) {
-            return new JsonResponse(['error' => 'No data provided'], 400);
+            return $this->json(['error' => 'No data provided'], 400);
         }
 
         // ------------- 2) Barcode scanning (legacy) -------------
         if (!isset($data['barcode'])) {
-            return new JsonResponse(['error' => 'No barcode provided'], 400);
+            return $this->json(['error' => 'No barcode provided'], 400);
         }
 
         $userEntity = $this->em->getRepository(Costumer::class)->find($data['barcode']);
         if (!$userEntity) {
-            throw $this->createNotFoundException('User with id '. $data['barcode'] .' not found');
+            return $this->json(['error' => 'User with id '. $data['barcode'] .' not found'], 404);
         }
+        
         assert( $userEntity instanceof Costumer);
         if (!$userEntity->isActive())
-            throw $this->createAccessDeniedException('User with id '. $data['barcode'] .'('.$userEntity->getUsername().') is not active');
+            return $this->json(['error' => 'User with id '. $data['barcode'] .'('.$userEntity->getFullName().') is not active'], 403);
         
         $lastEntry = $this->em->getRepository(TimeEntry::class)->getTimeEntryForUser($userEntity);
         $now = new \DateTime();
@@ -89,86 +96,12 @@ class ScannerPageController extends AbstractController
 
             return new JsonResponse([
                 'status' => 'checkin',
-                'user' => $userEntity->getUsername(),
+                'user' => $userEntity->getFullName(),
                 'time' => $now->format('H:i:s'),
                 'cooldown_until' => (clone $now)->modify($this::$cooldown)->format('H:i:s')
             ], 201);
         }
         
-    }
-
-    #[Route('/TimeEntries/{id}', name: 'gettimeentrie', methods: ['GET'])]
-    private function getTimeEntry(Request $request, int $id): JsonResponse{
-        return new JsonResponse($this->em->getRepository(TimeEntry::class)->find($id));
-    }
-
-
-    private function setCheckIn(Costumer $user, array $data): JsonResponse
-    {
-        $todayStart = (new \DateTime())->setTime(0, 0, 0);
-        $todayEnd = (new \DateTime())->setTime(23, 59, 59);
-
-        $existing = $this->em->getRepository(TimeEntry::class)->createQueryBuilder('t')
-            ->where('t.user = :user')
-            ->andWhere('t.checkinTime BETWEEN :start AND :end')
-            ->setParameter('user', $user)
-            ->setParameter('start', $todayStart)
-            ->setParameter('end', $todayEnd)
-            ->getQuery()
-            ->getResult();
-
-        if (count($existing) > 0) {
-            // Overwrite today's first entry's check-in
-            $entry = $existing[0];
-            $entry->setCheckinTime(new \DateTime($data['checkin']));
-            $this->em->flush();
-
-            return new JsonResponse(['status' => 'checkin_overwritten']);
-        }
-
-        $entry = new TimeEntry();
-        $entry->setUser($user);
-        $entry->setCheckinTime(new \DateTime($data['checkin']));
-        $entry->setCheckoutTime(null);
-        $this->em->persist($entry);
-        $this->em->flush();
-
-        return new JsonResponse(['status' => 'checkin_set']);
-    }
-
-    private function setCheckout(Costumer $user, array $data): JsonResponse
-    {
-        $todayStart = (new \DateTime())->setTime(0, 0, 0);
-        $todayEnd = (new \DateTime())->setTime(23, 59, 59);
-
-        $entries = $this->em->getRepository(TimeEntry::class)->createQueryBuilder('t')
-            ->where('t.user = :user')
-            ->andWhere('t.checkinTime BETWEEN :start AND :end')
-            ->setParameter('user', $user)
-            ->setParameter('start', $todayStart)
-            ->setParameter('end', $todayEnd)
-            ->orderBy('t.checkinTime', 'DESC')
-            ->getQuery()
-            ->getResult();
-
-        if (count($entries) === 0) {
-            // No entry exists → create new with only checkout time
-            $entry = new TimeEntry();
-            $entry->setUser($user);
-            $entry->setCheckinTime($todayStart); // or minimal placeholder
-            $entry->setCheckoutTime(new \DateTime($data['checkout']));
-            $this->em->persist($entry);
-            $this->em->flush();
-
-            return new JsonResponse(['status' => 'checkout_created']);
-        }
-
-        // Overwrite the checkout of the first entry
-        $entry = $entries[0];
-        $entry->setCheckoutTime(new \DateTime($data['checkout']));
-        $this->em->flush();
-
-        return new JsonResponse(['status' => 'checkout_overwritten']);
     }
 
 }
