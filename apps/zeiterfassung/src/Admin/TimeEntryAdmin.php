@@ -265,6 +265,14 @@ final class TimeEntryAdmin extends AbstractAdmin
     }
 
     // -------------------------------------------------------------------
+    // EXPORT FIELDS
+    // -------------------------------------------------------------------
+    protected function configureExportFields(): array
+    {
+        return ['user.fullName', 'user.Department', 'checkinTime', 'checkoutTime'];
+    }
+
+    // -------------------------------------------------------------------
     // DEFAULT SORTING + TODAY FILTER
     // -------------------------------------------------------------------
     // protected $datagridValues = [
