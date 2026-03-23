@@ -20,9 +20,6 @@ use Symfony\Component\Validator\Constraints\Choice;
     fields: ['firstname', 'lastname'],
     message: "A costumer with this name already exists"
 )]
-
-
-
 class Costumer
 {
 

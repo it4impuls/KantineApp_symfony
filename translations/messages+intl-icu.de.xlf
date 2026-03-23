@@ -121,6 +121,58 @@
         <source>Time Entry Create</source>
         <target>Zeiteintrag Erstellen</target>
       </trans-unit>
+      <trans-unit id="JrqrCkq" resname="Zeiteinträge">
+        <source>Zeiteinträge</source>
+        <target>Zeiteinträge</target>
+      </trans-unit>
+      <trans-unit id="tRLZfny" resname="User">
+        <source>User</source>
+        <target>Teilnehmer</target>
+      </trans-unit>
+      <trans-unit id="LgUe4aA" resname="User Department">
+        <source>User Department</source>
+        <target>Bereich</target>
+      </trans-unit>
+      <trans-unit id="0cLGoq2" resname="Fachanleiter">
+        <source>Fachanleiter</source>
+        <target>Fachanleiter</target>
+      </trans-unit>
+      <trans-unit id="47ienTP" resname="Username">
+        <source>Username</source>
+        <target>Username</target>
+      </trans-unit>
+      <trans-unit id="lpzL089" resname="Email">
+        <source>Email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="ksHN.fT" resname="Enabled">
+        <source>Enabled</source>
+        <target>Aktiviert</target>
+      </trans-unit>
+      <trans-unit id="PUQzcBC" resname="Created At">
+        <source>Created At</source>
+        <target>Erstellt am</target>
+      </trans-unit>
+      <trans-unit id="yRDUdNz" resname="General">
+        <source>General</source>
+        <target>Allgemein</target>
+      </trans-unit>
+      <trans-unit id="7TE8nTi" resname="Plain Password">
+        <source>Plain Password</source>
+        <target>Passwort (Klartext)</target>
+      </trans-unit>
+      <trans-unit id="wlM3BVR" resname="Roles">
+        <source>Roles</source>
+        <target>Rollen</target>
+      </trans-unit>
+      <trans-unit id="sIwK89t" resname="User List">
+        <source>User List</source>
+        <target>Teilnehmer Liste</target>
+      </trans-unit>
+      <trans-unit id="7f4FugA" resname="User Create">
+        <source>User Create</source>
+        <target>Teilnehmer Erstellen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
