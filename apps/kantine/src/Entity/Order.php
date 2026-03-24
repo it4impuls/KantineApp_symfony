@@ -23,9 +23,6 @@ class Order
     #[ORM\Column(type: "integer")]
     private ?int $id = null;
 
-    // #[ORM\Column(name: '`order_date_time`', type: 'date')]
-    // private readonly ?\DateTime $order_date;
-
     public function __construct()
     {
         $this->order_dateTime = new DateTime();
@@ -48,8 +45,6 @@ class Order
     {
         return $this->id;
     }
-
-    // public function setId($id) {}
 
     public function getCostumer(): ?Costumer
     {

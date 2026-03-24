@@ -89,7 +89,6 @@ final class CostumerAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            // ->add('id')
             ->add('firstname')
             ->add('lastname')
             ->add('active', null, ['data' => true])

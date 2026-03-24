@@ -36,8 +36,6 @@ class SecurityController extends AbstractController
     #[Route('/api/login', name: 'api_login', methods: ['POST'])]
     public function apiLogin(#[CurrentUser] ?User $editor, Request $request): Response
     {
-        
-        // $request->getContent()
         if (null === $editor) {
             return $this->json([
                 'error' => 'Invalid credentials'
@@ -50,20 +48,4 @@ class SecurityController extends AbstractController
             'roles' => $editor->getRoles(),
         ], Response::HTTP_OK);
     }
-
-    // #[Route(['/api/login','/api/login/'], name: 'api_login', methods: ['POST'])]
-    // public function apiLogin(#[CurrentUser] ?User $user, Request $request): Response
-    // {
-    //     if (null === $user) {
-    //         return $this->json([
-    //             'message' => 'missing credentials',
-    //         ], Response::HTTP_UNAUTHORIZED);
-    //     }
-    //     $token = $request->attributes->get("_security_remember_me_cookie");
-    //     $response = $this->json([
-    //         'user'  => $user->getUserIdentifier(),
-    //         $token->getName() => $token->getValue()
-    //     ]);
-    //     return $response;
-    // }
 }

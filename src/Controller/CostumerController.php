@@ -60,9 +60,7 @@ final class CostumerController extends AbstractFOSRestController
         // get Costumer in JSON compatible format
         $filter = $request->query->all();
         $data = $this->entityManager->getRepository(Costumer::class)->filterBy($filter)->getArrayResult();
-        // if (!$data) throw $this->createNotFoundException(
-        //     'No costumer found with those attributes'
-        // );
+
         if ($request->getRequestFormat() == 'html') return $this->json($data);
         $view = $this->view($data);
         return $this->handleView($view);

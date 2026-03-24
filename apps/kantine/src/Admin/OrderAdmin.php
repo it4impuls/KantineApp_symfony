@@ -72,7 +72,6 @@ final class OrderAdmin extends AbstractAdmin
                 'class' => Costumer::class,
                 'choice_label' => 'id',
             ])
-            // ->add('order_dateTime')
             ->add('ordered_item', MoneyType::class, [])
             ->add('tax')
         ;

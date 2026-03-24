@@ -51,7 +51,6 @@ final class OrderController extends AbstractFOSRestController
         $order = new Order();
         $now = new DateTime();
         $order->setOrderDateTime($now);
-        // $order->setOrderDate($now);
         $order->setCostumer($this->get_Costumer((int)$orderDTO->getCostumer()));
         $order->setOrderedItem($orderDTO->getOrderedItem());
         $order->setTax($orderDTO->getTax());
@@ -74,15 +73,6 @@ final class OrderController extends AbstractFOSRestController
         
         // form is submitted (any submit button pressed)
         if ( $form->isSubmitted() && $form->isValid()) {
-            // $cancelButton =$form->get('cancel');
-            // assert($cancelButton instanceof SubmitButton);
-
-            // if ($cancelButton->isClicked()) {
-            //     // $orderDTO = new OrderFormDTO();
-            //     $form = $this->createForm(OrderDTOType::class, $emptyOrderDTO);
-            //     $options['form']=$form;
-            //     return $this->render_site($options);
-            // }
 
             $orderDTO =$form->getData();
             $order = $this->makeOrderFromDTO($orderDTO);

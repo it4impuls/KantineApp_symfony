@@ -158,7 +158,6 @@ final class TimeEntryAdmin extends AbstractAdmin
         ]);
 
         $filter->add('missingCheckinCheckout', CallbackFilter::class, [
-            // 'label' => 'Missing Check-in/Out',
             'field_type' => CheckboxType::class,
             'callback' => function ($qb, $alias, $field, $value) {
                 if (!$value || !$value->hasValue() || $value->getValue() !== true) return false;
@@ -168,7 +167,6 @@ final class TimeEntryAdmin extends AbstractAdmin
         ]);
 
         $filter->add('today', CallbackFilter::class, [
-            // 'label' => ('Today only'),
             'field_type' => CheckboxType::class,
             'callback' => function ($qb, $alias, $field, $value) {
                 if (!$value || !$value->hasValue() || $value->getValue() !== true) return false;
@@ -182,7 +180,6 @@ final class TimeEntryAdmin extends AbstractAdmin
         ]);
 
         $filter->add('fromDate', CallbackFilter::class, [
-            // 'label' => 'From Date',
             'field_type' => DatePickerType::class,
             'field_options' => [
                 'widget' => 'single_text',
@@ -206,7 +203,6 @@ final class TimeEntryAdmin extends AbstractAdmin
         ]);
 
         $filter->add('toDate', CallbackFilter::class, [
-            // 'label' => 'To Date',
             'field_type' => DatePickerType::class,
             'field_options' => [
                 'widget' => 'single_text',
@@ -238,12 +234,15 @@ final class TimeEntryAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list): void
     {
         $list
-            ->addIdentifier('user', null, [
+            ->add('user', null, [
                 'label' => 'Name',
                 'associated_property' => 'fullName',
+                'sort_field_mapping' => [
+                    'fieldName' => 'lastname',
+                ],
             ])
             ->add('user.department', null, ['label' => 'Department'])
-            ->add('checkinTime', null, ['label' => 'Check-in', 'format' => 'd.m.Y - H:i:s'])
+            ->addIdentifier('checkinTime', null, ['label' => 'Check-in', 'format' => 'd.m.Y - H:i:s'])
             ->add('checkoutTime', null, ['label' => 'Check-out', 'format' => 'd.m.Y - H:i:s'])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'label' => 'Actions',
@@ -274,28 +273,10 @@ final class TimeEntryAdmin extends AbstractAdmin
     // -------------------------------------------------------------------
     // DEFAULT SORTING + TODAY FILTER
     // -------------------------------------------------------------------
-    // protected $datagridValues = [
-    //     '_sort_order' => 'DESC',
-    //     '_sort_by'    => 'checkinTime',
-    //     'today' => ['type' => null, 'value' => true],
-    // ];
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::SORT_ORDER] = 'DESC';
         $sortValues[DatagridInterface::SORT_BY] = 'id';
     }
-
-    //super annoying, dont do this, cant apply any other filters
-    // protected function configureDefaultFilterValues(array &$filterValues): void
-    // {
-    //     $user = $this->ts->getToken()->getUser();
-    //     if(!$user instanceof FaUser) return;
-    //     $filterValues['user__Department'] = [
-    //         'value' => $user->getDepartment(),
-    //     ];
-    //     $filterValues['today'] = [
-    //         'value' => 1,
-    //     ];
-    // }
 }
