@@ -27,7 +27,7 @@ services:
         arguments:
         - '@security.token_storage'
         tags:
-            - { name: sonata.admin, model_class: Zeiterfassung\Entity\TimeEntry, controller: ~, manager_type: orm, group: Zeiterfassung, label: "Zeiteinträge", show_in_roles_matrix: false}
+            - { name: sonata.admin, model_class: Zeiterfassung\Entity\TimeEntry, controller: ~, manager_type: orm, group: Zeiterfassung, label: Zeiteinträge, show_in_roles_matrix: false}
 
 
     admin.FA:

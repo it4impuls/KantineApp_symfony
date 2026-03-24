@@ -521,6 +521,10 @@
         <source>Übersicht</source>
         <target>Time Entries</target>
       </trans-unit>
+      <trans-unit id="0xQwunu" resname="Zeiterfassung">
+        <source>Zeiterfassung</source>
+        <target>Timekeeping</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
