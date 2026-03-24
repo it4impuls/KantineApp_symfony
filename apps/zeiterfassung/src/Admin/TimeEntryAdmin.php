@@ -241,6 +241,9 @@ final class TimeEntryAdmin extends AbstractAdmin
             ->addIdentifier('user', null, [
                 'label' => 'Name',
                 'associated_property' => 'fullName',
+                'sort_field_mapping' => [
+                    'fieldName' => 'id',
+                ],
             ])
             ->add('user.department', null, ['label' => 'Department'])
             ->add('checkinTime', null, ['label' => 'Check-in', 'format' => 'd.m.Y - H:i:s'])
