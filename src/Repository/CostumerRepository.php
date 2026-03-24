@@ -70,7 +70,6 @@ class CostumerRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('c');
         foreach ($filters as $key => $value) {
             // forgiving key:
-            // $key = $key == "department" ? "Department" : $key;
             $key = $this->guessKey($key);
 
             // check if it should be treated as a literal or if it should be treated as a string
@@ -89,29 +88,4 @@ class CostumerRepository extends ServiceEntityRepository
         }
         return $qb->orderBy('c.id', 'ASC')->getQuery();
     }
-
-    //    /**
-    //     * @return Costumer[] Returns an array of Costumer objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Costumer
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

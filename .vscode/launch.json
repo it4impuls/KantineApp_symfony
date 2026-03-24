@@ -30,11 +30,6 @@
             "program": "",
             "cwd": "${workspaceRoot}",
             "port": 9003,
-            // "serverReadyAction": {
-            //     "pattern": "Development Server \\(http://localhost:([0-9]+)\\) started",
-            //     "uriFormat": "http://localhost:%s",
-            //     "action": "openExternally"
-            // },
             "preLaunchTask": "compile assets",
             "log":true,
             "env": {
