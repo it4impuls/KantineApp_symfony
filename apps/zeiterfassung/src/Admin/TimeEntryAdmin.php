@@ -238,7 +238,7 @@ final class TimeEntryAdmin extends AbstractAdmin
                 'label' => 'Name',
                 'associated_property' => 'fullName',
                 'sort_field_mapping' => [
-                    'fieldName' => 'id',
+                    'fieldName' => 'lastname',
                 ],
             ])
             ->add('user.department', null, ['label' => 'Department'])
