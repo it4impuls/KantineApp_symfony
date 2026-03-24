@@ -2,7 +2,6 @@
 
 namespace Zeiterfassung\Admin;
 
-use Zeiterfassung\Entity\FaUser;
 use Shared\Entity\Costumer;
 
 use Doctrine\ORM\QueryBuilder;
@@ -159,7 +158,7 @@ final class TimeEntryAdmin extends AbstractAdmin
         ]);
 
         $filter->add('missingCheckinCheckout', CallbackFilter::class, [
-            'label' => 'Missing Check-in/Out',
+            // 'label' => 'Missing Check-in/Out',
             'field_type' => CheckboxType::class,
             'callback' => function ($qb, $alias, $field, $value) {
                 if (!$value || !$value->hasValue() || $value->getValue() !== true) return false;
@@ -169,7 +168,7 @@ final class TimeEntryAdmin extends AbstractAdmin
         ]);
 
         $filter->add('today', CallbackFilter::class, [
-            'label' => 'Today only',
+            // 'label' => ('Today only'),
             'field_type' => CheckboxType::class,
             'callback' => function ($qb, $alias, $field, $value) {
                 if (!$value || !$value->hasValue() || $value->getValue() !== true) return false;
@@ -183,7 +182,7 @@ final class TimeEntryAdmin extends AbstractAdmin
         ]);
 
         $filter->add('fromDate', CallbackFilter::class, [
-            'label' => 'From Date',
+            // 'label' => 'From Date',
             'field_type' => DatePickerType::class,
             'field_options' => [
                 'widget' => 'single_text',
@@ -207,7 +206,7 @@ final class TimeEntryAdmin extends AbstractAdmin
         ]);
 
         $filter->add('toDate', CallbackFilter::class, [
-            'label' => 'To Date',
+            // 'label' => 'To Date',
             'field_type' => DatePickerType::class,
             'field_options' => [
                 'widget' => 'single_text',

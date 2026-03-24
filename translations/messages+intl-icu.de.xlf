@@ -43,11 +43,11 @@
       </trans-unit>
       <trans-unit id="hgDZWDO" resname="Costumer List">
         <source>Costumer List</source>
-        <target>Kunden Liste</target>
+        <target>Teilnehmer Liste</target>
       </trans-unit>
       <trans-unit id="Sk1T9wP" resname="Costumer Create">
         <source>Costumer Create</source>
-        <target>Kunden Erstellen</target>
+        <target>Teilnehmer Erstellen</target>
       </trans-unit>
       <trans-unit id="a_CQgly" resname="Order">
         <source>Order</source>
@@ -167,11 +167,27 @@
       </trans-unit>
       <trans-unit id="sIwK89t" resname="User List">
         <source>User List</source>
-        <target>Teilnehmer Liste</target>
+        <target>Anleiter Liste</target>
       </trans-unit>
       <trans-unit id="7f4FugA" resname="User Create">
         <source>User Create</source>
-        <target>Teilnehmer Erstellen</target>
+        <target>Anleiter Erstellen</target>
+      </trans-unit>
+      <trans-unit id="KwZcfJz" resname="Today">
+        <source>Today</source>
+        <target>Heute</target>
+      </trans-unit>
+      <trans-unit id="vqcrsVK" resname="Missing Checkin Checkout">
+        <source>Missing Checkin Checkout</source>
+        <target>Fehlende Checkouts</target>
+      </trans-unit>
+      <trans-unit id="YSiOgqG" resname="From Date">
+        <source>From Date</source>
+        <target>Von</target>
+      </trans-unit>
+      <trans-unit id="j0TR6jz" resname="To Date">
+        <source>To Date</source>
+        <target>Bis</target>
       </trans-unit>
     </body>
   </file>

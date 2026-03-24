@@ -101,6 +101,74 @@
         <source>sucessfully added: %firstname% %lastname% in %dep% &amp;emsp; &lt;img src="/%barcode%"&gt; </source>
         <target><![CDATA[__sucessfully added: %firstname% %lastname% in %dep% &emsp; <img src="/%barcode%"> ]]></target>
       </trans-unit>
+      <trans-unit id="JrqrCkq" resname="Zeiteinträge">
+        <source>Zeiteinträge</source>
+        <target>Time Entries</target>
+      </trans-unit>
+      <trans-unit id="tRLZfny" resname="User">
+        <source>User</source>
+        <target>Supervisor</target>
+      </trans-unit>
+      <trans-unit id="LgUe4aA" resname="User Department">
+        <source>User Department</source>
+        <target>Supervisor Bereich</target>
+      </trans-unit>
+      <trans-unit id="vqcrsVK" resname="Missing Checkin Checkout">
+        <source>Missing Checkin Checkout</source>
+        <target>Missing Checkin Checkout</target>
+      </trans-unit>
+      <trans-unit id="KwZcfJz" resname="Today">
+        <source>Today</source>
+        <target>Today</target>
+      </trans-unit>
+      <trans-unit id="YSiOgqG" resname="From Date">
+        <source>From Date</source>
+        <target>From Date</target>
+      </trans-unit>
+      <trans-unit id="j0TR6jz" resname="To Date">
+        <source>To Date</source>
+        <target>To Date</target>
+      </trans-unit>
+      <trans-unit id="0cLGoq2" resname="Fachanleiter">
+        <source>Fachanleiter</source>
+        <target>Supervisor</target>
+      </trans-unit>
+      <trans-unit id="47ienTP" resname="Username">
+        <source>Username</source>
+        <target>Username</target>
+      </trans-unit>
+      <trans-unit id="lpzL089" resname="Email">
+        <source>Email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="ksHN.fT" resname="Enabled">
+        <source>Enabled</source>
+        <target>Enabled</target>
+      </trans-unit>
+      <trans-unit id="PUQzcBC" resname="Created At">
+        <source>Created At</source>
+        <target>Created At</target>
+      </trans-unit>
+      <trans-unit id="yRDUdNz" resname="General">
+        <source>General</source>
+        <target>General</target>
+      </trans-unit>
+      <trans-unit id="7TE8nTi" resname="Plain Password">
+        <source>Plain Password</source>
+        <target>Plain Password</target>
+      </trans-unit>
+      <trans-unit id="wlM3BVR" resname="Roles">
+        <source>Roles</source>
+        <target>Roles</target>
+      </trans-unit>
+      <trans-unit id="sIwK89t" resname="User List">
+        <source>User List</source>
+        <target>Supervisor List</target>
+      </trans-unit>
+      <trans-unit id="7f4FugA" resname="User Create">
+        <source>User Create</source>
+        <target>Supervisor Create</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
