@@ -234,7 +234,7 @@ final class TimeEntryAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list): void
     {
         $list
-            ->addIdentifier('user', null, [
+            ->add('user', null, [
                 'label' => 'Name',
                 'associated_property' => 'fullName',
                 'sort_field_mapping' => [
@@ -242,7 +242,7 @@ final class TimeEntryAdmin extends AbstractAdmin
                 ],
             ])
             ->add('user.department', null, ['label' => 'Department'])
-            ->add('checkinTime', null, ['label' => 'Check-in', 'format' => 'd.m.Y - H:i:s'])
+            ->addIdentifier('checkinTime', null, ['label' => 'Check-in', 'format' => 'd.m.Y - H:i:s'])
             ->add('checkoutTime', null, ['label' => 'Check-out', 'format' => 'd.m.Y - H:i:s'])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'label' => 'Actions',
