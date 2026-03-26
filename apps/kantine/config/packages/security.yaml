@@ -83,7 +83,7 @@ when@prod: &normalAccess
 
 when@dev: *normalAccess
 
-# I cant get logging in when testing to work, so disable access_control
+# I cant get log-in when testing to work, so disable access_control for now
 when@test:
     security:
         access_control:
