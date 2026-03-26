@@ -26,10 +26,19 @@ use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 
 final class TimeEntryAdmin extends AbstractAdmin
 {
-    protected $baseRouteName = 'admin_time_entry';
-    protected $baseRoutePattern = 'attendance';
-    public function __construct(private UsageTrackingTokenStorage $ts)
+    public function __construct(private UsageTrackingTokenStorage $ts){}
+
+    // DEPRICATED
+    // protected $baseRouteName = 'admin_time_entry';
+    // protected $baseRoutePattern = 'attendance';
+    protected function generateBaseRouteName(bool $isChildAdmin = false): string
     {
+        return 'admin_time_entry';
+    }
+
+    protected function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'attendance';
     }
 
     // -------------------------------------------------------------------

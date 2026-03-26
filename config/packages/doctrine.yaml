@@ -18,7 +18,7 @@ doctrine:
     orm:
         entity_managers:
             default:
-                auto_mapping: true
+                auto_mapping: false
                 mappings:
                     Shared:
                         is_bundle: false
