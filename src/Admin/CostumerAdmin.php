@@ -108,8 +108,8 @@ final class CostumerAdmin extends AbstractAdmin
             ->add('firstname')
             ->add('lastname')
             ->add('active')
-            ->add('enddate', 'date', [
-                'format' => 'd-m-Y',
+            ->add('enddate', null, [
+                'format' => 'd.m.Y',
             ])
             ->add('Barcode', 'barcode')             // custom types defined in config/packages/sonata_doctrine_orm_admin.yaml
             ->add('Department')
