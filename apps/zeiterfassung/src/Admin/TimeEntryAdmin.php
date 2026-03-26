@@ -257,11 +257,11 @@ final class TimeEntryAdmin extends AbstractAdmin
             ->add('user.fullName', null, ['label' => 'Name'])
             ->add('user.department', null, ['label' => 'Department'])
             ->add('checkinTime', null, [
-                'label' => 'Check-in'
+                'label' => 'Check-in',
                 'format' => 'dd.MM.yyyy',
                 ])
             ->add('checkoutTime', null, [
-                'label' => 'Check-out'
+                'label' => 'Check-out',
                 'format' => 'dd.MM.yyyy',
                 ]);
     }
