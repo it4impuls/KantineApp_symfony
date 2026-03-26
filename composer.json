@@ -4,18 +4,18 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "doctrine/dbal": "^3",
-        "doctrine/doctrine-bundle": "^2.16",
-        "doctrine/doctrine-migrations-bundle": "^3.4",
-        "doctrine/orm": "^3.5",
-        "friendsofsymfony/rest-bundle": "^3.8",
+        "doctrine/dbal": "^4.4",
+        "doctrine/doctrine-bundle": "^3.2",
+        "doctrine/doctrine-migrations-bundle": "^4.0",
+        "doctrine/orm": "^3.6",
+        "friendsofsymfony/rest-bundle": "^3.9",
         "jms/serializer-bundle": "*",
         "lexik/jwt-authentication-bundle": "3.*",
         "paragonie/sodium_compat": "^2.5",
-        "phpdocumentor/reflection-docblock": "^5.6",
+        "phpdocumentor/reflection-docblock": "^6.0",
         "phpoffice/phpspreadsheet": "^5.4",
         "phpstan/phpdoc-parser": "^2.3",
         "picqer/php-barcode-generator": "^3.2",
@@ -26,11 +26,11 @@
         "symfony/asset-mapper": "*",
         "symfony/console": "*",
         "symfony/dotenv": "*",
-        "symfony/flex": "^2",
+        "symfony/flex": "*",
         "symfony/form": "*",
         "symfony/framework-bundle": "*",
         "symfony/mime": "*",
-        "symfony/polyfill-intl-messageformatter": "^1.33",
+        "symfony/polyfill-intl-messageformatter": "*",
         "symfony/property-access": "*",
         "symfony/property-info": "*",
         "symfony/runtime": "*",
@@ -95,7 +95,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "7.*"
+            "require": "8.*"
         }
     },
     "require-dev": {

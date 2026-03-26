@@ -1,7 +1,9 @@
 # generate new keypair or atleat test getting new jwt token
-php bin/console lexik:jwt:generate-keypair --overwrite
+`php bin/console lexik:jwt:generate-keypair --overwrite`
 
-
+# migrate db
+`php bin/console doctrine:migrations:migrate`
+sonatauser roles are no longer arrays, JSON instead
 
 ## Doctrine move to Native Lazy Object
 

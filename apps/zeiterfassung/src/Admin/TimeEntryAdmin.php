@@ -107,9 +107,7 @@ final class TimeEntryAdmin extends AbstractAdmin
                 'minimum_input_length' => 1,
                 'to_string_callback' => fn($user, $property) =>  $this->costumerToStr($user),
                 'constraints' => [
-                    new NotNull([
-                        'message' => 'Please select a user.',
-                    ]),
+                    new NotNull(null, 'Please select a user.'),
                 ],
             ])
             ->add('checkinTime', DateTimePickerType::class, [
