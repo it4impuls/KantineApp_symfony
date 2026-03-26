@@ -22,7 +22,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
-
+use Symfony\Component\Translation\TranslatableMessage;
 
 final class TimeEntryAdmin extends AbstractAdmin
 {
