@@ -41,7 +41,7 @@ final class TimeEntryAdmin extends AbstractAdmin
         if (!$user instanceof Costumer) {
             return (string)$user;
         }
-        $dept = $user->getDepartment() ?? 'Kein Bereich';
+        $dept = $user->getDepartment() ?? new TranslatableMessage('No Dept');
         return sprintf('[%s] %s', $dept, $user->getFullName());
     }
 
