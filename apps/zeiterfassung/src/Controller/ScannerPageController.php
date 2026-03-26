@@ -45,7 +45,7 @@ class ScannerPageController extends AbstractController
         }
         
         assert( $userEntity instanceof Costumer);
-        if (!$userEntity->isActive())
+        if (!$userEntity->active)
             return $this->json(['error' => 'User with id '. $data['barcode'] .'('.$userEntity->getFullName().') is not active'], 403);
         
         $lastEntry = $this->em->getRepository(TimeEntry::class)->getTimeEntryForUser($userEntity);
@@ -69,7 +69,7 @@ class ScannerPageController extends AbstractController
 
                 return new JsonResponse([
                     'status' => 'checkout_update',
-                    'user_ID' => $userEntity->getId(),
+                    'user_ID' => $userEntity->id,
                     'time' => $now->format('H:i:s')
                 ], 200);
                 
@@ -81,7 +81,7 @@ class ScannerPageController extends AbstractController
 
             return new JsonResponse([
                 'status' => 'checkout_update_existing',
-                'user_ID' => $userEntity->getId(),
+                'user_ID' => $userEntity->id,
                 'time' => $now->format('H:i:s')
             ], 200);
         } else {
