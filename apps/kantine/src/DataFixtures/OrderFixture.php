@@ -16,7 +16,7 @@ class OrderFixture extends Fixture  implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $costumers =  $this->costumerRepository->getAllCostumers();
+        $costumers =  $this->costumerRepository->getAll();
 
         // ensure atleast one costumer does not have an Order
         array_pop($costumers);
