@@ -2,11 +2,13 @@
 
 namespace Shared\Repository;
 
+use DateTime;
 use Shared\Entity\Costumer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Component\DependencyInjection\Attribute\When;
 
 /**
  * @extends ServiceEntityRepository<Costumer>
@@ -87,5 +89,46 @@ class CostumerRepository extends ServiceEntityRepository
             $qb->andWhere(sprintf('c.%s = %s', $key, $value));
         }
         return $qb->orderBy('c.id', 'ASC')->getQuery();
+    }
+
+    #[When(env: 'test')]
+    public function getRandomCostumer(): Costumer
+    {
+        $count = $this->createQueryBuilder('c')
+            ->select('count(c)')
+            ->getQuery()->getSingleScalarResult();
+        $qb = $this->createQueryBuilder('c')
+            ->setFirstResult(rand(0,$count-1))
+            ->setMaxResults(1)
+            ->getQuery();
+
+        return $qb->getSingleResult();
+    }
+
+    #[When(env: 'test')]
+    public function getAll(): array{
+        $qb = $this->createQueryBuilder('c')
+            ->select('c')
+            ->getQuery();
+        return $qb->getResult();
+    }
+
+    #[When(env: 'test')]
+    public function getRandomCostumerNotOrdered(): ?Costumer
+    {
+        $day_start = new DateTime()->setTime(0, 0);
+        $qb = $this->createQueryBuilder('c')
+            ->where('count(c.orders) = 0')
+            // ->innerJoin('c.orders', 'o')
+            // ->where('o.Costumer = c.id')
+            // ->andWhere('o.order_dateTime < :date')
+            
+            ->setParameter('date', $day_start)
+            ->setMaxResults(1)
+            ->getQuery();
+            
+            // ->andWhere('c.enddate < :date')
+            // ->setParameter('date', new \DateTimeImmutable(-self::MONTHS_INACTIVE_UNTIL_REMOVAL . ' months'));
+        return $qb->getOneOrNullResult();
     }
 }
