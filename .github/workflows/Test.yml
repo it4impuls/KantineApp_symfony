@@ -9,6 +9,13 @@ jobs:
   deploy:
     name: Setup
     runs-on: ubuntu-latest
+    env: 
+      cache-name: cache-composer-modules
+      APP_ID: kantine
+      APP_ENV: test
+      APP_DEBUG: 1
+      fail-fast: true
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -24,11 +31,7 @@ jobs:
       - name: Cache composer packages
         uses: actions/cache@v4
         id: cache_composer
-        env:
-          cache-name: cache-composer-modules
-          APP_ENV: test
-          APP_DEBUG: 1
-          fail-fast: true
+          
         with:
           path: vendor
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
@@ -41,17 +44,10 @@ jobs:
       - if: ${{ steps.cache_composer.outputs.cache-hit != 'true' }}
         name: install composer
         continue-on-error: true
-        env:
-          APP_ENV: test
         run:
           composer install
 
       - name: setup tests
-        env:
-          APP_ENV: test
-          APP_DEBUG: 1
-          APP_ID: kantine
-          fail-fast: true
         run: |
           mkdir apps/zeiterfassung/templates
           php bin/console secrets:generate-keys
@@ -65,11 +61,6 @@ jobs:
           php bin/console doctrine:fixtures:load --quiet
 
       - name: run tests
-        env:
-          APP_ENV: test
-          APP_DEBUG: 1
-          APP_ID: kantine
-          fail-fast: true
         run: php bin/phpunit --display-deprecations
 
   # initialize:
