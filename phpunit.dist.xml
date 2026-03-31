@@ -20,6 +20,8 @@
     <testsuites>
         <testsuite name="Project Test Suite">
             <directory>tests</directory>
+            <directory>apps/kantine/tests</directory>
+            <directory>apps/zeiterfassung/tests</directory>
         </testsuite>
     </testsuites>
 
@@ -30,6 +32,8 @@
     >
         <include>
             <directory>src</directory>
+            <directory>apps/kantine/src</directory>
+            <directory>apps/zeiterfassung/src</directory>
         </include>
 
         <deprecationTrigger>

@@ -114,6 +114,14 @@ class CostumerRepository extends ServiceEntityRepository
     }
 
     #[When(env: 'test')]
+    public function countAll(){
+        $qb = $this->createQueryBuilder('c')
+            ->select('count(c)')
+            ->getQuery();
+        return $qb->getSingleScalarResult();
+    }
+
+    #[When(env: 'test')]
     public function getRandomCostumerNotOrdered(): ?Costumer
     {
         $day_start = new DateTime()->setTime(0, 0);

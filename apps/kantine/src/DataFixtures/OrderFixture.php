@@ -16,20 +16,20 @@ class OrderFixture extends Fixture  implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $costumers =  $this->costumerRepository->getAll();
+        // $costumers =  $this->costumerRepository->getAll();
 
-        // ensure atleast one costumer does not have an Order
-        array_pop($costumers);
-        shuffle($costumers);
-        foreach ($costumers as $costumer) {
-            $order = new Order()
-                ->setOrderedItem(rand(10, 100)/10)
-                ->setCostumer($costumer)
-                ->setTax(7);
-            $manager->persist($order);
-        }
+        // // ensure atleast one costumer does not have an Order
+        // array_pop($costumers);
+        // shuffle($costumers);
+        // foreach ($costumers as $costumer) {
+        //     $order = new Order()
+        //         ->setOrderedItem(rand(10, 100)/10)
+        //         ->setCostumer($costumer)
+        //         ->setTax(7);
+        //     $manager->persist($order);
+        // }
 
-        $manager->flush();
+        // $manager->flush();
     }
 
     public function getDependencies(): array

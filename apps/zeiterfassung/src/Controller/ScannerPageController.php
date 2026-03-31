@@ -4,13 +4,18 @@ namespace Zeiterfassung\Controller;
 
 use Zeiterfassung\Entity\TimeEntry;
 use Doctrine\ORM\EntityManagerInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Shared\Entity\Costumer;
+use Shared\Entity\SonataUserUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Polyfill\Intl\Icu\Exception\NotImplementedException;
 
+use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
 
 // #[Route(path: '/zeiterfassung', name: 'zeiterfassung')]
 class ScannerPageController extends AbstractController
@@ -102,6 +107,14 @@ class ScannerPageController extends AbstractController
             ], 201);
         }
         
+    }
+
+    #[Route('/api/login', name: 'api_login', methods: ['POST'])]
+    public function apiLogin(#[CurrentUser] ?SonataUserUser $editor, Request $request, JWTTokenManagerInterface $JWTManager): Response
+    {
+        if ($_ENV['APP_ENV'] ?? $_SERVER['APP_ENV'] != "test") throw new \LogicException("this should be handled by JWT");
+        $token = $JWTManager->create($editor);
+        return $this->json(["token" => $token]);
     }
 
 }
