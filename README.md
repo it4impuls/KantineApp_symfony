@@ -133,6 +133,6 @@ php bin/console doctrine:schema:update --env=test --force -ikantine
 
 run tests:
 ```bash
-php bin/console doctrine:fixtures:load --env=test -ikantine --quiet
+php bin/console doctrine:fixtures:load --env=test -ikantine 
 php bin/phpunit  --display-deprecations 
 ```
