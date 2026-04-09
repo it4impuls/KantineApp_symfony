@@ -83,6 +83,12 @@ final class CostumerAdmin extends AbstractAdmin
                 'ask_confirmation' => false,
                 'controller' => 'Shared\Controller\CostumerCRUDController::batchActionBarcodes',
             ];
+
+            $actions['export_names'] = [
+                'label' => 'Teilnehmer (XLSX)',
+                'ask_confirmation' => false,
+                'controller' => 'Shared\Controller\CostumerCRUDController::batchActionExportNames',
+            ];
         }
 
         return $actions;
