@@ -39,5 +39,11 @@
             "command": "php bin/console cache:clear -ikantine && php bin/console cache:clear -izeiterfassung",
             "problemMatcher": [],
         },
+        {
+            "label": "test kantine",
+            "type": "shell",
+            "command": "php bin/console doctrine:fixtures:load --env=test -ikantine --quiet && php bin/phpunit",
+            "problemMatcher": [],
+        },
     ]
 }
