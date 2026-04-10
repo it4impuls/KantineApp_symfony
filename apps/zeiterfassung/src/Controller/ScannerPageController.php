@@ -54,47 +54,47 @@ class ScannerPageController extends AbstractController
             return $this->json(['error' => 'User with id '. $data['barcode'] .'('.$userEntity->getFullName().') is not active'], 403);
         
         $lastEntry = $this->em->getRepository(TimeEntry::class)->getTimeEntryForUser($userEntity);
-        $now = new \DateTime();
-        $todayStart = (clone $now)->setTime(0, 0, 0);
-        $todayEnd = (clone $now)->setTime(23, 59, 59);
+        $entry_time = new \DateTime($data['time']??"now");
+        $todayStart = (clone $entry_time)->setTime(0, 0, 0);
+        $todayEnd = (clone $entry_time)->setTime(23, 59, 59);
         if ($lastEntry) {
             // 1) If last entry has no checkout, update it (normal checkout)
             if ($lastEntry->getCheckoutTime() === null) {
                 $cooldownEnd = (clone $lastEntry->getCheckinTime())->modify($this::$cooldown);
-                if ($now < $cooldownEnd) {
-                    $remaining = $cooldownEnd->getTimestamp() - $now->getTimestamp();
+                if ($entry_time < $cooldownEnd) {
+                    $remaining = $cooldownEnd->getTimestamp() - $entry_time->getTimestamp();
                     return new JsonResponse([
                         'error' => 'Cooldown active',
                         'minutes_remaining' => ceil($remaining / 60)
                     ], 429);
                 }
 
-                $lastEntry->setCheckoutTime($now);
+                $lastEntry->setCheckoutTime($entry_time);
                 $this->em->flush();
 
                 return new JsonResponse([
                     'status' => 'checkout_update',
                     'user_ID' => $userEntity->getId(),
-                    'time' => $now->format('H:i:s')
+                    'time' => $entry_time->format('H:i:s')
                 ], 200);
                 
             } else {
                 // 2) Last entry already has checkin + checkout → just update checkout
-                $lastEntry->setCheckoutTime($now);
+                $lastEntry->setCheckoutTime($entry_time);
                 $this->em->flush();
             }
 
             return new JsonResponse([
                 'status' => 'checkout_update_existing',
                 'user_ID' => $userEntity->getId(),
-                'time' => $now->format('H:i:s')
+                'time' => $entry_time->format('H:i:s')
             ], 200);
         } else {
 
             // 3) No entry today → create new checkin
             $newEntry = new TimeEntry();
             $newEntry->setUser($userEntity);
-            $newEntry->setCheckinTime($now);
+            $newEntry->setCheckinTime($entry_time);
             $newEntry->setCheckoutTime(null);
             $this->em->persist($newEntry);
             $this->em->flush();
@@ -102,8 +102,8 @@ class ScannerPageController extends AbstractController
             return new JsonResponse([
                 'status' => 'checkin',
                 'user' => $userEntity->getFullName(),
-                'time' => $now->format('H:i:s'),
-                'cooldown_until' => (clone $now)->modify($this::$cooldown)->format('H:i:s')
+                'time' => $entry_time->format('H:i:s'),
+                'cooldown_until' => (clone $entry_time)->modify($this::$cooldown)->format('H:i:s')
             ], 201);
         }
         
