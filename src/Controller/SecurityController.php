@@ -2,7 +2,9 @@
 
 namespace Shared\Controller;
 
+use Shared\Entity\SonataUserUser;
 use Sonata\UserBundle\Model\User;
+use Sonata\UserBundle\Model\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,20 +34,6 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
-
-    #[Route('/api/login', name: 'api_login', methods: ['POST'])]
-    public function apiLogin(#[CurrentUser] ?User $editor, Request $request): Response
-    {
-        if (null === $editor) {
-            return $this->json([
-                'error' => 'Invalid credentials'
-            ], Response::HTTP_UNAUTHORIZED);
-        }
-
-        return $this->json([
-            'id' => $editor->getId(),
-            'username' => $editor->getUsername(),
-            'roles' => $editor->getRoles(),
-        ], Response::HTTP_OK);
-    }
+    
+    
 }

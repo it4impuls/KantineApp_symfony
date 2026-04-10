@@ -70,54 +70,63 @@ final class OrderController extends AbstractFOSRestController
 
         $options = ['form' =>$form,  'override_form' => null];
         $form->handleRequest($request);
+        $response = new Response();
         
         // form is submitted (any submit button pressed)
         if ( $form->isSubmitted() && $form->isValid()) {
 
             $orderDTO =$form->getData();
             $order = $this->makeOrderFromDTO($orderDTO);
-            $existing = $this->already_ordered($order);
-
-
+            
+            
             // if the costumer is not found, bail early
             if ($order->getCostumer() === null) {
                 $this->addFlash('alert', new TranslatableMessage("Costumer not found"));
-                return $this->render_site($options);
+                $response->setStatusCode(Response::HTTP_NOT_FOUND);
+                return $this->render_site($options, $response);
             }
-
+            
             $saveButton =$form->get('save');
             assert($saveButton instanceof SubmitButton);
-
+            
             $updateButton =$form->get('update');
             assert($updateButton instanceof SubmitButton);
-
+            
+            $existing = $this->already_ordered($order);
             // normal OK submit
             if ($saveButton->isClicked()) {
                 // if already ordered show update dialog
                 if ($existing) {
                     $options['override_form'] = true;
+                    $response->setStatusCode(Response::HTTP_ALREADY_REPORTED);
                 } else {
 
                     //try saving, if error write in $options['alert']
-                    $this->save_order($order, $options);
+                    if($this->save_order($order, $response)) 
+                        
+                    
+                        
                     $options['form']=$this->createForm(OrderDTOType::class, $emptyOrderDTO);
                 }
             } elseif ($updateButton->isClicked()) {
                 $existing->setOrderedItem($order->getOrderedItem());
                 $existing->setTax($order->getTax());
                 $existing->setOrderDateTime($order->getOrderDateTime());
-                $this->save_order($existing, $options);
+
+                $this->save_order($existing, $response);
+
+                $response->setStatusCode(Response::HTTP_CREATED);
                 $options['form']=$this->createForm(OrderDTOType::class, $emptyOrderDTO);
             }
         }
-        return $this->render_site($options);
+        return $this->render_site($options, $response);
     }
 
 
 
-    private function render_site(&$options)
+    private function render_site(&$options, $response)
     {
-        return $this->render('@Kantine/components/Order_submit.html.twig', $options);
+        return $this->render('@Kantine/components/Order_submit.html.twig', $options, $response);
     }
 
     private function already_ordered(Order $order): ?Order
@@ -130,18 +139,20 @@ final class OrderController extends AbstractFOSRestController
         return $repository->findCostumerOrderAtDate($order->getCostumer(), $order->getOrderDateTime());
     }
 
-    private function save_order(Order $order, &$options = []): bool
+    private function save_order(Order $order, &$response): bool
     {
         $errors = $this->validator->validate($order);
         if ($errors->count() > 0) {
             $this->addFlash('alert', (string)$errors);
+            $response->setStatusCode(Response::HTTP_BAD_REQUEST);
             return false;
         } else {
             $this->entityManager->persist($order);
-
             // actually executes the queries (i.e. the INSERT query)
             $this->entityManager->flush();
             $this->addFlash('alert', new TranslatableMessage("success"));
+            
+            $response->setStatusCode(Response::HTTP_CREATED);
             return true;
         }
     }

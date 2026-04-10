@@ -63,15 +63,25 @@ security:
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
-    access_control:
-        # Admin login page needs to be accessed without credential
-        - { path: ^/admin/login$, role: PUBLIC_ACCESS }
-        - { path: ^/admin/logout$, role: PUBLIC_ACCESS }
-        - { path: ^/fa/login$, role: PUBLIC_ACCESS }
-        - { path: ^/fa/logout$, role: PUBLIC_ACCESS }
-        # - { path: ^/fa, role: ROLE_USER }
+    
 
-        # Secured part of the site
-        # This config requires being logged for the whole site and having the admin role for the admin part.
-        # Change these rules to adapt them to your needs
-        - { path: ^/.*, role: ROLE_USER }
+# when@prod: &normalAccess
+#     security:
+    access_control:
+    # Admin login page needs to be accessed without credential
+    - { path: ^/admin/login$, role: PUBLIC_ACCESS }
+    - { path: ^/admin/logout$, role: PUBLIC_ACCESS }
+    - { path: ^/api/login$, role: PUBLIC_ACCESS }
+
+    # Secured part of the site
+    # This config requires being logged for the whole site and having the admin role for the admin part.
+    # Change these rules to adapt them to your needs
+    - { path: ^/.*, role: ROLE_USER }
+
+# when@dev: *normalAccess
+
+# I cant get log-in when testing to work, so disable access_control for now
+# when@test:
+#     security:
+#         access_control:
+#             - { path: ^/.*, role: PUBLIC_ACCESS }

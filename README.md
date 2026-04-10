@@ -109,3 +109,30 @@ Das löschen alter, inaktiver Teilnehmer läuft in einem cronjob. Dieser muss im
 
 Es muss ein Benutzer mit `Costumer delete` privilegien Angelegt werden und dessen login Informationen unter `advanced` abgelegt werden.
 ![cron user](media/cron_user.png)
+
+
+# Testing
+## Requirements
+Extra Datebank dessen zugangsdaten in .env.test eingetragen sind:
+```env
+# define your env variables for the test env here
+KERNEL_CLASS='Shared\Kernel'
+APP_SECRET='$ecretf0rt3st'
+
+DATABASE_HOST='localhost'
+DATABASE_NAME='test'
+DATABASE_USER='localuser'
+DATABASE_PASSWORD='localuser'
+```
+
+DB initialisieren:
+```bash
+php bin/console doctrine:database:create --env=test -ikantine
+php bin/console doctrine:schema:update --env=test --force -ikantine
+```
+
+run tests:
+```bash
+php bin/console doctrine:fixtures:load --env=test -ikantine 
+php bin/phpunit  --display-deprecations 
+```
