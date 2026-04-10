@@ -13,6 +13,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Restore cached Primes
+        id: cache-vendor-restore
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            vendor
+            public/assets
+            public/bundles
+          key: ${{ runner.os }}-build-
+
       
       - name: Deploy to All-Inkl (Development)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
