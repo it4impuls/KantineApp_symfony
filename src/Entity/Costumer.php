@@ -44,7 +44,10 @@ class Costumer
     #[ORM\GeneratedValue]
     #[ORM\Column]
     public ?int $id;
+    public function getId() {return $this->id;}
 
+    public function getFirstname() {return $this->firstname;}
+    public function setFirstname(string $firstname):static {$this->firstname = $firstname; return $this;}
     #[ORM\Column(length: 50)]
     public string $firstname = ''
     {
@@ -54,6 +57,8 @@ class Costumer
         }
     }
 
+    public function getLastname() {return $this->lastname;}
+    public function setLastname(string $lastname):static {$this->lastname = $lastname; return $this;}
     #[ORM\Column(length: 50)]
     public string $lastname = ''
     {
@@ -63,6 +68,8 @@ class Costumer
         }
     }
 
+    public function getActive() {return $this->active;}
+    public function setActive(bool $active):static {$this->active = $active; return $this;}
     #[ORM\Column]
     public bool $active = false{
         get => $this->active;
@@ -74,13 +81,14 @@ class Costumer
         }
     }
 
+    public function getEnddate() {return $this->enddate;}
+    public function setEnddate(?\DateTime $enddate):static {$this->enddate = $enddate; return $this;}
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     public ?\DateTime $enddate = null{
         get => $this->enddate;
         set(?\DateTime $enddate){
             $this->enddate = $enddate;
         }
-
     }
 
     /**
