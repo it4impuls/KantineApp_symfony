@@ -30,7 +30,7 @@
         {
             "label": "extract translations",
             "type": "shell",
-            "command": "APP_ENV=dev APP_DEBUG=1 APP_ID=kantine php bin/console translation:extract --force de",
+            "command": "APP_ID=kantine php bin/console translation:extract --force de && APP_ID=zeiterfassung php bin/console translation:extract --force de && APP_ID=kantine php bin/console translation:extract --force en && APP_ID=zeiterfassung php bin/console translation:extract --force en",
             "problemMatcher": [],
         },
         {
