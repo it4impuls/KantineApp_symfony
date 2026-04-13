@@ -101,9 +101,11 @@ class TimeEntryTest extends WebTestCase
 
         $logout_response = $this->postTimeentry($token, $costumer->getId());
         $this->assertResponseIsSuccessful('Could not checkout TimeEntry: '.$content);
-        
-
     }
+
+
+
+
 }
 
 
