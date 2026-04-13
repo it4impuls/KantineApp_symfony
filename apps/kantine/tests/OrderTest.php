@@ -120,7 +120,7 @@ class OrderTest extends WebTestCase
             if($existing_order){
                 if ($existing_order->getOrderedItem()==$new_ordered_item) continue;
                 $this->client->submitForm('order_dto_save', [
-                    "order_dto[Costumer]" => $costumer->getId(),
+                    "order_dto[Costumer]" => $costumer->id,
                     "order_dto[ordered_item]" => $new_ordered_item,
                     "order_dto[tax]" => "7",
                     // "order_dto[_token]" => "fhr8d5sha3a69tpv24s5"
@@ -130,7 +130,7 @@ class OrderTest extends WebTestCase
                 $this->assertSelectorExists('#order_dto_update', 'Response does not have "already ordered" dialog or update option');
                 $this->assertFalse($existing_order->getOrderedItem()==$new_ordered_item);
                 $this->client->submitForm('order_dto_update', [
-                    "order_dto[Costumer]" => $costumer->getId(),
+                    "order_dto[Costumer]" => $costumer->id,
                     "order_dto[ordered_item]" => $new_ordered_item,
                     "order_dto[tax]" => "7",
                     // "order_dto[_token]" => "fhr8d5sha3a69tpv24s5"
