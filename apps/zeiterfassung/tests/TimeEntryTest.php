@@ -2,6 +2,7 @@
 
 namespace Zeiterfassung\Tests;
 
+use DateInterval;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Shared\Repository\CostumerRepository;
@@ -103,7 +104,30 @@ class TimeEntryTest extends WebTestCase
         $this->assertResponseIsSuccessful('Could not checkout TimeEntry: '.$content);
     }
 
+    public function testOptionalTimestamp(): void
+    {
+        $token = $this->getToken($this->client);
+        $costumerRepository = static::getContainer()->get(CostumerRepository::class);
+        $timeEntryRepository = static::getContainer()->get(TimeEntryRepository::class);
+        $costumer = $costumerRepository->getRandomCostumer();
+        $existing = $timeEntryRepository->getTimeEntryForUser($costumer);
+        if($existing){
+            $this->entityManager->remove($existing);
+            $this->entityManager->flush();
+        }
 
+        // always 10 mins previously
+        $time_to_post = new DateTime()->sub( DateInterval::createFromDateString("10 minutes"))->format("h:m:s");
+        var_dump($time_to_post);
+        
+        $this->client->request('POST', '/api', server:[
+            "HTTP_AUTHORIZATION" => "Bearer ".$token
+        ], content: json_encode(["barcode" => $costumer->getId(), "time" => $time_to_post]));
+
+        $res = json_decode($this->client->getResponse()->getContent(), true);
+
+        $this->assertTrue($time_to_post === $res["time"]);
+    }
 
 
 }
