@@ -5,15 +5,15 @@ controllers:
     type: attribute
 
 admin_area:
-    resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.php"
+    resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
     prefix: /admin
 
 sonata_user_admin_security:
-    resource: '@SonataUserBundle/Resources/config/routing/admin_security.php'
+    resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
     prefix: /admin
 
 sonata_user_admin_resetting:
-    resource: '@SonataUserBundle/Resources/config/routing/admin_resetting.php'
+    resource: '@SonataUserBundle/Resources/config/routing/admin_resetting.xml'
     prefix: /admin/resetting
 
 _sonata_admin:

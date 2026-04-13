@@ -22,6 +22,21 @@ use Symfony\Component\Validator\Constraints\Choice;
 )]
 class Costumer
 {
+
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $firstname = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $lastname = null;
+
+    #[ORM\Column]
+    private ?bool $active = null;
+
     // name_to_display => name in database
     public const DEPARTMENTS = [
         "IT" => "IT",
@@ -40,56 +55,8 @@ class Costumer
         "" => ""
     ];
 
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    public ?int $id;
-    public function getId() {return $this->id;}
-
-    public function getFirstname() {return $this->firstname;}
-    public function setFirstname(string $firstname):static {$this->firstname = $firstname; return $this;}
-    #[ORM\Column(length: 50)]
-    public string $firstname = ''
-    {
-        get => ucwords(trim($this->firstname));
-        set(string $firstname){
-            $this->firstname = strtolower(trim($firstname));    // trimmed and lowercase
-        }
-    }
-
-    public function getLastname() {return $this->lastname;}
-    public function setLastname(string $lastname):static {$this->lastname = $lastname; return $this;}
-    #[ORM\Column(length: 50)]
-    public string $lastname = ''
-    {
-        get => ucwords(trim($this->lastname));
-        set(string $lastname){
-            $this->lastname = strtolower(trim($lastname));      // trimmed and lowercase
-        }
-    }
-
-    public function getActive() {return $this->active;}
-    public function setActive(bool $active):static {$this->active = $active; return $this;}
-    #[ORM\Column]
-    public bool $active = false{
-        get => $this->active;
-        set(bool $active){
-            $this->active = $active;
-            $now = new DateTime();
-            // if set to inactive, set enddate to now, if set to active set to 4Y from now
-            $this->enddate = $active ? $now->add(new DateInterval("P4Y")) : $now;
-        }
-    }
-
-    public function getEnddate() {return $this->enddate;}
-    public function setEnddate(?\DateTime $enddate):static {$this->enddate = $enddate; return $this;}
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    public ?\DateTime $enddate = null{
-        get => $this->enddate;
-        set(?\DateTime $enddate){
-            $this->enddate = $enddate;
-        }
-    }
+    private ?\DateTime $enddate = null;
 
     /**
      * @var Collection<int, Order>
@@ -115,9 +82,64 @@ class Costumer
         $this->enddate = $now->add(new DateInterval("P4Y")); // 4 Years
     }
 
-   
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
-    
+    public function getFirstname(): string
+    {
+        // trimmed and 1st letter capitalized
+        return ucwords(trim($this->firstname??""));
+    }
+
+    public function setFirstname(string $firstname): static
+    {
+        // trimmed and lowercase
+        strtolower(trim($this->firstname = $firstname));
+
+        return $this;
+    }
+
+    public function getLastname(): string
+    {
+        // trimmed and 1st letter capitalized
+        return  ucwords(trim($this->lastname??""));
+    }
+
+    public function setLastname(string $lastname): static
+    {
+        // trimmed and lowercase
+        strtolower(trim($this->lastname = $lastname));
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): static
+    {
+        $this->active = $active;
+        $now = new DateTime();
+        // if set to inactive, set enddate to now, if set to active set to 4Y from now
+        $this->enddate = $active ? $now->add(new DateInterval("P4Y")) : $now;
+        return $this;
+    }
+
+    public function getEnddate(): ?\DateTime
+    {
+        return $this->enddate;
+    }
+
+    public function setEnddate(\DateTime $enddate): static
+    {
+        $this->enddate = $enddate;
+
+        return $this;
+    }
 
     /**
      * @return Collection<int, Order>
@@ -151,7 +173,7 @@ class Costumer
 
     public function getBarcode(): string
     {
-        if (!$this->id) {
+        if (!$this->getId()) {
             return '';
         }
         $dirname = 'barcodes';
@@ -161,9 +183,9 @@ class Costumer
         }
 
         // 
-        $filename = join(DIRECTORY_SEPARATOR, [$dirname, (string)$this->id . '.svg']);
+        $filename = join(DIRECTORY_SEPARATOR, [$dirname, (string)$this->getId() . '.svg']);
         if (!file_exists($filename)) {
-            $barcode = (new BarcodeGeneratorSVG())->getBarcode($this->id, BarcodeGeneratorSVG::TYPE_CODE_128);
+            $barcode = (new BarcodeGeneratorSVG())->getBarcode($this->getId(), BarcodeGeneratorSVG::TYPE_CODE_128);
             file_put_contents($filename, $barcode);
         }
 
@@ -184,7 +206,7 @@ class Costumer
 
     public function getFullName()
     {
-        return $this->firstname. " ". $this->lastname;
+        return $this->getFirstname(). " ". $this->getLastname();
     }
 }
 

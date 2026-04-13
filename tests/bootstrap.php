@@ -6,6 +6,7 @@ require dirname(__DIR__).'/vendor/autoload.php';
 
 if (method_exists(Dotenv::class, 'bootEnv')) {
     (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
+    
 }
 
 // ensure a fresh cache when debug mode is disabled

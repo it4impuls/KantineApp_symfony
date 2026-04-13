@@ -12,10 +12,10 @@ class CostumerFixture extends Fixture
     {
         for ($i=0; $i < 10; $i++) { 
             $costumer = new Costumer()
-                ->setDepartment(array_rand(Costumer::DEPARTMENTS));
-            $costumer->active = true;
-            $costumer->firstname = 'F'.$i;
-            $costumer->lastname = 'L'.$i;
+                ->setActive(true)
+                ->setDepartment(array_rand(Costumer::DEPARTMENTS))
+                ->setFirstname('F'.$i)
+                ->setLastname('L'.$i);
             $manager->persist($costumer);
         }
 
