@@ -75,7 +75,7 @@ class ScannerPageController extends AbstractController
                 return new JsonResponse([
                     'status' => 'checkout_update',
                     'user_ID' => $userEntity->id,
-                    'time' => $now->format('H:i:s')
+                    'time' => $entry_time->format('H:i:s')
                 ], 200);
                 
             } else {
@@ -87,7 +87,7 @@ class ScannerPageController extends AbstractController
             return new JsonResponse([
                 'status' => 'checkout_update_existing',
                 'user_ID' => $userEntity->id,
-                'time' => $now->format('H:i:s')
+                'time' => $entry_time->format('H:i:s')
             ], 200);
         } else {
 

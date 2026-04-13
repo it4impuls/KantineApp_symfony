@@ -82,16 +82,16 @@ class OrderTest extends WebTestCase
         $costumerRepository = $container->get(CostumerRepository::class);
         // $newCostumer = $costumerRepository->getRandomCostumer();
         $count = $costumerRepository->countAll();
-        $newCostumer = new Costumer()
-            ->setActive(True)
-            ->setFirstname("test ".$count)
-            ->setLastName("test ".$count);
+        $newCostumer = new Costumer();
+        $newCostumer->active = True;
+        $newCostumer->firstname ="test ".$count;
+        $newCostumer->lastname="test ".$count;
         $this->entityManager->persist($newCostumer);
         $this->entityManager->flush();
         $this->assertNotNull($newCostumer, "could not get any costumers without orders");
 
         $this->client->submitForm('order_dto_save', [
-            "order_dto[Costumer]" => $newCostumer->getId(),
+            "order_dto[Costumer]" => $newCostumer->id,
             "order_dto[ordered_item]" => "4.5",
             "order_dto[tax]" => "7",
             // "order_dto[_token]" => "fhr8d5sha3a69tpv24s5"
