@@ -9,18 +9,14 @@ security:
         sonata_user_bundle:
             id: sonata.user.security.user_provider
         # used to reload user from session & other features (e.g. switch_user)
-        shared_user_provider:
-            entity:
-                class: Shared\Entity\SonataUserUser
-                property: username
+        # shared_user_provider:
+        #     entity:
+        #         class: Shared\Entity\SonataUserUser
+        #         property: username
     
-    
-
     role_hierarchy:
         ROLE_ADMIN:             [ROLE_USER, ROLE_ADMIN_ORDER_ALL, ROLE_FA ]
         ROLE_SUPER_ADMIN:       [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
-        
-    
 
 when@test:
     security:
@@ -34,3 +30,14 @@ when@test:
                 cost: 4 # Lowest possible value for bcrypt
                 time_cost: 3 # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon
+
+        # I cant get log-in when testing to work, so disable access_control for now
+        # access_control:
+        #     - { path: ^/.*, role: PUBLIC_ACCESS }
+
+        # providers:
+        #     users_in_memory:
+        #         memory:
+        #             users:
+        #                 admin: { password: password, roles: ROLE_ADMIN }
+        #                 kantine: { password: password, roles: ROLE_USER }

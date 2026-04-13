@@ -8,6 +8,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Query\Parameter;
 use Doctrine\Persistence\ManagerRegistry;
+use Shared\Entity\Costumer;
 
 /**
  * @extends ServiceEntityRepository<Order>
@@ -19,7 +20,7 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
-    public function findCostumerOrderAtDate($costumer, ?DateTime $order_date): ?Order
+    public function findCostumerOrderAtDate(Costumer $costumer, ?DateTime $order_date): ?Order
     {
         // copy original date
         $day_start = clone $order_date;

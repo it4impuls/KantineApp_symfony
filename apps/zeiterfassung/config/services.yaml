@@ -33,7 +33,7 @@ services:
     admin.FA:
         class: Zeiterfassung\Admin\FaUserAdmin
         tags:
-            - { name: sonata.admin, model_class: Zeiterfassung\Entity\FaUser, controller: ~, manager_type: orm, group: Zeiterfassung, label: Fachanleiter, show_in_roles_matrix: false }
+            - { name: sonata.admin, model_class: Zeiterfassung\Entity\FaUser, controller: ~, manager_type: orm, group: Zeiterfassung, label: Fachanleiter }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 

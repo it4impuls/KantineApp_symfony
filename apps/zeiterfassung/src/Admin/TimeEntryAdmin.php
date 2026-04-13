@@ -22,7 +22,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
-
+use Symfony\Component\Translation\TranslatableMessage;
 
 final class TimeEntryAdmin extends AbstractAdmin
 {
@@ -50,7 +50,7 @@ final class TimeEntryAdmin extends AbstractAdmin
         if (!$user instanceof Costumer) {
             return (string)$user;
         }
-        $dept = $user->getDepartment() ?? 'No Dept';
+        $dept = $user->getDepartment() ?? new TranslatableMessage('No Dept');
         return sprintf('[%s] %s', $dept, $user->getFullName());
     }
 
@@ -233,8 +233,6 @@ final class TimeEntryAdmin extends AbstractAdmin
         ]);
     }
 
-    
-
     // -------------------------------------------------------------------
     // LIST VIEW
     // -------------------------------------------------------------------
@@ -265,8 +263,14 @@ final class TimeEntryAdmin extends AbstractAdmin
         $show
             ->add('user.fullName', null, ['label' => 'Name'])
             ->add('user.department', null, ['label' => 'Department'])
-            ->add('checkinTime', null, ['label' => 'Check-in'])
-            ->add('checkoutTime', null, ['label' => 'Check-out']);
+            ->add('checkinTime', null, [
+                'label' => 'Check-in',
+                'format' => 'd.m.Y - H:i',
+                ])
+            ->add('checkoutTime', null, [
+                'label' => 'Check-out',
+                'format' => 'd.m.Y - H:i',
+                ]);
     }
 
     // -------------------------------------------------------------------

@@ -30,13 +30,19 @@
         {
             "label": "extract translations",
             "type": "shell",
-            "command": "APP_ENV=dev APP_DEBUG=1 APP_ID=kantine php bin/console translation:extract --force de",
+            "command": "APP_ID=kantine php bin/console translation:extract --force de && APP_ID=zeiterfassung php bin/console translation:extract --force de && APP_ID=kantine php bin/console translation:extract --force en && APP_ID=zeiterfassung php bin/console translation:extract --force en",
             "problemMatcher": [],
         },
         {
             "label": "clear cache",
             "type": "shell",
             "command": "php bin/console cache:clear -ikantine && php bin/console cache:clear -izeiterfassung",
+            "problemMatcher": [],
+        },
+        {
+            "label": "test kantine",
+            "type": "shell",
+            "command": "php bin/console doctrine:fixtures:load --env=test -ikantine --quiet && php bin/phpunit",
             "problemMatcher": [],
         },
     ]

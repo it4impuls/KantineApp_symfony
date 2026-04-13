@@ -86,6 +86,12 @@ final class CostumerAdmin extends AbstractAdmin
                 'ask_confirmation' => false,
                 'controller' => 'Shared\Controller\CostumerCRUDController::batchActionBarcodes',
             ];
+
+            $actions['export_names'] = [
+                'label' => 'Teilnehmer (XLSX)',
+                'ask_confirmation' => false,
+                'controller' => 'Shared\Controller\CostumerCRUDController::batchActionExportNames',
+            ];
         }
 
         return $actions;
@@ -116,10 +122,8 @@ final class CostumerAdmin extends AbstractAdmin
             ->add('lastname')
             ->add('active')
             ->add('enddate', null, [
-                'widget' => 'single_text',
-                'html5' => false,
-                'help' => '(Format: dd.mm.yyyy)',
-                'format' => 'd.m.Y'])
+                'format' => 'd.m.Y',
+            ])
             ->add('Barcode', 'barcode')             // custom types defined in config/packages/sonata_doctrine_orm_admin.yaml
             ->add('Department')
         ;
