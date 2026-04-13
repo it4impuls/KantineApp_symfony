@@ -27,6 +27,26 @@ class TimeEntryTest extends WebTestCase
         return new static::$class($env, $debug, 'zeiterfassung');
     }
 
+    /** I have no idea why $this->client->loginUser($adminUser) is not enough, but we have to manually submit the form from /login */
+    private function authenticate(): void
+    {
+        $userRepository = $this->getContainer()->get(SonataUserUserRepository::class);
+        $adminUser = $userRepository->findOneByUsername('admin');
+        $this->client->loginUser($adminUser);
+        // 
+
+        // $this->loginUser()
+        $this->client->request('GET', '/admin/logout', );
+        $this->client->request('GET', '/admin/login', );
+        // var_dump($this->client->getResponse()->getContent());
+        $this->assertResponseIsSuccessful('Could not get login page');
+        $this->client->submitForm('submit', [
+            "_username"=>	"admin",
+            "_password"=>	"admin"
+        ]);
+        // var_dump($this->client->getResponse());
+    }
+
     public function setUp(): void
     {
         $this->client = static::createClient();
@@ -118,18 +138,52 @@ class TimeEntryTest extends WebTestCase
 
         // always 10 mins previously
         $time_to_post = new DateTime()->sub( DateInterval::createFromDateString("10 minutes"))->format("h:m:s");
-        var_dump($time_to_post);
+        // var_dump($time_to_post);
 
         $this->client->request('POST', '/api', server:[
             "HTTP_AUTHORIZATION" => "Bearer ".$token
         ], content: json_encode(["barcode" => $costumer->id, "time" => $time_to_post]));
 
         $res = json_decode($this->client->getResponse()->getContent(), true);
-        var_dump($res);
+        // var_dump($res);
         $this->assertTrue($time_to_post === $res["time"], "posted time ".$time_to_post." is not the same as saved time ".$res["time"] ?? $this->client->getResponse()->getContent());
     }
 
+    public function testTestAdminGet(): void
+    {
+        $this->authenticate();
 
+        $this->client->request('GET', '/admin/dashboard', );
+        $this->assertResponseIsSuccessful('Could not get admin main page: '.$this->client->getResponse()->getStatusCode());
+
+        foreach (["shared/sonatauseruser", "shared/costumer", "attendance", "zeiterfassung/fauser"] as $key) {
+            $this->client->request('GET', '/admin/'.$key.'/list', );
+            $this->assertResponseIsSuccessful('Could not get '.$key.' page: '.$this->client->getResponse()->getStatusCode());
+            $crawler = $this->client->getCrawler();
+            
+            // view
+            $entries = $crawler->filter('.sonata-link-identifier');
+            if(count($entries) > 0){
+                $this->client->click($entries->first()->link());
+                $this->assertResponseIsSuccessful('Could get entity '.$key.' page: '.$this->client->getResponse()->getStatusCode());
+                // var_dump($this->client->getResponse()->getContent());
+            }
+
+            // edit
+            $entries = $crawler->filter('.edit_link');
+            if(count($entries) > 0){
+                $this->client->click($entries->first()->link());
+                $this->assertResponseIsSuccessful('Could get entity '.$key.' page: '.$this->client->getResponse()->getStatusCode());
+            }
+
+            // create
+            $entries = $crawler->filter('.sonata-action-element');
+            if(count($entries) > 0){
+                $this->client->click($entries->first()->link());
+                $this->assertResponseIsSuccessful('Could get entity '.$key.' page: '.$this->client->getResponse()->getStatusCode());
+            }
+        }
+    }
 }
 
 

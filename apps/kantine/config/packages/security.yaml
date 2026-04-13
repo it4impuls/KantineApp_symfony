@@ -58,7 +58,7 @@ security:
 
     role_hierarchy:
         ROLE_USER_KANTINE:      [ROLE_ADMIN_ORDER_ALL]
-        ROLE_ADMIN:             [ROLE_USER, ROLE_ADMIN_ORDER_ALL, ROLE_FA, ROLE_USER_KANTINE ]
+        ROLE_ADMIN:             [ROLE_USER, ROLE_FA, ROLE_USER_KANTINE, ROLE_ADMIN_COSTUMER_ALL ]
 
 
 # when@prod: &normalAccess

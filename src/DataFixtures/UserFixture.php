@@ -15,7 +15,7 @@ class UserFixture extends Fixture
         $user->setEnabled(True);
         $user->setUsername("admin");
         $user->setPlainPassword("admin");
-        $user->setRoles(["ROLE_ADMIN"]);
+        $user->setRoles(["ROLE_SUPER_ADMIN"]);
 
 
         $manager->persist($user);
