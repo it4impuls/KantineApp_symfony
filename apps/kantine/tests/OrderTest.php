@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Kantine\Repository\OrderRepository;
 use Shared\Entity\Costumer;
 use Shared\Repository\CostumerRepository;
+use Shared\Repository\SonataUserUserRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
