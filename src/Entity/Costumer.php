@@ -87,10 +87,10 @@ class Costumer
         return $this->id;
     }
 
-    public function getFirstname(): ?string
+    public function getFirstname(): string
     {
         // trimmed and 1st letter capitalized
-        return ucwords(trim($this->firstname));
+        return ucwords(trim($this->firstname??""));
     }
 
     public function setFirstname(string $firstname): static
@@ -101,10 +101,10 @@ class Costumer
         return $this;
     }
 
-    public function getLastname(): ?string
+    public function getLastname(): string
     {
         // trimmed and 1st letter capitalized
-        return  ucwords(trim($this->lastname));
+        return  ucwords(trim($this->lastname??""));
     }
 
     public function setLastname(string $lastname): static
