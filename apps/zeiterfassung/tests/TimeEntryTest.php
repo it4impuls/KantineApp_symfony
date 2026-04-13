@@ -38,13 +38,13 @@ class TimeEntryTest extends WebTestCase
         // $this->loginUser()
         $this->client->request('GET', '/admin/logout', );
         $this->client->request('GET', '/admin/login', );
-        var_dump($this->client->getResponse()->getContent());
+        // var_dump($this->client->getResponse()->getContent());
         $this->assertResponseIsSuccessful('Could not get login page');
         $this->client->submitForm('submit', [
             "_username"=>	"admin",
             "_password"=>	"admin"
         ]);
-        var_dump($this->client->getResponse());
+        // var_dump($this->client->getResponse());
     }
 
     public function setUp(): void
@@ -138,14 +138,14 @@ class TimeEntryTest extends WebTestCase
 
         // always 10 mins previously
         $time_to_post = new DateTime()->sub( DateInterval::createFromDateString("10 minutes"))->format("h:m:s");
-        var_dump($time_to_post);
+        // var_dump($time_to_post);
 
         $this->client->request('POST', '/api', server:[
             "HTTP_AUTHORIZATION" => "Bearer ".$token
         ], content: json_encode(["barcode" => $costumer->getId(), "time" => $time_to_post]));
 
         $res = json_decode($this->client->getResponse()->getContent(), true);
-        var_dump($res);
+        // var_dump($res);
         $this->assertTrue($time_to_post === $res["time"], "posted time ".$time_to_post." is not the same as saved time ".$res["time"] ?? $this->client->getResponse()->getContent());
     }
 
@@ -166,7 +166,7 @@ class TimeEntryTest extends WebTestCase
             if(count($entries) > 0){
                 $this->client->click($entries->first()->link());
                 $this->assertResponseIsSuccessful('Could get entity '.$key.' page: '.$this->client->getResponse()->getStatusCode());
-                var_dump($this->client->getResponse()->getContent());
+                // var_dump($this->client->getResponse()->getContent());
             }
 
             // edit

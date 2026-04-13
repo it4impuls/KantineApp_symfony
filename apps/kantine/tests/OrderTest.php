@@ -160,7 +160,7 @@ class OrderTest extends WebTestCase
             if(count($entries) > 0){
                 $this->client->click($entries->first()->link());
                 $this->assertResponseIsSuccessful('Could get entity '.$key.' page: '.$this->client->getResponse()->getStatusCode());
-                var_dump($this->client->getResponse()->getContent());
+                // var_dump($this->client->getResponse()->getContent());
             }
 
             // edit
