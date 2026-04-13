@@ -125,8 +125,8 @@ class TimeEntryTest extends WebTestCase
         ], content: json_encode(["barcode" => $costumer->getId(), "time" => $time_to_post]));
 
         $res = json_decode($this->client->getResponse()->getContent(), true);
-
-        $this->assertTrue($time_to_post === $res["time"], "posted time ".$time_to_post." is not the same as saved time ".$res["time"]);
+        var_dump($res);
+        $this->assertTrue($time_to_post === $res["time"], "posted time ".$time_to_post." is not the same as saved time ".$res["time"] ?? $this->client->getResponse()->getContent());
     }
 
 
