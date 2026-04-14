@@ -43,7 +43,7 @@ class Costumer
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    public ?int $id;
+    public ?int $id = null;
     public function getId() {return $this->id;}
 
     public function getFirstname() {return $this->firstname;}

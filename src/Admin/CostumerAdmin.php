@@ -55,7 +55,7 @@ final class CostumerAdmin extends AbstractAdmin
                 'widget' => 'single_text',
                 'html5' => false,
                 'help' => '(Format: dd.mm.yyyy)',
-                'format' => 'd.m.Y'])
+                'format' => 'd.m.y'])
             ->add('Barcode', 'barcode')                         // custom types defined in config/packages/sonata_doctrine_orm_admin.yaml
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
@@ -107,7 +107,7 @@ final class CostumerAdmin extends AbstractAdmin
                 'widget' => 'single_text',
                 'html5' => false,
                 'help' => '(Format: dd.mm.yyyy)',
-                'format' => 'd.m.Y'])
+                'format' => 'd.m.y'])
             ->add('Department', ChoiceType::class, [
                 'choices' => Costumer::DEPARTMENTS,
             ])
@@ -122,7 +122,7 @@ final class CostumerAdmin extends AbstractAdmin
             ->add('lastname')
             ->add('active')
             ->add('enddate', null, [
-                'format' => 'd.m.Y',
+                'format' => 'd.m.y',
             ])
             ->add('Barcode', 'barcode')             // custom types defined in config/packages/sonata_doctrine_orm_admin.yaml
             ->add('Department')
