@@ -3,6 +3,9 @@ name: Deploy to All-Inkl (Development)
 on:
   push:
     branches: [dev]
+    paths-ignore:
+      - '.github/**'
+      - '.vscode/**'
   workflow_dispatch:
 
 jobs:
