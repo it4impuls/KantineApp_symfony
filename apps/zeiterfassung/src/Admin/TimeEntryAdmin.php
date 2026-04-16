@@ -23,10 +23,11 @@ use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Symfony\Component\Translation\TranslatableMessage;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class TimeEntryAdmin extends AbstractAdmin
 {
-    public function __construct(private UsageTrackingTokenStorage $ts){}
+    public function __construct(private UsageTrackingTokenStorage $ts, private TranslatorInterface $translator){}
 
     // DEPRICATED
     // protected $baseRouteName = 'admin_time_entry';
@@ -50,7 +51,7 @@ final class TimeEntryAdmin extends AbstractAdmin
         if (!$user instanceof Costumer) {
             return (string)$user;
         }
-        $dept = $user->getDepartment() ?? new TranslatableMessage('No Dept');
+        $dept = $user->getDepartment()=="" ? $this->translator->trans('No Dept'):$user->getDepartment();
         return sprintf('[%s] %s', $dept, $user->getFullName());
     }
 
