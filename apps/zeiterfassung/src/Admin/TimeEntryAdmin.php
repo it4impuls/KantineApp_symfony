@@ -8,7 +8,6 @@ use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\UsageTrackingTokenStorage;
 
 use Sonata\Form\Type\DatePickerType;
 use Sonata\Form\Type\DateTimePickerType;
@@ -22,12 +21,10 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
-use Symfony\Component\Translation\TranslatableMessage;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class TimeEntryAdmin extends AbstractAdmin
 {
-    public function __construct(private UsageTrackingTokenStorage $ts, private TranslatorInterface $translator){}
+    public function __construct(){}
 
     // DEPRICATED
     // protected $baseRouteName = 'admin_time_entry';
@@ -51,8 +48,7 @@ final class TimeEntryAdmin extends AbstractAdmin
         if (!$user instanceof Costumer) {
             return (string)$user;
         }
-        $dept = $user->getDepartment()=="" ? $this->translator->trans('No Dept'):$user->getDepartment();
-        return sprintf('[%s] %s', $dept, $user->getFullName());
+        return sprintf('[%s] %s', $user->getDepartment(), $user->getFullName());
     }
 
     private function ensureUserJoin(QueryBuilder $qb, string $alias): void

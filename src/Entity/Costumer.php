@@ -37,8 +37,8 @@ class Costumer
         "Media" => "MEDIA",
         "BVB" => "BVB",
         "Aperio" => "APERIO",
-        "" => ""
-    ];
+        "No Dept" => null
+        ];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -177,7 +177,7 @@ class Costumer
 
     public function setDepartment(?string $Department): static
     {
-        $this->Department = trim(strtoupper($Department));
+        $this->Department = $Department;
 
         return $this;
     }
