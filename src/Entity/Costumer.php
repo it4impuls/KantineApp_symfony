@@ -14,6 +14,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints\Choice;
+use Zeiterfassung\Entity\TimeEntry;
 
 #[ORM\Entity(repositoryClass: CostumerRepository::class)] #
 #[UniqueEntity(
@@ -96,6 +97,12 @@ class Costumer
      */
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'Costumer')]
     private Collection $orders;
+
+    /**
+     * @var Collection<int, Order>
+     */
+    #[ORM\OneToMany(targetEntity: TimeEntry::class, mappedBy: 'user')]
+    private Collection $timeEntries;
 
     protected File $Barcode;
 

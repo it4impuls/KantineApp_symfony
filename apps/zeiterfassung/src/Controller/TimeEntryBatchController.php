@@ -6,7 +6,7 @@ use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\Exporter\Handler;
 use Sonata\Exporter\Source\ArraySourceIterator;
-use Sonata\Exporter\Writer\XlsxWriter;
+use Sonata\Exporter\Writer\XlsxExporter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,19 +16,15 @@ use ZipArchive;
 
 final class TimeEntryBatchController extends AbstractController
 {
-    public function batchGetReportAction(ProxyQueryInterface $query, AdminInterface $admin): BinaryFileResponse|RedirectResponse
+    private function formatReportData(array $rawData): array
     {
-        $admin->checkAccess('list');
-
         $format = datefmt_create('de-DE');
         $format->setPattern("EEEE dd.MM.y");
 
-        $selectedUsers = $query->execute();
         $data = [];
-        $data1 = [];
 
         // sort entries into [Costumer][Month][entiry]
-        foreach ($selectedUsers as $timeEntry) {
+        foreach ($rawData as $timeEntry) {
             if(!$timeEntry instanceof TimeEntry) continue;
             $month = $timeEntry->getCheckinTime()->format('m.y');
             $data[$timeEntry->getUser()->getFullname()][$month][] = [
@@ -37,26 +33,17 @@ final class TimeEntryBatchController extends AbstractController
                 'Austrag' => $timeEntry->getCheckoutTime()? $timeEntry->getCheckoutTime()->format('H:i'):''];
         }
 
-        $zipName = tempnam(sys_get_temp_dir(), 'zip_');
-        $zip = new ZipArchive();
-        if ($zip->open($zipName, ZipArchive::OVERWRITE) !== true) {
-            throw new \RuntimeException(_('Cannot open ' . $zipName));
-        }
+        return $data;
+    }
+    
+    public function batchGetReportAction(ProxyQueryInterface $query, AdminInterface $admin): BinaryFileResponse|RedirectResponse
+    {
+        $admin->checkAccess('list');
+        $selectedEntries = $query->execute();
 
-        // write into zip archive structured costumer/month.xlsx
-        foreach ($data as $costumer => $months) {
-            $zip->addEmptyDir($costumer);
-            foreach ($months as $month => $entries) {
-                $source = new ArraySourceIterator($entries);
-                $tmpName = tempnam(sys_get_temp_dir(), 'xlsx_');
-                if(file_exists($tmpName)) unlink($tmpName);             // hacky way to just get a random name, not the new file
-                $writer = new XlsxWriter($tmpName);
-                Handler::create($source, $writer)->export();
-                $zip->addFile($tmpName, $costumer.DIRECTORY_SEPARATOR.$costumer.'_'.$month.'.xlsx');
-            }
-        }
-        if (!$zip->close()) throw new \RuntimeException(_('Cannot close ' . $zipName));
-
+        
+        $exporter = new XlsxExporter();
+        $zipName = $exporter->writeAsTimeEntryReport($selectedEntries); 
 
         $response = new BinaryFileResponse($zipName);
         $response->headers->set('Content-Type', 'application/zip');
