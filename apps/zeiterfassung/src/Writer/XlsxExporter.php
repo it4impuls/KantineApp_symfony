@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace Zeiterfassung\Writer;
 
 use XLSXWriter;
+use Sonata\Exporter\Writer\TypedWriterInterface;
 
 final class XlsxExporter extends XLSXWriter implements TypedWriterInterface
 {    
