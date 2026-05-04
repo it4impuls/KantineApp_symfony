@@ -4,7 +4,7 @@ namespace Zeiterfassung\Controller;
 
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
-use Sonata\Exporter\Writer\XlsxExporter;
+use Zeiterfassung\Writer\XlsxExporter;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;

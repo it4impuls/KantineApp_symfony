@@ -3,9 +3,10 @@
 declare(strict_types=1);
 
 
-namespace Sonata\Exporter\Writer;
+namespace Zeiterfassung\Writer;
 
 use XLSXWriter;
+use Sonata\Exporter\Writer\TypedWriterInterface;
 
 final class XlsxExporter extends XLSXWriter implements TypedWriterInterface
 {    
