@@ -14,7 +14,7 @@ class TimeEntry
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: "timeEnties", targetEntity: User::class)]
+    #[ORM\ManyToOne(inversedBy: "timeEntries", targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false, onDelete:"CASCADE")]
     private ?User $user = null;
 
