@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 
-namespace Sonata\Exporter\Writer;
+namespace Zeiterfassung\Writer;
 
 use XLSXWriter;
 
