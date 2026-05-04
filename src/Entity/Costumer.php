@@ -98,12 +98,12 @@ class Costumer
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'Costumer')]
     private Collection $orders;
 
-    /**
-     * @var Collection<int, Order>
+        /**
+     * @var Collection<int, TimeEntry>
      */
     #[ORM\OneToMany(targetEntity: TimeEntry::class, mappedBy: 'user')]
     private Collection $timeEntries;
-
+    
     protected File $Barcode;
 
     #[Choice(choices: Costumer::DEPARTMENTS, message: '{{ value }} not a valid department. Possible departments: {{ choices }}')]
