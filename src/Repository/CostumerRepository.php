@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Attribute\When;
  */
 class CostumerRepository extends ServiceEntityRepository
 {
-    private const MONTHS_INACTIVE_UNTIL_REMOVAL = 6;
+    public const MONTHS_INACTIVE_UNTIL_REMOVAL = 120;
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -40,7 +40,7 @@ class CostumerRepository extends ServiceEntityRepository
         return $this->getOldInactive()->delete()->getQuery()->execute();
     }
 
-    public function findByCode($id): Query
+    public function findByCode(string|int $id): Query
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.id = :id')
@@ -127,16 +127,11 @@ class CostumerRepository extends ServiceEntityRepository
         $day_start = new DateTime()->setTime(0, 0);
         $qb = $this->createQueryBuilder('c')
             ->where('count(c.orders) = 0')
-            // ->innerJoin('c.orders', 'o')
-            // ->where('o.Costumer = c.id')
-            // ->andWhere('o.order_dateTime < :date')
             
             ->setParameter('date', $day_start)
             ->setMaxResults(1)
             ->getQuery();
             
-            // ->andWhere('c.enddate < :date')
-            // ->setParameter('date', new \DateTimeImmutable(-self::MONTHS_INACTIVE_UNTIL_REMOVAL . ' months'));
         return $qb->getOneOrNullResult();
     }
 }
