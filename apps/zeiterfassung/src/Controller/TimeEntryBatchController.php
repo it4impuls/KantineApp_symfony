@@ -4,9 +4,8 @@ namespace Zeiterfassung\Controller;
 
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
-use Sonata\Exporter\Handler;
-use Sonata\Exporter\Source\ArraySourceIterator;
 use Sonata\Exporter\Writer\XlsxExporter;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,7 +15,7 @@ use ZipArchive;
 
 final class TimeEntryBatchController extends AbstractController
 {
-    private function formatReportData(array $rawData): array
+    private function formatReportData(array|Paginator $rawData): array
     {
         $format = datefmt_create('de-DE');
         $format->setPattern("EEEE dd.MM.y");
@@ -40,11 +39,25 @@ final class TimeEntryBatchController extends AbstractController
     {
         $admin->checkAccess('list');
         $selectedEntries = $query->execute();
+        $data = $this->formatReportData($selectedEntries);
 
+        $zipName = tempnam(sys_get_temp_dir(), 'zip_');
+        $zip = new ZipArchive();
+        if ($zip->open($zipName, ZipArchive::OVERWRITE) !== true) {
+            throw new \RuntimeException(_('Cannot open ' . $zipName));
+        }
+
+        // write into zip archive structured costumer/month.xlsx
+        foreach ($data as $costumer => $months) {
+            $zip->addEmptyDir($costumer);
+            foreach ($months as $month => $entries) {
+                $writer = new XlsxExporter();
+                $file = $writer->writeAsTimeEntryReport($entries, $costumer);
+                $zip->addFile($file, $costumer.DIRECTORY_SEPARATOR.$costumer.'_'.$month.'.xlsx');
+            }
+        }
+        if (!$zip->close()) throw new \RuntimeException(_('Cannot close ' . $zipName));
         
-        $exporter = new XlsxExporter();
-        $zipName = $exporter->writeAsTimeEntryReport($selectedEntries); 
-
         $response = new BinaryFileResponse($zipName);
         $response->headers->set('Content-Type', 'application/zip');
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'Teilnehmer_Zeiteinträge' . '.zip');
