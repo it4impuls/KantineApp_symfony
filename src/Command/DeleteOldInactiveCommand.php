@@ -5,7 +5,6 @@ namespace Shared\Command;
 use Shared\Repository\CostumerRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,7 +12,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'app:delete-old-inactive',
-    description: 'Deletes Costumers that are atleast 6 months old',
+    description: 'Deletes Costumers that are atleast '.CostumerRepository::MONTHS_INACTIVE_UNTIL_REMOVAL.' months old',
 )]
 class DeleteOldInactiveCommand extends Command
 {
