@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Shared\Admin;
 
-use Doctrine\DBAL\Schema\Exception\NotImplemented;
 use Shared\Entity\Costumer;
 use Shared\Entity\Tags;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter;
+use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Translation\TranslatableMessage;
@@ -47,26 +47,23 @@ final class CostumerAdmin extends AbstractAdmin
                 },
                 // "expanded" => true,
                 "multiple" => true,
+            ],
+        ])
+        ->add(
+            'tags',
+            ModelFilter::class,
+            [
+                'field_type' => ModelAutocompleteType::class,
+                'field_options' => [
+                    'property' => 'name',
+                    'minimum_input_length' => 1,
+                ]
             ]
-        ]);
-            // ->add('Barcode', FieldDescriptionInterface::TYPE_HTML/*, ["required" => false, ['help' => '<img src="' . $this->getSubject()->getBarcode() . '" />']]*/)
-        ;
+        );
     }
 
     protected function configureListFields(ListMapper $list): void
     {
-        // $q = getTags($this, 'id', 1);
-        $test = $this->getModelManager();
-        $q = $this->getModelManager()->getEntityManager(Tags::class)->createQueryBuilder('t')
-            ->select('t')
-            ->from('Shared\Entity\Tags', 't')
-            // ->setMaxResults(10)
-            ->where("t.id > 0")
-            ->getQuery()
-            ->getResult();
-        // $q->execute();
-        
-        
         // ModelManagerInterface;
 
         $list
@@ -77,8 +74,6 @@ final class CostumerAdmin extends AbstractAdmin
                 'editable' => true
             ])
             ->add('Department', 
-            // 'tags_lst',
-            // ChoiceType::class,
             FieldDescriptionInterface::TYPE_CHOICE, 
             [
                 'choices' => Costumer::DEPARTMENTS,
@@ -86,19 +81,17 @@ final class CostumerAdmin extends AbstractAdmin
                 'multiple' => true,
                 'editable' => true,
             ])
-            ->add('tags', FieldDescriptionInterface::TYPE_MANY_TO_MANY, [
-                'btn_add' => true,
+            ->add('tags', 
+            FieldDescriptionInterface::TYPE_MANY_TO_MANY, 
+            [
                 'multiple' => true,
-                // 'editable' => true,      // I can not make editablility this work...
-                'field_options'=> [
-                    'multiple' => true,
-                    'editable' => true,
-                ]
+                'class' => Tags::class,
+                'associated_property' => 'name',
             ])
             ->add('enddate', null, [
                 'widget' => 'single_text',
                 'html5' => false,
-                'help' => '(Format: dd.MM.yyyy)',
+                'help' => '(Format: dd.mm.yyyy)',
                 'format' => 'd.M.y'])
             ->add('Barcode', 'barcode')                         // custom types defined in config/packages/sonata_doctrine_orm_admin.yaml
             ->add(ListMapper::NAME_ACTIONS, null, [
@@ -155,11 +148,10 @@ final class CostumerAdmin extends AbstractAdmin
             ])
              ->add('tags', ModelType::class, [
                 'label' => 'Tags',
-                'btn_add' => false,
                 'required' => true,
                 'multiple' => true,
                 'placeholder' => 'Select tags',
-                'btn_add'=>'new tag',
+                'btn_add'=>'+',
                 'property' => 'name',
             ])
             

@@ -42,7 +42,6 @@ final class TagsAdmin extends AbstractAdmin
             ])
             ->add('costumers', null, [
                 'multiple' => true,
-                'editable' => true,
             ]);
     }
 
@@ -50,6 +49,7 @@ final class TagsAdmin extends AbstractAdmin
     {
         $form
             ->add('name')
+            ->add('costumers')
         ;
     }
 
@@ -57,6 +57,7 @@ final class TagsAdmin extends AbstractAdmin
     {
         $show
             ->add('name')
+            ->add('costumers')
         ;
     }
 }

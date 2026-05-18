@@ -50,7 +50,7 @@ class Costumer
     public function getFirstname() {return $this->firstname;}
     public function setFirstname(string $firstname):static {$this->firstname = $firstname; return $this;}
     #[ORM\Column(length: 50)]
-    private string $firstname;
+    private ?string $firstname = '';
     // public string $firstname = ''
     // {
     //     get => ucwords(trim($this->firstname));
@@ -62,7 +62,7 @@ class Costumer
     public function getLastname() {return $this->lastname;}
     public function setLastname(string $lastname):static {$this->lastname = $lastname; return $this;}
     #[ORM\Column(length: 50)]
-    private string $lastname;
+    private ?string $lastname = '';
     // public string $lastname = ''
     // {
     //     get => ucwords(trim($this->lastname));
@@ -125,7 +125,7 @@ class Costumer
 
     public function __tostring()
     {
-        return sprintf('[%s] %s', $this->getDepartment()??'None', $this->getFullName()?:'None');
+        return sprintf('[%s] %s', $this->getDepartment()??'None', $this->getFullName()??'None');
     }
 
     public function __construct()
@@ -243,7 +243,7 @@ class Costumer
 
     public function getFullName()
     {
-        return $this->firstname. " ". $this->lastname;
+        return  $this->getFirstname()&&$this->getLastname()? $this->getFirstname(). " ". $this->getLastname(): 'unknown Costumer';
     }
 
     /**

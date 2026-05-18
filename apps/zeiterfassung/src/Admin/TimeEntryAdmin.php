@@ -23,8 +23,6 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\DoctrineORMAdminBundle\Filter\DateRangeFilter;
 use Sonata\Form\Type\DateRangePickerType;
-use Symfony\Component\Translation\TranslatableMessage;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class TimeEntryAdmin extends AbstractAdmin
 {
@@ -164,6 +162,18 @@ final class TimeEntryAdmin extends AbstractAdmin
             ]
         );
 
+        $filter->add(
+            'user.tags',
+            ModelFilter::class,
+            [
+                'field_type' => ModelAutocompleteType::class,
+                'field_options' => [
+                    'property' => 'name',
+                    'minimum_input_length' => 1,
+                ]
+            ]
+        );
+
         $filter->add('user.Department', ChoiceFilter::class, [
             'field_type' => ChoiceType::class,
             'field_options' => [
@@ -195,7 +205,7 @@ final class TimeEntryAdmin extends AbstractAdmin
 
         $filter->add('checkinTime', DateRangeFilter::class, [
             'field_type' => DateRangePickerType::class,
-            'label' => $this->translator->trans('From - to'),
+            'label' => 'From - to',
         ]);
     }
 
@@ -218,7 +228,8 @@ final class TimeEntryAdmin extends AbstractAdmin
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'label' => 'Actions',
                 'actions' => ['edit' => [], 'delete' => []],
-            ]);
+            ])
+            ->add('user.tags');
     }
 
     // -------------------------------------------------------------------
