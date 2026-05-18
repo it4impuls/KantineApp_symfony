@@ -158,47 +158,6 @@ class Costumer
         return $this;
     }
 
-    // public function removeTags(Tags $tag): static
-    // {
-    //     if ($this->orders->removeElement($tags)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($tags->getCostumer() === $this) {
-    //             $tags->setCostumer(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
-
-    // /**
-    //  * @return Collection<int, Order>
-    //  */
-    // public function getTags(): Collection
-    // {
-    //     return $this->orders;
-    // }
-
-    // public function addOrder(Order $order): static
-    // {
-    //     if (!$this->orders->contains($order)) {
-    //         $this->orders->add($order);
-    //         $order->setCostumer($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeOrder(Order $order): static
-    // {
-    //     if ($this->orders->removeElement($order)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($order->getCostumer() === $this) {
-    //             $order->setCostumer(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
 
     public function getBarcode(): string
     {
@@ -220,14 +179,6 @@ class Costumer
 
         return $filename;
     }
-
-    // public function getDepartment(): ?string
-    // {
-    //     $ret = array_find_key(static::DEPARTMENTS, 
-    //         fn(?string $value, string $key)=>$this->Department===$value
-    //     );
-    //     return $ret;
-    // }
 
     public function getDepartment(): ?string
     {

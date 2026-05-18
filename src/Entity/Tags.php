@@ -43,14 +43,7 @@ class Tags
     {
         $this->costumers = new ArrayCollection();
     }
-    // public ?string $name = null
-    // {
-    //     get => $this->name;
-    //     set(?string $name){
-    //         $this->name = $name ?? $this->name;    // trimmed and lowercase
-    //     }
-    // }
-
+    
     public function getName(): ?string
     {
         return $this->name;
