@@ -13,9 +13,9 @@ class CostumerFixture extends Fixture
         for ($i=0; $i < 10; $i++) { 
             $costumer = new Costumer()
                 ->setDepartment(array_rand(Costumer::DEPARTMENTS));
-            $costumer->active = true;
-            $costumer->firstname = 'F'.$i;
-            $costumer->lastname = 'L'.$i;
+            $costumer->setActive(true);
+            $costumer->setFirstname('F'.$i);
+            $costumer->setLastname('L'.$i);
             $manager->persist($costumer);
         }
 

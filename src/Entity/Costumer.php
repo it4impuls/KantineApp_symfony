@@ -120,7 +120,7 @@ class Costumer
     /**
      * @var Collection<int, Tags>
      */
-    #[ORM\ManyToMany(targetEntity: Tags::class, inversedBy: 'costumers')]
+    #[ORM\ManyToMany(targetEntity: Tags::class, mappedBy: 'costumers')]
     private Collection $tags;
 
     public function __tostring()

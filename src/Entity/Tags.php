@@ -43,7 +43,7 @@ class Tags
     {
         $this->costumers = new ArrayCollection();
     }
-    
+
     public function getName(): ?string
     {
         return $this->name;

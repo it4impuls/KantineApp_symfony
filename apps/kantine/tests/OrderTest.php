@@ -83,9 +83,9 @@ class OrderTest extends WebTestCase
         // $newCostumer = $costumerRepository->getRandomCostumer();
         $count = $costumerRepository->countAll();
         $newCostumer = new Costumer();
-        $newCostumer->active = True;
-        $newCostumer->firstname ="test ".$count;
-        $newCostumer->lastname="test ".$count;
+        $newCostumer->setActive(True);
+        $newCostumer->setFirstname("test ".$count);
+        $newCostumer->setLastname("test ".$count);
         $this->entityManager->persist($newCostumer);
         $this->entityManager->flush();
         $this->assertNotNull($newCostumer, "could not get any costumers without orders");

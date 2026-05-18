@@ -91,7 +91,7 @@ class TimeEntryTest extends WebTestCase
 
     public function testPostValidTimeentry(): void
     {
-        $token = $this->getToken($this->client);
+        $token = $this->getToken();
         $costumerRepository = static::getContainer()->get(CostumerRepository::class);
         $timeEntryRepository = static::getContainer()->get(TimeEntryRepository::class);
         $costumer = $costumerRepository->getRandomCostumer();
@@ -104,7 +104,7 @@ class TimeEntryTest extends WebTestCase
 
         $content = $this->postTimeentry($token, $costumer->id);
         // var_dump($content);
-        $this->assertResponseIsSuccessful('Could not post TimeEntry: '.$content);
+        $this->assertResponseIsSuccessful('Could not post TimeEntry: '. join(', ',$content));
         $this->assertResponseStatusCodeSame(Response::HTTP_CREATED, "Wrong status code: ".$this->client->getResponse());
 
 
@@ -121,12 +121,12 @@ class TimeEntryTest extends WebTestCase
         $this->entityManager->flush();
 
         $logout_response = $this->postTimeentry($token, $costumer->id);
-        $this->assertResponseIsSuccessful('Could not checkout TimeEntry: '.$content);
+        $this->assertResponseIsSuccessful('Could not checkout TimeEntry: '.join(', ',$content));
     }
 
     public function testOptionalTimestamp(): void
     {
-        $token = $this->getToken($this->client);
+        $token = $this->getToken();
         $costumerRepository = static::getContainer()->get(CostumerRepository::class);
         $timeEntryRepository = static::getContainer()->get(TimeEntryRepository::class);
         $costumer = $costumerRepository->getRandomCostumer();
