@@ -33,6 +33,9 @@ final class TagsAdmin extends AbstractAdmin
     {
         $list
             ->add('name')
+            ->add('costumers', null, [
+                'multiple' => true,
+            ])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
                     'show' => [],
@@ -40,9 +43,7 @@ final class TagsAdmin extends AbstractAdmin
                     'delete' => [],
                 ],
             ])
-            ->add('costumers', null, [
-                'multiple' => true,
-            ]);
+            ;
     }
 
     protected function configureFormFields(FormMapper $form): void
