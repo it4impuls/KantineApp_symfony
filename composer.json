@@ -86,6 +86,7 @@
             "assets:install %PUBLIC_DIR% -izeiterfassung --no-cleanup": "symfony-cmd"
         },
         "post-install-cmd": [
+            "@auto-scripts"
         ],
         "post-update-cmd": [
             "@auto-scripts"
