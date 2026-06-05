@@ -11,6 +11,7 @@
         "doctrine/doctrine-bundle": "^3.2",
         "doctrine/doctrine-migrations-bundle": "^4.0",
         "doctrine/orm": "^3.6",
+        "dompdf/dompdf": "^3.1",
         "friendsofsymfony/rest-bundle": "^3.9",
         "jms/serializer-bundle": "*",
         "lexik/jwt-authentication-bundle": "3.*",
@@ -43,8 +44,8 @@
         "symfony/ux-twig-component": "*",
         "symfony/validator": "*",
         "symfony/yaml": "*",
-        "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/extra-bundle": "^3.21",
+        "twig/twig": "^3.21"
     },
     "config": {
         "allow-plugins": {
