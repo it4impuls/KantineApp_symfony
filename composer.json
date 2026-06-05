@@ -78,13 +78,14 @@
     },
     "scripts": {
         "auto-scripts": {
+            "importmap:install -ikantine": "symfony-cmd",
+            "importmap:install -izeiterfassung": "symfony-cmd",
             "cache:clear -ikantine": "symfony-cmd",
             "cache:clear -izeiterfassung": "symfony-cmd",
             "assets:install %PUBLIC_DIR% -ikantine": "symfony-cmd",
             "assets:install %PUBLIC_DIR% -izeiterfassung --no-cleanup": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
         ],
         "post-update-cmd": [
             "@auto-scripts"
