@@ -41,6 +41,17 @@ final class CostumerAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $list): void
     {
+        $actions = [
+                'actions' => [
+                    'show' => [],
+                    'edit' => [],
+                    'delete' => [],
+                ],
+            ];
+        // if ($_ENV['APP_ID'] === "zeiterfassung"){
+        //     $actions['actions']['report']
+        // }
+
         $list
             ->add('id', null, ['read'])
             ->add('firstname')
@@ -57,13 +68,7 @@ final class CostumerAdmin extends AbstractAdmin
                 'help' => '(Format: dd.MM.yyyy)',
                 'format' => 'd.M.y'])
             ->add('Barcode', 'barcode')                         // custom types defined in config/packages/sonata_doctrine_orm_admin.yaml
-            ->add(ListMapper::NAME_ACTIONS, null, [
-                'actions' => [
-                    'show' => [],
-                    'edit' => [],
-                    'delete' => [],
-                ],
-            ]);
+            ->add(ListMapper::NAME_ACTIONS, null, $actions);
     }
 
     protected function configureDefaultSortValues(array &$sortValues): void
