@@ -31,12 +31,3 @@ services:
         class: Shared\Admin\CostumerAdmin
         tags:
             - { name: sonata.admin, model_class: Shared\Entity\Costumer, controller: ~, manager_type: orm, group: Shared, label: Costumer}
-
-when@test:
-    services:
-        _defaults:
-            autowire: true      # Automatically injects dependencies in your services.
-            autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-
-        DataFixtures\:
-            resource: '../DataFixtures/'

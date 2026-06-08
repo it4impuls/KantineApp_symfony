@@ -35,6 +35,7 @@ final class CostumerAdmin extends AbstractAdmin
                 'choices' => Costumer::DEPARTMENTS
             ]
         ]);
+            // ->add('Barcode', FieldDescriptionInterface::TYPE_HTML/*, ["required" => false, ['help' => '<img src="' . $this->getSubject()->getBarcode() . '" />']]*/)
         ;
     }
 
