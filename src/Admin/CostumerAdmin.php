@@ -35,23 +35,11 @@ final class CostumerAdmin extends AbstractAdmin
                 'choices' => Costumer::DEPARTMENTS
             ]
         ]);
-            // ->add('Barcode', FieldDescriptionInterface::TYPE_HTML/*, ["required" => false, ['help' => '<img src="' . $this->getSubject()->getBarcode() . '" />']]*/)
         ;
     }
 
     protected function configureListFields(ListMapper $list): void
     {
-        $actions = [
-                'actions' => [
-                    'show' => [],
-                    'edit' => [],
-                    'delete' => [],
-                ],
-            ];
-        // if ($_ENV['APP_ID'] === "zeiterfassung"){
-        //     $actions['actions']['report']
-        // }
-
         $list
             ->add('id', null, ['read'])
             ->add('firstname')
@@ -68,7 +56,13 @@ final class CostumerAdmin extends AbstractAdmin
                 'help' => '(Format: dd.MM.yyyy)',
                 'format' => 'd.M.y'])
             ->add('Barcode', 'barcode')                         // custom types defined in config/packages/sonata_doctrine_orm_admin.yaml
-            ->add(ListMapper::NAME_ACTIONS, null, $actions);
+            ->add(ListMapper::NAME_ACTIONS, null, [
+                'actions' => [
+                    'show' => [],
+                    'edit' => [],
+                    'delete' => [],
+                ],
+            ]);
     }
 
     protected function configureDefaultSortValues(array &$sortValues): void
