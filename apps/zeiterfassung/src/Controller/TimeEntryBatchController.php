@@ -6,35 +6,28 @@ use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Zeiterfassung\Writer\XlsxExporter;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use Dompdf\Dompdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Zeiterfassung\Entity\TimeEntry;
 use ZipArchive;
 
 final class TimeEntryBatchController extends AbstractController
 {
-    private $data_headers = ['Datum', 'Eintrag', 'Austrag'];
-
     private function formatReportData(array|Paginator $rawData): array
     {
-        $date_format = datefmt_create('de-DE');
-        $date_format->setPattern("EEEE dd.MM.y");
-
-        $month_format = datefmt_create('de-DE');
-        $month_format->setPattern("MMMM y");
+        $format = datefmt_create('de-DE');
+        $format->setPattern("EEEE dd.MM.y");
 
         $data = [];
 
         // sort entries into [Costumer][Month][entiry]
         foreach ($rawData as $timeEntry) {
             if(!$timeEntry instanceof TimeEntry) continue;
-            $month = datefmt_format($month_format, $timeEntry->getCheckinTime());
+            $month = $timeEntry->getCheckinTime()->format('m.y');
             $data[$timeEntry->getUser()->getFullname()][$month][] = [
-                'Datum'=>   datefmt_format($date_format, $timeEntry->getCheckinTime()), 
+                'Datum'=>   datefmt_format($format, $timeEntry->getCheckinTime()), 
                 'Eintrag' => $timeEntry->getCheckinTime()->format('H:i'), 
                 'Austrag' => $timeEntry->getCheckoutTime()? $timeEntry->getCheckoutTime()->format('H:i'):''];
         }
@@ -42,24 +35,33 @@ final class TimeEntryBatchController extends AbstractController
         return $data;
     }
     
-    public function batchGetReportAction(ProxyQueryInterface $query, AdminInterface $admin): Response//BinaryFileResponse|RedirectResponse
+    public function batchGetReportAction(ProxyQueryInterface $query, AdminInterface $admin): BinaryFileResponse|RedirectResponse
     {
         $admin->checkAccess('list');
         $selectedEntries = $query->execute();
         $data = $this->formatReportData($selectedEntries);
-        $dompdf = new Dompdf();
-        $dompdf->setPaper('A4', 'portrait');
 
-        $html = $this->renderView('@Zeiterfassung/monthly_report_collection.html.twig', [
-            'data' => $data, 
-            'headers' => $this->data_headers
-        ]);
-        $dompdf->loadHtml($html);
-        $dompdf->render();
-        $dompdf->stream();
+        $zipName = tempnam(sys_get_temp_dir(), 'zip_');
+        $zip = new ZipArchive();
+        if ($zip->open($zipName, ZipArchive::OVERWRITE) !== true) {
+            throw new \RuntimeException(_('Cannot open ' . $zipName));
+        }
 
-        // anyything after $dompdf->stream() doesnt matter
+        // write into zip archive structured costumer/month.xlsx
+        foreach ($data as $costumer => $months) {
+            $zip->addEmptyDir($costumer);
+            foreach ($months as $month => $entries) {
+                $writer = new XlsxExporter();
+                $file = $writer->writeAsTimeEntryReport($entries, $costumer);
+                $zip->addFile($file, $costumer.DIRECTORY_SEPARATOR.$costumer.'_'.$month.'.xlsx');
+            }
+        }
+        if (!$zip->close()) throw new \RuntimeException(_('Cannot close ' . $zipName));
+        
+        $response = new BinaryFileResponse($zipName);
+        $response->headers->set('Content-Type', 'application/zip');
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'Teilnehmer_Zeiteinträge' . '.zip');
         $this->addFlash('sonata_flash_success', 'successfully exported');
-        return new Response($html);
+        return $response;
     }
 }

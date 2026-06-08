@@ -1,13 +1,11 @@
 <?php
 
-namespace DataFixtures;
+namespace Shared\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Shared\Entity\SonataUserUser;
-use Symfony\Component\DependencyInjection\Attribute\When;
 
-#[When(env: 'test')]
 class UserFixture extends Fixture
 {
     public function load(ObjectManager $manager): void
