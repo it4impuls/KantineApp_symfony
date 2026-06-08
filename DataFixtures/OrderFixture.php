@@ -1,14 +1,15 @@
 <?php
 
-namespace Shared\DataFixtures;
+namespace DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Kantine\Entity\Order;
-use Shared\DataFixtures\CostumerFixture;
+use DataFixtures\CostumerFixture;
 use Shared\Repository\CostumerRepository;
+use Symfony\Component\DependencyInjection\Attribute\When;
 
+#[When(env: 'test')]
 class OrderFixture extends Fixture  implements DependentFixtureInterface
 {
     public function __construct(private CostumerRepository $costumerRepository)

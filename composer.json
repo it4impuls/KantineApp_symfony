@@ -64,7 +64,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Shared\\Tests\\": "tests/"
+            "Shared\\Tests\\": "tests/",
+            "DataFixtures\\": "DataFixtures/"
         }
     },
     "replace": {
@@ -98,7 +99,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "8.*"
+            "require": "8.2"
         }
     },
     "require-dev": {
