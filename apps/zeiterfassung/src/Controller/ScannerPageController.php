@@ -50,7 +50,7 @@ class ScannerPageController extends AbstractController
         }
         
         assert( $userEntity instanceof Costumer);
-        if (!$userEntity->active)
+        if (!$userEntity->getActive())
             return $this->json(['error' => 'User with id '. $data['barcode'] .'('.$userEntity->getFullName().') is not active'], 403);
         
         $lastEntry = $this->em->getRepository(TimeEntry::class)->getTimeEntryForUser($userEntity);

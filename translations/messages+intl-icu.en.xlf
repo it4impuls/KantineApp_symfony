@@ -197,6 +197,30 @@
         <source>From - to</source>
         <target>From - to</target>
       </trans-unit>
+      <trans-unit id="c3JjHHp" resname="Tags">
+        <source>Tags</source>
+        <target>Tags</target>
+      </trans-unit>
+      <trans-unit id="wbMeKOh" resname="Name">
+        <source>Name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="KISwno4" resname="Costumers">
+        <source>Costumers</source>
+        <target>Costumers</target>
+      </trans-unit>
+      <trans-unit id="DZGGUPK" resname="Tags List">
+        <source>Tags List</source>
+        <target>Tags List</target>
+      </trans-unit>
+      <trans-unit id="xj.N3EZ" resname="Tags Create">
+        <source>Tags Create</source>
+        <target>Tags Create</target>
+      </trans-unit>
+      <trans-unit id="D1c4afO" resname="User Tags">
+        <source>User Tags</source>
+        <target>User Tags</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

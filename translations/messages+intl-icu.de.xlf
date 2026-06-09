@@ -189,8 +189,8 @@
         <source>To Date</source>
         <target>Bis</target>
       </trans-unit>
-      <trans-unit id="SrPzv8l" resname="No Dept">
-        <source>No Dept</source>
+      <trans-unit id="2w8knlr" resname="dept.none">
+        <source>dept.none</source>
         <target>Kein Bereich</target>
       </trans-unit>
       <trans-unit id="NHTo1QO" resname="Order Formatted">
@@ -212,6 +212,30 @@
       <trans-unit id="43FgOvL" resname="From - to">
         <source>From - to</source>
         <target>Von - bis</target>
+      </trans-unit>
+      <trans-unit id="c3JjHHp" resname="Tags">
+        <source>Tags</source>
+        <target>Tags</target>
+      </trans-unit>
+      <trans-unit id="wbMeKOh" resname="Name">
+        <source>Name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="KISwno4" resname="Costumers">
+        <source>Costumers</source>
+        <target>Teilnehmer</target>
+      </trans-unit>
+      <trans-unit id="DZGGUPK" resname="Tags List">
+        <source>Tags List</source>
+        <target>Tags Liste</target>
+      </trans-unit>
+      <trans-unit id="xj.N3EZ" resname="Tags Create">
+        <source>Tags Create</source>
+        <target>Tags Erstellen</target>
+      </trans-unit>
+      <trans-unit id="D1c4afO" resname="User Tags">
+        <source>User Tags</source>
+        <target>Teilnehmer Tags</target>
       </trans-unit>
     </body>
   </file>
