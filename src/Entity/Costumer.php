@@ -136,10 +136,6 @@ class Costumer
         $this->enddate = $now->add(new DateInterval("P4Y")); // 4 Years
     }
 
-   
-
-    
-
     /**
      * @return Collection<int, Order>
      */

@@ -146,14 +146,20 @@ final class CostumerAdmin extends AbstractAdmin
             ->add('Department', ChoiceType::class, [
                 'choices' => Costumer::DEPARTMENTS,
             ])
-             ->add('tags', ModelType::class, [
-                'label' => 'Tags',
-                'required' => true,
-                'multiple' => true,
-                'placeholder' => 'Select tags',
-                'btn_add'=>'+',
-                'property' => 'name',
-            ])
+            // TODO: editing tags in costumer doesnt persist for some reason and I dont have the patience to try to debug.
+
+            //  ->add('tags', 
+            //     ModelType::class, [
+            //     // ModelAutocompleteType::class, [
+            //     // 'minimum_input_length' => 1,
+            //     // 'expanded' => true, 
+            //     'label' => 'Tags',
+            //     'required' => true,
+            //     'multiple' => true,
+            //     'placeholder' => 'Select tags',
+            //     'btn_add'=>'+',
+            //     'property' => 'name',
+            // ])
             
         ;
     }
