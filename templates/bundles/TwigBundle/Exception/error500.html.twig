@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{status_text}}</h1>
+    {%dump%}
+    {% set referer = app.request.server.get('http-referer')|default('/') %}
+    <p>
+        An error on the server occured, please report it to us <a href="mailto:it@impuls-reha.de?subject=Error%20at%20{{app.request.baseUrl|url_encode}}&body={{exception.message|url_encode}}">here</a>
+    </p>
+
+
+    <p>
+        {{exception.message | trans}}
+    </p>
+{% endblock %}
