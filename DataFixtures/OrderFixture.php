@@ -6,10 +6,9 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use DataFixtures\CostumerFixture;
+use Kantine\Entity\Order;
 use Shared\Repository\CostumerRepository;
-use Symfony\Component\DependencyInjection\Attribute\When;
 
-#[When(env: 'test')]
 class OrderFixture extends Fixture  implements DependentFixtureInterface
 {
     public function __construct(private CostumerRepository $costumerRepository)
@@ -17,20 +16,20 @@ class OrderFixture extends Fixture  implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        // $costumers =  $this->costumerRepository->getAll();
+        $costumers =  $this->costumerRepository->getAll();
 
-        // // ensure atleast one costumer does not have an Order
-        // array_pop($costumers);
-        // shuffle($costumers);
-        // foreach ($costumers as $costumer) {
-        //     $order = new Order()
-        //         ->setOrderedItem(rand(10, 100)/10)
-        //         ->setCostumer($costumer)
-        //         ->setTax(7);
-        //     $manager->persist($order);
-        // }
+        // ensure atleast one costumer does not have an Order
+        array_pop($costumers);
+        shuffle($costumers);
+        foreach ($costumers as $costumer) {
+            $order = new Order()
+                ->setOrderedItem(rand(10, 100)/10)
+                ->setCostumer($costumer)
+                ->setTax(7);
+            $manager->persist($order);
+        }
 
-        // $manager->flush();
+        $manager->flush();
     }
 
     public function getDependencies(): array

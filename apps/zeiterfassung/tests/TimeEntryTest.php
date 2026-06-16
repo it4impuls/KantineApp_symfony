@@ -80,18 +80,18 @@ class TimeEntryTest extends WebTestCase
         return $deserialized["token"];
     }
 
-    private function postTimeentry(string $token, string $id): array
+    private function postTimeentry(string $token, string $id): string
     {
         $this->client->request('POST', '/api', server:[
             "HTTP_AUTHORIZATION" => "Bearer ".$token
         ], content: json_encode(["barcode" => $id]));
 
-        return json_decode($this->client->getResponse()->getContent(), true);
+        return $this->client->getResponse()->getContent();
     }
 
     public function testPostValidTimeentry(): void
     {
-        $token = $this->getToken($this->client);
+        $token = $this->getToken();
         $costumerRepository = static::getContainer()->get(CostumerRepository::class);
         $timeEntryRepository = static::getContainer()->get(TimeEntryRepository::class);
         $costumer = $costumerRepository->getRandomCostumer();

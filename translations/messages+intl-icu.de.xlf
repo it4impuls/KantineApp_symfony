@@ -213,6 +213,10 @@
         <source>From - to</source>
         <target>Von - bis</target>
       </trans-unit>
+      <trans-unit id="Mvs_k51" resname="An unexpected error on the server occured, please provide following information when reporting:">
+        <source>An unexpected error on the server occured, please provide following information when reporting:</source>
+        <target>Ein unerwarteter Fehler ist aufgetreten. bitte meldet den Fehler mit folgender Nachricht:</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
