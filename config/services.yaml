@@ -40,3 +40,12 @@ when@test:
 
         DataFixtures\:
             resource: '../DataFixtures/'
+
+when@dev:
+    services:
+        _defaults:
+            autowire: true      # Automatically injects dependencies in your services.
+            autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+        DataFixtures\:
+            resource: '../DataFixtures/'

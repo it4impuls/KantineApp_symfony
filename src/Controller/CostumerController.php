@@ -149,8 +149,8 @@ final class CostumerController extends AbstractFOSRestController
                 if (!str_contains($line, $deliminator)) break;
                 $data = str_getcsv($line, $deliminator, '"', "\\");
                 if (sizeof($data) < 2) break;
+                $costumer = new Costumer();
                 try {
-                    $costumer = new Costumer();
                     $costumer
                         ->setDepartment(Department: count($data) >= 3 ? $data[2] : null);
                     $costumer->active = true;

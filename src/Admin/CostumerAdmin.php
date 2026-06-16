@@ -101,7 +101,7 @@ final class CostumerAdmin extends AbstractAdmin
         $form
             ->add('firstname')
             ->add('lastname')
-            ->add('active', null, ['data' => true])
+            ->add('active')
             ->add('enddate', DatePickerType::class, [
                 'widget' => 'single_text',
                 'html5' => false,])

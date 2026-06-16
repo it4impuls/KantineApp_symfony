@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{status_text}}</h1>
+    <p>
+        {{"An unexpected error on the server occured, please provide following information when reporting:"|trans}}
+    </p>
+
+    {% set referer = app.request.server.get('http-referer')|default('/') %}
+    {% set all = {'subject': ['error at ', app.request.baseUrl]|join|url_encode, 'body': exception.message|url_encode} %}
+
+
+    <p>
+        {{exception.message | trans}}
+    </p>
+{% endblock %}
