@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace Shared\Admin;
 
+use Doctrine\DBAL\Types\StringType;
 use Shared\Entity\Costumer;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
+use Sonata\AdminBundle\Filter\Model\FilterData;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
+use Sonata\DoctrineORMAdminBundle\Filter\CallbackFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -22,6 +27,23 @@ final class CostumerAdmin extends AbstractAdmin
     {
         $filter
             ->add('id')
+            ->add('fullName', CallbackFilter::class, [
+                // This option accepts any callable syntax.
+                // 'callback' => [$this, 'getWithOpenCommentFilter'],
+                'callback' => static function(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool {
+                    if (!$data->hasValue()) {
+                        return false;
+                    }
+                    assert($query instanceof ProxyQuery);
+                    $query
+                        ->orWhere($alias.'.firstname like :query')
+                        ->orWhere($alias.'.lastname like :query')
+                        ->setParameter('query',$data->getValue());
+
+                    return true;
+                },
+                // 'field_type' => StringType::class,
+            ])
             ->add('firstname')
             ->add('lastname')
             ->add('active', null, [

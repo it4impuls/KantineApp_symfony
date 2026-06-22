@@ -39,8 +39,8 @@ final class OrderAdmin extends AbstractAdmin
                     'to_string_callback' => function ($user, $property) {
                         return sprintf("%s: %s",$user->getId(), $user->getFullName());
                     },
-                ]
-                ]);
+                ]])
+            ->add('Costumer.active');
         } else {
             $filter
             ->add('Costumer');

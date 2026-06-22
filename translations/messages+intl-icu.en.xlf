@@ -201,6 +201,10 @@
         <source>An unexpected error on the server occured, please provide following information when reporting:</source>
         <target>An unexpected error on the server occured, please provide following information when reporting:</target>
       </trans-unit>
+      <trans-unit id="MRtMS_P" resname="Full Name">
+        <source>Full Name</source>
+        <target>Full Name</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

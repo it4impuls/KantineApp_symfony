@@ -217,6 +217,10 @@
         <source>An unexpected error on the server occured, please provide following information when reporting:</source>
         <target>Ein unerwarteter Fehler ist aufgetreten. bitte meldet den Fehler mit folgender Nachricht:</target>
       </trans-unit>
+      <trans-unit id="MRtMS_P" resname="Full Name">
+        <source>Full Name</source>
+        <target>Vor-, Nachname</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
