@@ -25,7 +25,8 @@ final class OrderAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         // kantine shouldnt have access to Customerdata, use ID instead
-        if($this->getConfigurationPool()->getAdminByClass(Costumer::class)->hasAccess('LIST')){
+        $costumerAdmin = $this->getConfigurationPool()->getAdminByClass(Costumer::class);
+        if($costumerAdmin->hasAccess('list')){
             $filter
             ->add('Costumer', ModelFilter::class,
             [
@@ -87,9 +88,9 @@ final class OrderAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         // kantine shouldnt have access to Customerdata, use ID instead
-        if($this->getConfigurationPool()->getAdminByClass(Costumer::class)->hasAccess('LIST')){
-            $form
-            ->add('Costumer', ModelAutocompleteType::class, [
+        $costumerAdmin = $this->getConfigurationPool()->getAdminByClass(Costumer::class);
+        if($costumerAdmin->hasAccess('list')){
+            $form->add('Costumer', ModelAutocompleteType::class, [
                 'class' => Costumer::class,
                 // 'choice_label' => 'id',
                 'minimum_input_length' => 1,
