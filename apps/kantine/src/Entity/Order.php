@@ -28,7 +28,7 @@ class Order
         // $this->order_dateTime = new DateTime();
     }
 
-    #[ORM\Column(options: ['default' => new CurrentTimestamp()], insertable: false, updatable: false)]
+    #[ORM\Column(options: ['default' => new CurrentTimestamp()])]
     private ?\DateTime $order_dateTime = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders', cascade: ['persist', 'persist'])]
