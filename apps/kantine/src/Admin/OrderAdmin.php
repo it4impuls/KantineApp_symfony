@@ -17,6 +17,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Sonata\DoctrineORMAdminBundle\Filter\DateRangeFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
 use Sonata\Form\Type\DateRangePickerType;
+use Sonata\Form\Type\DateTimePickerType;
 use Symfony\Component\Form\Extension\Core\DataTransformer\MoneyToLocalizedStringTransformer;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
@@ -106,6 +107,10 @@ final class OrderAdmin extends AbstractAdmin
             ->add('ordered_item', MoneyType::class, [])
             ->add('tax')
         ;
+
+        if($this->isGranted("ROLE_ADMIN")){
+            $form->add('order_dateTime', DateTimePickerType::class);
+        }
     }
 
     /**
