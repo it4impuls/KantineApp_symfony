@@ -24,18 +24,25 @@ final class OrderAdmin extends AbstractAdmin
 {
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $filter
+        // kantine shouldnt have access to Customerdata, use ID instead
+        if($this->getConfigurationPool()->getAdminByClass(Costumer::class)->hasAccess('LIST')){
+            $filter
             ->add('Costumer', ModelFilter::class,
             [
                 'field_type' => ModelAutocompleteType::class,
                 'field_options' => [
-                    'property' => ['firstname', 'lastname'],
+                    'property' => ['firstname', 'lastname', 'id'],
                     'minimum_input_length' => 1,
                     'to_string_callback' => function ($user, $property) {
-                        return $user->getFullName();
+                        return sprintf("%s: %s",$user->getId(), $user->getFullName());
                     },
                 ]
-            ])
+                ]);
+        } else {
+            $filter
+            ->add('Costumer');
+        }
+        $filter
             ->add('order_dateTime', DateRangeFilter::class, [
                     'field_type'=> DateRangePickerType::class,
                     'field_options' => [
@@ -79,12 +86,22 @@ final class OrderAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $form): void
     {
-        $form
+        // kantine shouldnt have access to Customerdata, use ID instead
+        if($this->getConfigurationPool()->getAdminByClass(Costumer::class)->hasAccess('LIST')){
+            $form
             ->add('Costumer', ModelAutocompleteType::class, [
                 'class' => Costumer::class,
                 // 'choice_label' => 'id',
-                'property' => 'fullname'
-            ])
+                'minimum_input_length' => 1,
+                'property' => ['firstname', 'lastname', 'id'],
+                'to_string_callback' => function ($user, $property) {
+                        return sprintf("%s: %s",$user->getId(), $user->getFullName());
+                },
+            ]);
+        } else {
+            $form->add('Costumer');
+        }
+        $form
             ->add('ordered_item', MoneyType::class, [])
             ->add('tax')
         ;
