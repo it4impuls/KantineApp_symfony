@@ -25,7 +25,7 @@ class Order
 
     public function __construct()
     {
-        // $this->order_dateTime = new DateTime();
+        $this->order_dateTime = new DateTime();
     }
 
     #[ORM\Column(options: ['default' => new CurrentTimestamp()])]
