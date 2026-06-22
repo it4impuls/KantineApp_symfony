@@ -35,7 +35,6 @@ final class CostumerAdmin extends AbstractAdmin
                 'choices' => Costumer::DEPARTMENTS
             ]
         ]);
-        ;
     }
 
     protected function configureListFields(ListMapper $list): void
@@ -54,7 +53,7 @@ final class CostumerAdmin extends AbstractAdmin
                 'widget' => 'single_text',
                 'html5' => false,
                 'help' => '(Format: dd.MM.yyyy)',
-                'format' => 'd.M.y'])
+                'format' => 'd.M.Y'])
             ->add('Barcode', 'barcode')                         // custom types defined in config/packages/sonata_doctrine_orm_admin.yaml
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
