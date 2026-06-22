@@ -44,6 +44,13 @@
             "type": "shell",
             "command": "php bin/console doctrine:fixtures:load --env=test -ikantine --quiet && php bin/phpunit",
             "problemMatcher": [],
+            "dependsOn": "load fixtures"
+        },
+        {
+            "label": "load fixtures",
+            "type": "shell",
+            "command": "php bin/console doctrine:fixtures:load --env=test -ikantine --quiet",
+            "problemMatcher": [],
         },
     ]
 }
