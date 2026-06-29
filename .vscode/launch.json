@@ -5,17 +5,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "command": "symfony server:start --no-tls",
-            "name": "run server",
-            "request": "launch",
-            "type": "node-terminal"
-        },
-        {
-            "name": "Listen for Xdebug",
-            "type": "php",
-            "request": "launch",
-            "port": 9003
-        }, {
             "name": "Launch Built-in web server",
             "type": "php",
             "request": "launch",
@@ -37,6 +26,12 @@
                 "APP_DEBUG":"1",
                 "APP_ID":"kantine"
             }
-        }
+        },
+        {
+            "name": "Listen for Xdebug",
+            "type": "php",
+            "request": "launch",
+            "port": 9003
+        },
     ]
 }
