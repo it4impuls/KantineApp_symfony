@@ -205,6 +205,14 @@
         <source>Full Name</source>
         <target>Full Name</target>
       </trans-unit>
+      <trans-unit id="wbMeKOh" resname="Name">
+        <source>Name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="GzNYG1d" resname="Costumer active">
+        <source>Costumer active</source>
+        <target>Costumer active</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
