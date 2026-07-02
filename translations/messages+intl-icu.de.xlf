@@ -229,6 +229,10 @@
         <source>Costumer active</source>
         <target>Kunde ist aktiv</target>
       </trans-unit>
+      <trans-unit id="MRtMS_P" resname="Full Name">
+        <source>Full Name</source>
+        <target>Vor-, Nachname</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

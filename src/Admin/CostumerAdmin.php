@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shared\Admin;
 
+use Doctrine\DBAL\Types\StringType;
 use Shared\Entity\Costumer;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
