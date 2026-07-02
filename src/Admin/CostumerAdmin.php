@@ -21,8 +21,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 final class CostumerAdmin extends AbstractAdmin
 {
-    
-
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
