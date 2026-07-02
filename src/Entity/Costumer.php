@@ -123,9 +123,6 @@ class Costumer
     }
 
    
-
-    
-
     /**
      * @return Collection<int, Order>
      */
@@ -170,7 +167,8 @@ class Costumer
         // 
         $filename = join(DIRECTORY_SEPARATOR, [$dirname, (string)$this->id . '.svg']);
         if (!file_exists($filename)) {
-            $barcode = (new BarcodeGeneratorSVG())->getBarcode($this->id, BarcodeGeneratorSVG::TYPE_CODE_128);
+            // $barcode = SvgHelper::generateBarcode($this->id);                                                // barcode with number
+            $barcode = (new BarcodeGeneratorSVG())->getBarcode($this->id, BarcodeGeneratorSVG::TYPE_CODE_128);  // barcode without number
             file_put_contents($filename, $barcode);
         }
 
@@ -193,10 +191,15 @@ class Costumer
     {
         return $this->firstname. " ". $this->lastname;
     }
+
+    public function getFullNameWithId()
+    {
+        return sprintf("%s: %s",$this->getId(), $this->getFullName());
+    }
 }
 
 
-/* OBSOLETE, numbers should not be shown anymore*/
+/* OBSOLETE, numbers should not be shown anymore, unless you want to re-introduce numbers on barcode*/
 class SvgHelper
 {
     static public function generateBarcode(int $id): string
@@ -218,7 +221,7 @@ class SvgHelper
         return $matches[0];
     }
 
-    static public function setSvgValue(string &$barcode, string $name, string $value, $class): string
+    static public function setSvgValue(string &$barcode, string $name, string $value, string $class): string
     {
         // <$class**$name="$toReplace">
         $pattern = sprintf('/(?<=<%s).+?\K(?<=%s=\").+?(?=")/', $class, $name);

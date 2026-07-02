@@ -194,7 +194,7 @@ final class CostumerController extends AbstractFOSRestController
     */
     #[When(env: 'dev')]
     #[Route('/generate/costumer/{num}', name: 'gen_costumers')]
-    public function genUsers(Request $request, $num): Response
+    public function genUsers(Request $request, int $num): Response
     {
         $dir = 'uploads';
         // look in public/barcodes/${id}.svg
@@ -231,6 +231,8 @@ final class CostumerController extends AbstractFOSRestController
         return new Response(implode($generated));
     }
 
+
+    // CRON Job for all-inkl
     #[IsGranted('ROLE_ADMIN_COSTUMER_DELETE')]
     #[Route('/cron/delete_old_costumers', name: 'del_costumers')]
     public function deleteOldInactiveCostumers(Request $request): Response
