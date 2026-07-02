@@ -12,6 +12,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
+use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Sonata\DoctrineORMAdminBundle\Filter\DateRangeFilter;
@@ -34,13 +35,12 @@ final class OrderAdmin extends AbstractAdmin
             [
                 'field_type' => ModelAutocompleteType::class,
                 'field_options' => [
-                    'property' => ['firstname', 'lastname', 'id'],
+                    'property' => ['firstname', 'lastname'],
                     'minimum_input_length' => 1,
-                    'to_string_callback' => function ($user, $property) {
-                        return sprintf("%s: %s",$user->getId(), $user->getFullName());
-                    },
+                    'to_string_callback' => fn($user, $property)=> $user->getFullNameWithId()
                 ]
-                ]);
+            ])
+            ->add('Costumer.active');
         } else {
             $filter
             ->add('Costumer');
@@ -60,11 +60,21 @@ final class OrderAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $list): void
     {
-        $list
+        $costumerAdmin = $this->getConfigurationPool()->getAdminByClass(Costumer::class);
+        if($costumerAdmin->hasAccess('list')){
+            $list
+            ->add('Costumer',null, [
+                'class' => Costumer::class,
+                'label' => 'Costumer',
+                'associated_property' => 'fullNameWithId',
+            ]);
+        } else {
+            $list
             ->add('Costumer', EntityType::class, [
                 'class' => Costumer::class,
-                'choice_label' => 'id',
-            ])
+            ]);
+        }
+        $list
             ->add('order_dateTime')
             ->add('orderFormatted')
             ->add('tax')
@@ -97,9 +107,7 @@ final class OrderAdmin extends AbstractAdmin
                 // 'choice_label' => 'id',
                 'minimum_input_length' => 1,
                 'property' => ['firstname', 'lastname', 'id'],
-                'to_string_callback' => function ($user, $property) {
-                        return sprintf("%s: %s",$user->getId(), $user->getFullName());
-                },
+                'to_string_callback' => fn($user, $property)=> $user->getFullNameWithId()
             ]);
         } else {
             $form->add('Costumer');
