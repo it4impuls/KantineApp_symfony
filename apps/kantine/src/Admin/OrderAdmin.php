@@ -37,7 +37,7 @@ final class OrderAdmin extends AbstractAdmin
                 'field_options' => [
                     'property' => ['firstname', 'lastname'],
                     'minimum_input_length' => 1,
-                    'to_string_callback' => fn($user, $property)=> $user->fullNameWithId()
+                    'to_string_callback' => fn($user, $property)=> $user->getFullNameWithId()
                 ]
             ])
             ->add('Costumer.active');
@@ -107,7 +107,7 @@ final class OrderAdmin extends AbstractAdmin
                 // 'choice_label' => 'id',
                 'minimum_input_length' => 1,
                 'property' => ['firstname', 'lastname', 'id'],
-                'to_string_callback' => fn($user, $property)=> $user->fullNameWithId()
+                'to_string_callback' => fn($user, $property)=> $user->getFullNameWithId()
             ]);
         } else {
             $form->add('Costumer');
