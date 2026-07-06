@@ -4,16 +4,15 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        # main:
-        #     lazy: true
-        #     provider: sonata_user_bundle
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-        
+        # Required for All-inkl CRON, it only tries authenticating with uses http_basic
+        cron:
+            lazy: true
+            pattern: ^/cron/(.*)
+            provider: sonata_user_bundle
+            context: user
+            http_basic:
+                realm: Secured Area
             
         admin:
             # name: admin

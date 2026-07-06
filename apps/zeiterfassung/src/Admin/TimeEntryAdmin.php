@@ -107,7 +107,7 @@ final class TimeEntryAdmin extends AbstractAdmin
                 'btn_add' => false,
                 'required' => true,
                 'placeholder' => 'Select user',
-                'property' => ['firstname', 'lastname'],
+                'property' => ['name'],
                 'minimum_input_length' => 1,
                 'to_string_callback' => fn($user, $property) =>  $this->costumerToStr($user),
                 'constraints' => [
@@ -152,7 +152,7 @@ final class TimeEntryAdmin extends AbstractAdmin
             [
                 'field_type' => ModelAutocompleteType::class,
                 'field_options' => [
-                    'property' => ['firstname', 'lastname'],
+                    'property' => ['name'],
                     'minimum_input_length' => 1,
                     'to_string_callback' => function ($user, $property) {
                         return $this->costumerToStr($user);
