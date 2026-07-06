@@ -33,6 +33,7 @@ final class CostumerAdmin extends AbstractAdmin
                     assert($query instanceof ProxyQuery);
 
                     // search each space seperated key individually
+                    // ALL words have to match the firstname OR lastname OR id
                     foreach(explode(" ", $data->getValue()) as $key){
                         $query->andWhere( 
                             $query->expr()->orX(
