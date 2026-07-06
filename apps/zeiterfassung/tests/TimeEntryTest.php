@@ -126,7 +126,7 @@ class TimeEntryTest extends WebTestCase
 
     public function testOptionalTimestamp(): void
     {
-        $token = $this->getToken($this->client);
+        $token = $this->getToken();
         $costumerRepository = static::getContainer()->get(CostumerRepository::class);
         $timeEntryRepository = static::getContainer()->get(TimeEntryRepository::class);
         $costumer = $costumerRepository->getRandomCostumer();
@@ -185,6 +185,35 @@ class TimeEntryTest extends WebTestCase
 
             
         }
+    }
+
+    public function testRetrieveAutocompleteItemsAction(){
+        $this->authenticate();
+        $this->client->setServerParameter("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
+        $path = "/admin/core/get-autocomplete-items";
+        $parameters = [
+            "_context" => "filter",
+            "_sonata_admin" => "admin.TimeEntry",
+            "field" => "user",
+            "q" => "F"];
+
+        $this->client->request('GET', $path, $parameters);
+        $content = $this->client->getResponse()->getContent();
+
+        $this->assertResponseIsSuccessful('could not get user from filter '.$content);
+        $deserialized =  json_decode($content, true);
+        $this->assertArrayHasKey("items", $deserialized);
+        $this->assertTrue(sizeof($deserialized["items"]) > 0, "result must not be empty");
+
+        $parameters["q"] = "doesNotExist";
+        $this->client->request('GET', $path, $parameters);
+        $content = $this->client->getResponse()->getContent();
+        
+        $deserialized =  json_decode($content, true);
+        $this->assertArrayHasKey("items", $deserialized);
+        $this->assertTrue(sizeof($deserialized["items"]) === 0, "Array must be empty. Actual: ". $content);
+        
+        // $this->assertResponse('could not get user from filter '.$content);
     }
 }
 
