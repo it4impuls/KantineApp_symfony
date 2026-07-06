@@ -149,7 +149,7 @@ class TimeEntryTest extends WebTestCase
         $this->assertTrue($time_to_post === $res["time"], "posted time ".$time_to_post." is not the same as saved time ".$res["time"] ?? $this->client->getResponse()->getContent());
     }
 
-    public function testTestAdminGet(): void
+    public function testAdminGet(): void
     {
         $this->authenticate();
 
@@ -182,6 +182,8 @@ class TimeEntryTest extends WebTestCase
                 $this->client->click($entries->first()->link());
                 $this->assertResponseIsSuccessful('Could get entity '.$key.' page: '.$this->client->getResponse()->getStatusCode());
             }
+
+            
         }
     }
 }

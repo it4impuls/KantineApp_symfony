@@ -1,4 +1,5 @@
 twig_component:
+    anonymous_template_directory: 'apps/kantine/templates/components/'
     defaults:
         Kantine\Twig\Components\: 'apps/kantine/templates/components/'
 

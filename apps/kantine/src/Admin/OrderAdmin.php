@@ -12,7 +12,6 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
-use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Sonata\DoctrineORMAdminBundle\Filter\DateRangeFilter;
@@ -22,12 +21,14 @@ use Sonata\Form\Type\DateTimePickerType;
 use Symfony\Component\Form\Extension\Core\DataTransformer\MoneyToLocalizedStringTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class OrderAdmin extends AbstractAdmin
 {
+    public function __construct(private TranslatorInterface $translator) {}
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        // kantine shouldnt have access to Customerdata, use ID instead
+        // kantine shouldnt have access to Costumerdata, use ID instead
         $costumerAdmin = $this->getConfigurationPool()->getAdminByClass(Costumer::class);
         if($costumerAdmin->hasAccess('list')){
             $filter
@@ -40,7 +41,9 @@ final class OrderAdmin extends AbstractAdmin
                     'to_string_callback' => fn($user, $property)=> $user->getFullNameWithId()
                 ]
             ])
-            ->add('Costumer.active');
+            ->add('Costumer.active', null, [
+                'label' => $this->translator->trans('Costumer active')
+            ]);
         } else {
             $filter
             ->add('Costumer');

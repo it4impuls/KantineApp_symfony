@@ -10,7 +10,6 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\UsageTrackingTokenStorage;
 
-use Sonata\Form\Type\DatePickerType;
 use Sonata\Form\Type\DateTimePickerType;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\CallbackFilter;
@@ -24,16 +23,12 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\DoctrineORMAdminBundle\Filter\DateRangeFilter;
 use Sonata\Form\Type\DateRangePickerType;
-use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class TimeEntryAdmin extends AbstractAdmin
 {
     public function __construct(private UsageTrackingTokenStorage $ts, private TranslatorInterface $translator){}
 
-    // DEPRICATED
-    // protected $baseRouteName = 'admin_time_entry';
-    // protected $baseRoutePattern = 'attendance';
     protected function generateBaseRouteName(bool $isChildAdmin = false): string
     {
         return 'admin_time_entry';
