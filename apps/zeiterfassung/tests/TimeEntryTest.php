@@ -126,7 +126,7 @@ class TimeEntryTest extends WebTestCase
 
     public function testOptionalTimestamp(): void
     {
-        $token = $this->getToken($this->client);
+        $token = $this->getToken();
         $costumerRepository = static::getContainer()->get(CostumerRepository::class);
         $timeEntryRepository = static::getContainer()->get(TimeEntryRepository::class);
         $costumer = $costumerRepository->getRandomCostumer();

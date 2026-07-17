@@ -23,6 +23,7 @@
         "picqer/php-barcode-generator": "^3.2",
         "sonata-project/admin-bundle": "^4.42",
         "sonata-project/doctrine-orm-admin-bundle": "^4.21",
+        "sonata-project/intl-bundle": "^3.3",
         "sonata-project/user-bundle": "^5.19",
         "symfony/asset": "*",
         "symfony/asset-mapper": "*",
@@ -33,6 +34,7 @@
         "symfony/framework-bundle": "*",
         "symfony/mime": "*",
         "symfony/monolog-bundle": "^4.0",
+        "symfony/object-mapper": "8.1",
         "symfony/polyfill-intl-messageformatter": "*",
         "symfony/property-access": "*",
         "symfony/property-info": "*",
@@ -99,7 +101,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "8.2"
+            "require": "8.1"
         }
     },
     "require-dev": {

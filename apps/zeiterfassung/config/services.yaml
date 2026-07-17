@@ -34,7 +34,14 @@ services:
         class: Zeiterfassung\Admin\FaUserAdmin
         tags:
             - { name: sonata.admin, model_class: Zeiterfassung\Entity\FaUser, controller: ~, manager_type: orm, group: Zeiterfassung, label: Fachanleiter }
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    
+    admin.scanner_client:
+        class: Zeiterfassung\Admin\ScannerClientAdmin
+        tags:
+            - { name: sonata.admin, model_class: Zeiterfassung\Entity\ScannerClient, controller: ~, manager_type: orm, group: admin, label: ScannerClient }
 
+    admin.scanner_log:
+        class: Zeiterfassung\Admin\ScannerLogAdmin
+        tags:
+            - { name: sonata.admin, model_class: Zeiterfassung\Entity\ScannerLogEntry, controller: ~, manager_type: orm, group: admin, label: ScannerLogEntry }
 

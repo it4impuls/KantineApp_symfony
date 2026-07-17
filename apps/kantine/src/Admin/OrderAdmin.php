@@ -36,7 +36,7 @@ final class OrderAdmin extends AbstractAdmin
             [
                 'field_type' => ModelAutocompleteType::class,
                 'field_options' => [
-                    'property' => ['firstname', 'lastname'],
+                    'property' => ['name'],
                     'minimum_input_length' => 1,
                     'to_string_callback' => fn($user, $property)=> $user->getFullNameWithId()
                 ]
@@ -109,7 +109,7 @@ final class OrderAdmin extends AbstractAdmin
                 'class' => Costumer::class,
                 // 'choice_label' => 'id',
                 'minimum_input_length' => 1,
-                'property' => ['firstname', 'lastname', 'id'],
+                'property' => ['name', 'id'],
                 'to_string_callback' => fn($user, $property)=> $user->getFullNameWithId()
             ]);
         } else {
