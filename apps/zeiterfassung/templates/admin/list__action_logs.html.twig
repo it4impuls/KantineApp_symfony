@@ -1,0 +1,10 @@
+{%set logAdmin=admin.configurationPool.adminByAdminCode("admin.scanner_log")%}
+{%set filters={
+    'scanner__id': {'value':object.id}, 
+    'timeStamp': {'value': "now"|date('d.m.Y', options.timezone|default(null))}}
+%}
+
+<a class="btn btn-sm btn-default" href="{{ logAdmin.generateUrl('list', {'filter': filters}) }}">
+    <i class="fas fa-scroll"> </i>
+    {{"view todays logs" | trans}}
+</a>

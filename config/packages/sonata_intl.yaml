@@ -1,0 +1,6 @@
+sonata_intl:
+    timezone:
+        detectors:
+          - sonata.intl.timezone_detector.locale_aware
+
+        default: Europe/Berlin
