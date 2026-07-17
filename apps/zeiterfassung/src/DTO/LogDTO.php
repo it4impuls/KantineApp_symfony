@@ -16,8 +16,7 @@ class LogDTO
     //     $this->timeStamp = new DateTime();
     // }
 
-    #[Choice(callback: [ScannerLogEntry::class, 'log_levels'], message: '{{ value }} not a valid logLevel. Possible logLevels: {{ choices }}')]
-    #[Map(target: 'logLevel')]
+    #[Choice(callback: [ScannerLogEntry::class, 'log_levels'], message: '{{ value }} not a valid level. Possible logLevels: {{ choices }}')]
     public ?string $level = null;
     public ?string $message = null;
     // public ?DateTime $timeStamp;

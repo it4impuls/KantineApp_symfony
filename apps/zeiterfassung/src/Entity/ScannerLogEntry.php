@@ -17,7 +17,7 @@ class ScannerLogEntry
 
     public function __toString()
     {
-        return sprintf("%s | %s | %s", $this->getTimeStamp()->format("Y-m-d H:i:s"), $this->getLogLevel(), $this->getMessage());
+        return sprintf("%s | %s | %s", $this->getTimeStamp()->format("Y-m-d H:i:s"), $this->getLevel(), $this->getMessage());
     }
 
     public function __construct()
@@ -39,9 +39,9 @@ class ScannerLogEntry
     #[ORM\JoinColumn(nullable: false)]
     private ?ScannerClient $scanner = null;
 
-    #[Choice(callback: 'log_levels', message: '{{ value }} not a valid logLevel. Possible logLevels: {{ choices }}')]
+    #[Choice(callback: 'log_levels', message: '{{ value }} not a valid level. Possible logLevels: {{ choices }}')]
     #[ORM\Column(length: 255)]
-    private ?string $logLevel = null;
+    private ?string $level = null;
 
     #[ORM\Column(length: 255)]
     private ?string $message = null;
@@ -66,14 +66,14 @@ class ScannerLogEntry
         return $this;
     }
 
-    public function getLogLevel(): ?string
+    public function getLevel(): ?string
     {
-        return strtoupper($this->logLevel??"");
+        return strtoupper($this->level??"");
     }
 
-    public function setLogLevel(string $logLevel): static
+    public function setLevel(string $level): static
     {
-        strtolower($this->logLevel = $logLevel);
+        strtolower($this->level = $level);
 
         return $this;
     }

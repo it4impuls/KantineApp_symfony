@@ -64,7 +64,7 @@ final class ScannerClientControllerTest extends WebTestCase
     {
         $userRepository = static::getContainer()->get(SonataUserUserRepository::class);
         $testUser = $userRepository->findOneByUsername('admin');
-        $this->client->loginUser($testUser, 'main');
+        $this->client->loginUser($testUser);
         // for some reason the Request fails with invalid credentals if you are not logged in??
         $this->client->request('POST', '/api/login', content: json_encode(["username" => "admin", "password" => "admin"]));
         $content = $this->client->getResponse()->getContent();
@@ -92,13 +92,13 @@ final class ScannerClientControllerTest extends WebTestCase
         // $this->authenticate();
         $token = $this->getToken();
         $payload = ['level' => 'INFO', 'message' => 'test'];
-        $this->client->request('POST', '/api/scanner/test/log', content:json_encode($payload), server:[
+        $this->client->jsonRequest('POST', '/api/scanner/test/log', parameters:$payload, server:[
             "HTTP_AUTHORIZATION" => "Bearer ".$token
         ]);
-        self::assertResponseIsSuccessful();
+        self::assertResponseIsSuccessful($this->client->getResponse()->getContent());
 
         $scannerRepository = $this->getContainer()->get(ScannerClientRepository::class);
-        $logRepository = $this->getContainer()->get(ScannerClientRepository::class);
+        $logRepository = $this->getContainer()->get(ScannerLogEntryRepository::class);
         $scanner = $scannerRepository->findOneBy(['uname' => 'test']);
         $this->assertNotNull($scanner, "scanner not found");
         $log = $logRepository->findBy(array_merge(["scanner"=> $scanner], $payload));

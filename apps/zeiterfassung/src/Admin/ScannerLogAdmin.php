@@ -25,7 +25,7 @@ final class ScannerLogAdmin extends AbstractAdmin
     {
         $filter
             ->add('id')
-            ->add('logLevel')
+            ->add('level')
             ->add('message')
             ->add('scanner', ModelFilter::class, [
                 'field_type' => ModelAutocompleteType::class,
@@ -48,7 +48,7 @@ final class ScannerLogAdmin extends AbstractAdmin
         $list
             ->add('id')
             ->add('scanner')
-            ->add('logLevel')
+            ->add('level')
             ->add('message')
             ->add('timeStamp')
             ->add(ListMapper::NAME_ACTIONS, null, [
@@ -64,7 +64,7 @@ final class ScannerLogAdmin extends AbstractAdmin
     {
         $form
             ->add('id')
-            ->add('logLevel')
+            ->add('level')
             ->add('message')
             ->add('timeStamp')
         ;
@@ -74,7 +74,7 @@ final class ScannerLogAdmin extends AbstractAdmin
     {
         $show
             ->add('id')
-            ->add('logLevel')
+            ->add('level')
             ->add('message')
             ->add('timeStamp')
         ;
