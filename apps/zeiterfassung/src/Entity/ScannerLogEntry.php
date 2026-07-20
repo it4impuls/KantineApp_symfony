@@ -36,7 +36,7 @@ class ScannerLogEntry
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'logs')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete:"CASCADE")]
     private ?ScannerClient $scanner = null;
 
     #[Choice(callback: 'log_levels', message: '{{ value }} not a valid level. Possible logLevels: {{ choices }}')]
