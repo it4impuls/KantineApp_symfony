@@ -8,7 +8,6 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Zeiterfassung\Entity\ScannerLogEntry;
 
@@ -20,7 +19,6 @@ final class ScannerClientAdmin extends AbstractAdmin
             ->add('id')
             ->add('uname')
             ->add('lastOnline')
-            
         ;
     }
 
@@ -38,7 +36,7 @@ final class ScannerClientAdmin extends AbstractAdmin
                     'edit' => [],
                     'delete' => [],
                     'logs' => [
-                        'template' => ['@Zeiterfassung/admin/list__action_logs.html.twig', ["test"=> "t"]]
+                        'template' => ['@Zeiterfassung/admin/list__action_logs.html.twig']
                         ]
                 ],
             ]);
@@ -72,11 +70,4 @@ final class ScannerClientAdmin extends AbstractAdmin
             ->add('logsToday')
         ;
     }
-
-
-    protected function configureRoutes(RouteCollectionInterface $collection): void
-{
-    $collection
-        ->add('clone', $this->getRouterIdParameter().'/clone');
-}
 }
