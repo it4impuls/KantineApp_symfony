@@ -38,7 +38,7 @@ final class ScannerClientController extends AbstractController
     public function log(string $scanner_name, #[MapRequestPayload] LogDTO $logDto, EntityManagerInterface $entityManager, ObjectMapperInterface $objectMapper, LoggerInterface $logger): Response
     {
         $repo = $entityManager->getRepository(ScannerClient::class);
-        $scanner_entity = $repo->findOneBy(["uname" => $scanner_name]);
+        $scanner_entity = $repo->getOrCreateByName($scanner_name);
         try {
             $log = $objectMapper->map($logDto, ScannerLogEntry::class);
             assert($log instanceof ScannerLogEntry);
