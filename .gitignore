@@ -27,6 +27,7 @@ php_errors.log
 
 ###< misc ###
 *.tar.gz
+.FA_users.md
 ###> lexik/jwt-authentication-bundle ###
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###

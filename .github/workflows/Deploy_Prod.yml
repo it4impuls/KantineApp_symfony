@@ -51,14 +51,17 @@ jobs:
             # ensure correct php version (default php version is too old)
             alias php='/usr/bin/${vars.PHP_VERSION}'
 
-            # install dependencies
-            composer install --no-dev --optimize-autoloader
+            # install dependencies, if failed, remove cache and try again
+            composer install --no-dev --optimize-autoloader || (rm -r var/cache && composer install --no-dev --optimize-autoloader)
 
             # compile assets
             php bin/console asset-map:compile
 
             # some optimizations
             composer dump-autoload --no-dev --classmap-authoritative
+
+            # migrate if any present
+            php bin/console doctrine:migrations:migrate --no-interaction -ikantine
 
   # initialize:
   #   name: Deploy to All-Inkl

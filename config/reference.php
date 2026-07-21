@@ -2194,6 +2194,15 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         },
  *     }>,
  * }
+ * @psalm-type SonataIntlConfig = array{
+ *     locale?: scalar|Param|null, // Default: null
+ *     timezone?: array{
+ *         service?: scalar|Param|null,
+ *         detectors?: list<scalar|Param|null>,
+ *         default?: scalar|Param|null, // Default: "UTC"
+ *         locales?: array<string, scalar|Param|null>,
+ *     },
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -2218,6 +2227,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     fos_rest?: FosRestConfig,
  *     lexik_jwt_authentication?: LexikJwtAuthenticationConfig,
  *     monolog?: MonologConfig,
+ *     sonata_intl?: SonataIntlConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -2245,6 +2255,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         fos_rest?: FosRestConfig,
  *         lexik_jwt_authentication?: LexikJwtAuthenticationConfig,
  *         monolog?: MonologConfig,
+ *         sonata_intl?: SonataIntlConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -2270,6 +2281,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         fos_rest?: FosRestConfig,
  *         lexik_jwt_authentication?: LexikJwtAuthenticationConfig,
  *         monolog?: MonologConfig,
+ *         sonata_intl?: SonataIntlConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -2296,6 +2308,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         fos_rest?: FosRestConfig,
  *         lexik_jwt_authentication?: LexikJwtAuthenticationConfig,
  *         monolog?: MonologConfig,
+ *         sonata_intl?: SonataIntlConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

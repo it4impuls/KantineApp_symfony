@@ -24,8 +24,6 @@ services:
     # please note that last definitions always *replace* previous ones
     Sonata\UserBundle\Model\UserManagerInterface: '@sonata.user.manager.user'
 
-    Kantine\Admin\OrderDataSource:
-        decorates: 'sonata.admin.data_source.orm'
 
     admin.costumer:
         class: Shared\Admin\CostumerAdmin
