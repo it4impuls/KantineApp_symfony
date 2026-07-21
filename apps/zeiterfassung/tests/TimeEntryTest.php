@@ -186,6 +186,51 @@ class TimeEntryTest extends WebTestCase
             
         }
     }
+
+    public function testRetrieveAutocompleteItemsAction(){
+        $this->authenticate();
+        $this->client->setServerParameter("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
+        $path = "/admin/core/get-autocomplete-items";
+        $parameters = [
+            "_context" => "filter",
+            "_sonata_admin" => "admin.TimeEntry",
+            "field" => "user",
+            "q" => "F"];
+
+        // test existing
+        $this->client->request('GET', $path, $parameters);
+
+        $content = $this->client->getResponse()->getContent();
+        $deserialized =  json_decode($content, true);
+        
+        $this->assertResponseIsSuccessful('could not get user from filter '.$content);
+        $this->assertArrayHasKey("items", $deserialized);
+        $this->assertTrue(sizeof($deserialized["items"]) > 0, "result must not be empty");
+
+        // test non-existing
+        $parameters["q"] = "doesNotExist";
+        $this->client->request('GET', $path, $parameters);
+
+        $content = $this->client->getResponse()->getContent();
+        $deserialized =  json_decode($content, true);
+
+        $this->assertArrayHasKey("items", $deserialized);
+        $this->assertTrue(sizeof($deserialized["items"]) === 0, "Array must be empty. Actual: ". $content);
+
+        // test space in query
+        $costumerRepository = static::getContainer()->get(CostumerRepository::class);
+        $costumer = $costumerRepository->getRandomCostumer();
+        $parameters["q"] = sprintf("%s %s %s", $costumer->getId(), $costumer->getFirstname(), $costumer->getLastname());
+        $this->client->request('GET', $path, $parameters);
+
+        $content = $this->client->getResponse()->getContent();
+        $deserialized =  json_decode($content, true);
+
+        $this->assertArrayHasKey("items", $deserialized);
+        $this->assertTrue(sizeof($deserialized["items"]) === 1, "Did not find costumer ". $parameters["q"]. " found: ". $deserialized["items"]);
+
+        // $this->assertResponse('could not get user from filter '.$content);
+    }
 }
 
 
