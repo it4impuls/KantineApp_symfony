@@ -24,8 +24,8 @@ class ScannerClient
     #[ORM\Column(length: 255)]
     private ?string $uname = null;
 
-    // #[ORM\Column(length: 255)]
-    // private ?string $ip = null;
+    #[ORM\Column(length: 255, nullable:true)]
+    private ?string $location;
 
     #[ORM\Column]
     private ?\DateTime $lastOnline = null;
@@ -58,17 +58,17 @@ class ScannerClient
         return $this;
     }
 
-    // public function getIp(): ?string
-    // {
-    //     return $this->ip;
-    // }
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
 
-    // public function setIp(string $ip): static
-    // {
-    //     $this->ip = $ip;
+    public function setLocation(string $location): static
+    {
+        $this->location = $location;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     public function getLastOnline(): ?\DateTime
     {

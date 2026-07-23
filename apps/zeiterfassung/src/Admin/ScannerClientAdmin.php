@@ -28,6 +28,7 @@ final class ScannerClientAdmin extends AbstractAdmin
         $list
             ->add('id')
             ->add('uname')
+            ->add('location')
             ->add('lastOnline')
             ->add('latestLog')
             ->add(ListMapper::NAME_ACTIONS, null, [
@@ -48,6 +49,7 @@ final class ScannerClientAdmin extends AbstractAdmin
         $form
             ->add('id')
             ->add('uname')
+            ->add('location')
             ->add('lastOnline', null, [
                 // 'format' => 'Y-m-d H:i',
                 // 'locale' => 'de',
@@ -62,6 +64,7 @@ final class ScannerClientAdmin extends AbstractAdmin
         $show
             ->add('id')
             ->add('uname')
+            ->add('location')
             ->add('lastOnline', null, [
                 // 'format' => 'Y-m-d H:i',
                 'locale' => 'de',
