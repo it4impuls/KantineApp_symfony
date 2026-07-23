@@ -56,7 +56,7 @@ final class TimeEntryBatchController extends AbstractController
         yield $data;
     }
     
-    public function batchGetReportAction(ProxyQueryInterface $query, AdminInterface $admin, LoggerInterface $logger): Response//BinaryFileResponse|RedirectResponse
+    public function batchGetReportAction(ProxyQueryInterface $query, AdminInterface $admin, LoggerInterface $logger): Response
     {
         assert($query instanceof ProxyQuery);
         $admin->checkAccess('list');
@@ -83,7 +83,7 @@ final class TimeEntryBatchController extends AbstractController
                 $first=false;
             }
 
-            // output pdf to browser. Function should exit from OutputHttpInline
+            // output pdf to browser. Function should exit from OutputHttpDownload
             $pdf->WriteHTML('', init:false, close:true);
             $pdf->OutputHttpDownload('file.pdf');
 
