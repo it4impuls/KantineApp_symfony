@@ -1,7 +1,10 @@
 {%set logAdmin=admin.configurationPool.adminByAdminCode("admin.scanner_log")%}
 {%set filters={
     'scanner__id': {'value':object.id}, 
-    'timeStamp': {'value': "now"|date('d.m.Y', options.timezone|default(null))}}
+    'timeStamp': {'value': "now"|date('d.m.Y', options.timezone|default(null))},
+    '_sort_order': 'DESC',
+    '_sort_by': 'timeStamp'
+    }
 %}
 
 <a class="btn btn-sm btn-default" href="{{ logAdmin.generateUrl('list', {'filter': filters}) }}">
