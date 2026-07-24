@@ -227,7 +227,7 @@ class TimeEntryTest extends WebTestCase
         $deserialized =  json_decode($content, true);
 
         $this->assertArrayHasKey("items", $deserialized);
-        $this->assertTrue(sizeof($deserialized["items"]) === 1, "Did not find costumer ". $parameters["q"]. " found: ". $deserialized["items"]);
+        $this->assertTrue(sizeof($deserialized["items"]) === 1, "Did not find costumer ". $parameters["q"]. " found: ". implode(", ", $deserialized["items"]));
 
         // $this->assertResponse('could not get user from filter '.$content);
     }
