@@ -3,5 +3,7 @@ sonata_doctrine_orm_admin:
         types:
             show: 
                 barcode: 'admin/Barcode_show_field.html.twig'
+                status_datetime: 'admin/date_status_color.html.twig'
             list:
                 barcode: 'admin/Barcode_list_field.html.twig'
+                status_datetime: 'admin/date_status_color.html.twig'

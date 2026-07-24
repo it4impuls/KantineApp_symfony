@@ -1,0 +1,42 @@
+{% extends get_admin_template('base_list_field', admin.code) %}
+
+{% block field %}
+    {%- apply trim|raw %}
+        {%- if value is empty -%}
+            &nbsp;
+        {%- else -%}
+            {% set value = date().diff(value)%}
+
+            {% if value.days or value.h  %} {# more than an hour #}
+                <i class="fas fa-exclamation-circle" style="color: rgb(239, 23, 23);"></i>
+
+                {% if value.days %}     {# more than a day #}
+                    {% set format = "%D Days, %Hh %Im %Ss ago" | trans %}
+                {% else %}
+                    {% set format = "%Hh %Im %Ss ago" | trans %}
+                {% endif %}
+
+
+            {% elseif  value.i >= 10 %}     {# more than 10 mins #}
+                <i class="fa fa-question" style="color: rgba(243, 208, 49, 1);"></i>
+                
+                {% set format = "%Im %Ss ago" %}
+                
+            {% else %}
+                <i class="fa fa-check" style="color: rgb(14, 205, 2);"></i>      
+
+                {% if value.i %}
+                    {% set format = "%Im %Ss ago" %}
+                {% else %}
+                    {% set format = "%Ss ago" %}
+                {% endif %}
+
+            {% endif %}
+
+            <time datetime="{{ value|date('c', 'UTC') }}" title="{{ value|date('c', 'UTC') }}">
+                {{ value|date(format) }}
+            </time>
+        {%- endif -%}
+    {% endapply -%}
+
+{% endblock %}

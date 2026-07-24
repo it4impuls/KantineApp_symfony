@@ -29,7 +29,7 @@ final class ScannerClientAdmin extends AbstractAdmin
             ->add('id')
             ->add('uname')
             ->add('location')
-            ->add('lastOnline')
+            ->add('lastOnline', 'status_datetime')
             ->add('latestLog')
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
