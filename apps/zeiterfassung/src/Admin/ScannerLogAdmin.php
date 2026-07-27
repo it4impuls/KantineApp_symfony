@@ -10,12 +10,14 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
-use Sonata\DoctrineORMAdminBundle\Filter\DateTimeFilter;
-use Sonata\DoctrineORMAdminBundle\Filter\DateTimeRangeFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Sonata\Form\Type\DatePickerType;
+use Symfony\Component\Form\ChoiceList\ChoiceList;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Zeiterfassung\Entity\ScannerLogEntry;
 
 final class ScannerLogAdmin extends AbstractAdmin
 {
@@ -23,9 +25,18 @@ final class ScannerLogAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
+        $choices = ScannerLogEntry::log_levels();
         $filter
             ->add('id')
-            ->add('level')
+            ->add('level', ChoiceFilter::class, [
+                'field_type' => ChoiceType::class,
+                'field_options' => [
+                    'choices' => $choices,
+                    'choice_filter' => function ($query) use ($choices): bool {
+                    return in_array(strtolower($query??""), $choices, true);
+                }
+                ]
+            ])
             ->add('message')
             ->add('scanner', ModelFilter::class, [
                 'field_type' => ModelAutocompleteType::class,
@@ -64,7 +75,9 @@ final class ScannerLogAdmin extends AbstractAdmin
     {
         $form
             ->add('id')
-            ->add('level')
+            ->add('level', ChoiceList::class, [
+                'choices' => ScannerLogEntry::log_levels()
+                ])
             ->add('message')
             ->add('timeStamp')
         ;
