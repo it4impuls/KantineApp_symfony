@@ -32,6 +32,8 @@ final class ScannerLogAdmin extends AbstractAdmin
                 'field_type' => ChoiceType::class,
                 'field_options' => [
                     'choices' => $choices,
+                    'multiple' => true,
+                    'expanded' => true,
                     'choice_filter' => function ($query) use ($choices): bool {
                     return in_array(strtolower($query??""), $choices, true);
                 }
