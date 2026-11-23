@@ -1,3 +1,10 @@
+# Symfony Apps für die Kantine und die Zeiterfassung
+
+Dieses Git-Repository enthält zwei Symfony Apps für die Kantinenabrechnung und Zeiterfassung der Impuls Reha & Arbeit Teilnehmer.
+Die Auswahl, welche App aktiviert ist, erfolgt durch die Umgebungsvariable APP_ID.
+Diese muss entweder auf 'kantine' oder 'zeiterfassung' gesetzt werden.
+Auf dem Produktionsserver geschieht dieses in `public/.htaccess`, indem es schaut, über welche Subdomain die Seite aufgerufen wurde.
+
 # Updating der Webseite
 
 ## Server Daten updaten
@@ -13,7 +20,35 @@ export APP_ENV=prod
 composer install --no-dev --optimize-autoloader
 ```
 
+## Einrichten der MariaDB
+
+Die MariaDB muss auf dem Database Host eingerichtet werden.
+Man braucht eine Datenbank DATABASE_NAME, einen Benutzer DATABASE_USER@SYMFONY_HOST mit Passwort DATABASE_PASSWORD.
+Die Datenbankeinstellungen `DATABASE_*` werden weiter unten als Symfony-Secrets für den Webserver gespeichert.
+Sollten MariaDB und Symfony auf den gleichen Host laufen, benutze 'localhost' als SYMFONY_HOST.
+Der Benutzer muss Vollzugriff auf die angelegte Daten haben.
+Die Authentifizierung mittels Linux-Sockets wird von diesem Produkt nicht unterstützt.
+
+Dazu führt man auf dem Datenbank Host aus:
+
+```bash
+sudo mariadb
+```
+
+In der sich öffnenden Kommandozeile müssen folgende SQL-Queries mit angepassten Daten ausgeführt werden:
+
+```sql
+CREATE DATABASE 'DATABASE_NAME';
+CREATE USER IF NOT EXISTS 'DATABASE_USER'@'SYMFONY_HOST' IDENTIFIED BY 'DATABASE_PASSWORD';
+GRANT ALL PRIVILEGES ON 'DATABASE_NAME'.* TO 'DATABASE_USER'@'SYMFONY_HOST';
+```
+
+Sollten Symfony und die MariaDB auf verschiedenen Hosts laufen, muss man die Listen-Adresse von MariaDB entsprechend erweitern und gegebenenfalls die Firewalleinstellungen anpassen.
+
 ## Update DB Zugangsdaten
+
+Hier werden die Zugangsdaten von oben als Symfony-Secrets gespeichert:
+
 ```bash
 cd kantine.impuls-reha.de       # Falls nicht schon im Ordner
 export APP_RUNTIME_ENV=prod
@@ -80,6 +115,18 @@ Um das Datenbank Schema in die Datenbank zu übernehmen, muss
 php bin/console doctrine:migrations:migrate
 ```
 ausgeführt werden.
+
+## Assets installieren
+
+Sonata braucht mehrere Assets, d.h. standard CSS, JS etc. Dateien, um korrekt zu funktionieren.
+Diese installiert man mit folgenden Befehlen:
+
+```bash
+php bin/console asset-map:compile
+php bin/console assets:install
+```
+
+Beachte, dass der obige compile Schritt von der JWT_PASSPHRASE abhängt.
 
 ## All-ink auf den `public` Ordner verweisen
 Webspace Directory muss in den public order zeigen!
